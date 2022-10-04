@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:align="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+body{
+background-color:#a9d7d1;
+}
+.class{
+align-text:center;
+}
+div{
+background-color:#fafafa;
+text-align:center;
+margin-right:100px;
+margin-left:100px;
+height:1000px;
+}
+input[type="text"]{
+      }
+select{
+background-color:#f0f0f0;
+}
+
+
+table{
+text-align:right;
+border-collapse: separate;
+border-spacing: 0 15px
+
+}
+#choicebox{
+text-align:left;
+}
+#defe,#maybe,#notsure,#likemostid,#improveid{
+text-align:left;
+}
+
+.header{
+text-align:center;
+}
+  </style>
+</head>
+
+<body>
+<h1 class="header">Survey Form</h1>
+
+<div>
+    <br>
+    <p>Let us know how we can improve freeCodeCamp</p>
+  <form>
+      <table align="center">
+          <tr>
+              <td><label for="name">Name:</label></td>
+              <td><input type="text" name="name" id="name" placeholder="Enter your name"></td>
+          </tr>
+          <tr>
+              <td><label for="email">Email:</label></td>
+              <td><input type="text" name="email" id="email" placeholder="Enter your Email"></td>
+          </tr>
+          <tr>
+              <td><label for="age">Age:</label></td>
+              <td><input type="number" name="age" id="age" placeholder="Age"></td>
+          </tr>
+          <tr>
+              <td><label for="role">Which option best describes your current role?</label></td>
+              <td id="choicebox">    <select id="role">
+                  <option value="Student">Student</option>
+                  <option value="Teacher">Teacher</option>
+              </select></td>
+          </tr>
+          <tr>
+              <td> <label>How likely is that you would recommend<br> freeCodeCamp to a friend?</label></td>
+              <td id="defe">
+                  <input type="radio" id="def" name="recommend" value="Definitely">
+                  <label for="def">Definitely</label><br>
+                  <input type="radio" id="may" name="recommend" value="Maybe">
+                  <label for="may">Maybe</label><br>
+                  <input type="radio" id="nots" name="recommend" value="Notsure">
+                  <label for="nots">Not sure</label>
+              </td>
+          </tr>
+          <tr>
+              <td><label for="likemostselecter">What do you like the most in FCC:</label></td>
+              <td id="likemostid"><select id="likemostselecter">
+                  <option value="">Select an option</option>
+              </select></td>
+          </tr>
+          <tr>
+              <td><label>Things that should be improved in the future<br>
+              (Check all that apply):</label></td>
+              <td id="improveid"><input type="checkbox" value="Front-end Projects">Front-end Projects<br>
+              <input type="checkbox" value="Back-end Projects">Back-end Projects<br>
+              <input type="checkbox" value ="Data Visulization">Data Visualization</td>
+          </tr>
+      </table>
+  </form>
+</div>
+
+
+</body>
+</html>
