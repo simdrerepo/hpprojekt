@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #checkbox:checked + #div{
+display:block;
+  }
+
+  #div{
+  padding:10px;
+
+position:absolute;
+ display:none;
+  z-index=2;
+  }
+   #div2{
+height:770px;
+width:71%;
+border: 1px solid black;
+z-index=0;
+
+
+
+  }
+  </style>
+</head>
+<body>
+<input type="checkbox" id="checkbox"> hide and show via checkbox
+
+<div id="div"><img src="https://www.h-brs.de/sites/default/files/styles/hresize1331x750_169/public/teaser/campus_sta_im_herbst_21-10-22_foto_dominik_pieper.jpg.webp?itok=-3sv_6xh&t=9bca"></div>
+<div id="div2"></div>
+</body>
+</html>
