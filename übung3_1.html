@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <style>
+        .flex-container{display:flex;height:100%;width:100%;flex-direction: column;}
+        .flex-main{display:flex;height:100%;width:100%;flex-wrap:wrap;}
+        #header{background-color:red;}
+        #main{background-color:blue;flex:1 1 70%;}
+        #nav{background-color:green;flex:1 1 15%;}
+        #aside{background-color:pink;flex:1 1 15%;}
+
+        @media only screen and (max-width: 500px){
+         .flex-main{flex-direction: column;}
+
+  }
+
+    </style>
+</head>
+<body>
+
+<div class="flex-container">
+    <div id="header"><h2>Header</h2></div>
+</div>
+
+<div class="flex-main">
+
+        <div id="nav"><h2>Navigation</h2><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p></div>
+    <div id="main"><h2>Main</h2></div>
+
+    <div id="aside"><h2>Aside</h2></div>
+
+</div>
+
+
+
+</body>
+</html>
