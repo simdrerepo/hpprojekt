@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+* {
+    box-sizing: border-box;
+}
+.container{display:grid;
+grid-template-columns:repeat(12, 1fr);
+grid-template-rows: auto 0.5fr 4fr auto;
+}
+
+
+.mainlinks{background-color:#ebeae6;
+grid-column:1/7;
+grid-row:3/4;
+display:flex;
+justify-content:center;
+}
+.mainrechts{background-color:#ebeae6;
+grid-column:7/13;
+grid-row:3/4;
+display:flex;
+justify-content:center;
+}
+
+.footer{background-color:#011826;text-align:center;
+grid-column:1/13;
+grid-row:4/5;
+}
+.header{
+grid-column:1/13;
+grid-row:1/2;
+display:grid;
+background-color:#363636;
+}
+
+#headline{
+grid-column:1/13;
+grid-row:2/3;
+background-color:#ebeae6;
+
+}
+h1{
+text-align:center;
+
+}
+
+
+
+.header > *{
+color:#ceccbd;
+
+}
+
+ul{display-style-type:none;text-align:center;}
+li{display:inline;padding: 8px;font-size:1rem;}
+
+#footertab{
+
+}
+#footertab li{
+display:block;
+color:white;
+font-size:1.6rem;
+}
+#tabmainrechts{
+display: block;
+display-style-type:none;
+
+}
+#contentrechts{border:1px solid black;}
+#contentrechts>*{}
+
+#bild{
+border:1px solid black;
+border-radius: 25px;
+display:block;
+
+
+    width: 50%;
+    height:auto;
+    margin-bottom:15px;
+  }
+
+  #orderbutton{background-color:#f88e37; width: 200px;
+  height: 40px;display:flex;justify-content:center;margin:auto;border:none;border-radius: 5px;color:white;}
+
+  #findmorebutton{background-color:#f88e37;width:400px;height:40px;border-radius: 5px;margin:auto;display:flex;justify-content:center;border:none;color:white;}
+
+
+
+        @media only screen and (max-width: 520px){
+        .container{
+        grid-template-columns:repeat(4, 1fr);
+        grid-template-rows: auto 0.5fr 2fr 2fr 0.5fr;
+         }
+         .header{grid-column:1/5; grid-row:1/2;}
+      #headline{grid-column:1/5;grid-row:2/3;}
+      .mainlinks{grid-column:1/5;grid-row:3/4;}
+      .mainrechts{grid-column:1/5;grid-row:4/5;}
+       .footer{grid-column:1/5;grid-row:5/6;}
+
+
+
+
+        }
+
+
+  </style>
+</head>
+<body>
+<!--<img src="https://kaul.inf.h-brs.de/we/assets/img/landing-img.png" id="bild">-->
+
+<div class="container">
+<header class="header">
+
+  <div id="mitte"><ul><li>The book series</li><li>Testimonials</li><li>The Author</li><li>Free resources</li></ul></div>
+
+</header>
+
+<main class="mainlinks">
+  <img src="https://kaul.inf.h-brs.de/we/assets/img/landing-img.png" id="bild">
+</main>
+  <main class="mainrechts">
+
+<ul>
+    <h2>Don't just drift through javascript</h2>
+    <h2>Understand how javascript works</h2>
+      <h2>Start your journey through the bumpy side of javascript</h2>
+  <button id ="orderbutton"><p>ORDER YOUR COPY NOW</p></button>
+</ul>
+  </main>
+  <div id="headline"><h1>You dont know JavaScript</h1></div>
+
+
+<footer class="footer">
+  <ul id="footertab">
+    <p></p>
+    <h2 style="color:white;">The first ebook in the book series is absolutely free</h2>
+    <button id="findmorebutton"><p>FIND OUT MORE ABOUT THIS OFFER</p></button>
+  </ul>
+
+</footer>
+</div>
+</body>
+</html>
