@@ -5,34 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <style>
-        .flex-container{display:flex;height:100%;width:100%;flex-direction: column;}
-        .flex-main{display:flex;height:100%;width:100%;flex-wrap:wrap;}
-        #header{background-color:red;}
-        #main{background-color:blue;flex:1 1 70%;}
-        #nav{background-color:green;flex:1 1 15%;}
-        #aside{background-color:pink;flex:1 1 15%;}
 
-        @media only screen and (max-width: 500px){
-         .flex-main{flex-direction: column;}
+        .flex-container{display:flex;flex-wrap:wrap;margin:auto;}
+        .header{background-color:red;}
+        .nav{background-color:green;}
+        .main{background-color:blue;}
+        .aside{background-color:pink;}
+        .column{
+        --columns: 12;
+        --width: 0;
+          flex-basis: calc(var(--width) / var(--columns) * 100% - 2px);
+        }
 
-  }
+
+
+        .header, .main, .nav, .aside{
+        --width: 12;
+        }
+
+        @media only screen and (min-width: 520px){
+
+        .main{--width: 8;}
+         .nav{--width: 4;}
+
+        }
+          @media only screen and (min-width: 1280px){
+
+        .main{--width: 8;}
+         .nav{--width: 2;}
+         .aside{--width: 2;}
+
+        }
+
+
+
+
 
     </style>
 </head>
 <body>
 
 <div class="flex-container">
-    <div id="header"><h2>Header</h2></div>
+    <div class="header column"><h2>Header</h2></div>
+    <div class="nav column"><h2>Navigation</h2><p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+
+        Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. </p></div>
+    <div class="main column"><h2>Main</h2><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p></div>
+<div class="aside column"><h2>Aside</h2><p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p></div>
 </div>
 
-<div class="flex-main">
 
-        <div id="nav"><h2>Navigation</h2><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p></div>
-    <div id="main"><h2>Main</h2></div>
-
-    <div id="aside"><h2>Aside</h2></div>
-
-</div>
 
 
 
