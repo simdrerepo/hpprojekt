@@ -2,12 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Title</title>
+    <style>
+.container{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto 1fr;
+}
+main{background-color:#f9f9f9;}
+header{ grid-column: 1/5;grid-row: 1/2;background-color: #a19077;overflow: auto;display:grid;
+grid-template-columns: 1fr 1fr 1fr auto;grid-template-rows: 1fr;}
+main{grid-column: 1/5;grid-row: 2/3;}
+.iconbar{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+.iconbar a:hover{
+    background-color: #f9f9f9;
+    color:#a19077;
+}
+.iconbar>*{
+    float: left;
+  width: 20%;
+  text-align: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 2rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  background-color:#f9f9f9;
+}
+
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+li a:hover {
+  background-color: 
+#e7e9eb;
+  
+}
+
+@media (min-width: 992px) {
+container{
+grid-template-columns: repeat(12, 1fr);
+ grid-template-rows: auto 1fr;}
+header{grid-column:1/13;
+grid-row:1/2;}
+main{grid-column:1/13;
+grid-row:2/3;}
+
+
+}
+
+    </style>
 </head>
 <body>
-<h1>Übungsaufgaben</h1>
+    <div class="container">
+<header>
+    
+    <div class="iconbar">
+  <a href="#"><i class="fa fa-bars"></i></a> 
+  <a href="#"><i class="fa fa-home"></i></a> 
 
-<p><a href="übung1.html">Link zu Übung 1.1</a></p>
-<p><a href="übung1_2.html">Link zu Übung 1.2</a></p>
+   </div>
+</header>
+<main><h2>Main</h2>
+
+</main>
+
+
+
 </body>
 </html>
