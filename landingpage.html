@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            
+            display:grid;
+         grid-template-columns:repeat(12, 1fr);
+         grid-template-rows:1fr 1fr 1fr 1fr;
+         grid-gap:20px;
+         background-color: #ddd;
+        
+        }
+        #eins{
+            grid-column:1/13;
+            grid-row:1/2;
+          text-align:center;
+            background-color: white;
+        }
+        #zwei{
+            grid-column:1/4;
+            grid-row:2/3;
+          text-align: center;
+            background-color: white;
+
+        }
+        #drei{
+            grid-column:4/7;
+            grid-row:2/3;
+          text-align: center;
+            background-color: white;
+        }
+        #vier{
+            grid-column:7/10;
+            grid-row:2/3;
+          
+            background-color: white;
+        }
+        #fünf{
+            grid-column:10/13;
+            grid-row:2/3;
+          
+            background-color: white;
+        }
+       
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+    </div>
+
+</body>
+</html>
