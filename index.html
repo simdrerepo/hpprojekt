@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Title</title>
-    <script>
-      var status = 0;
+   
+      <script>
+        var status = 0;
       
       
       function openCloseSideNav(){
        
+      
         
         if(status == 0){
           openSidenav();
+          
           status = 1;
           return;
         }
@@ -25,20 +28,22 @@
       function openSidenav(){
         document.getElementById("sidenav").style.display = "block";
         document.getElementById("sidenav").style.width = "250px";
+       
       
       }
-    
+      
       function closeSidenav(){
         document.getElementById("sidenav").style.display = "none";
         document.getElementById("sidenav").style.width = "0px";
+       
       }
-      function navigateToÜbung1_2(){
-        document.getElementById("iframemain").style.src ="übung1_2.html";
-        console.log(document.getElementById("iframemain").style.src);
-     
-      }
-    </script>
+    
+      
+      </script>
+    
+    
     <style>
+     
      
 .container{
     display:grid;
@@ -50,19 +55,21 @@
 }
 
 
-main{z-index: 0;
+#main{z-index: 0;
   background-color: #ddd;
-  height: 900px;
+  height: 800px;
   
   
-grid-column: 1/4;
+grid-column: 1/5;
 grid-row:2/3;}
-header{ grid-column: 1/5;grid-row: 1/2;background-color: #232a30}
-footer{
+#header{ grid-column: 1/5;grid-row: 1/2;background-color: 
+#232f3e;display:grid;}
+#footer{
   grid-column: 1/5;grid-row: 3/4;
   background-color: 
   
-#232a30;
+
+  #232f3e;
   
 }
 
@@ -74,20 +81,33 @@ height:100%;
 border:none;
 
 }
+#dropdown-container{
+
+width:250px;
+
+
+}
+#sidenav{
+
+  display:none;
+}
 
 
 .iconbar{
+
     grid-column: 1/2;
     grid-row: 1/2;
 }
 .iconbar a:hover{
     background-color: white;
-    color:#232a30;
+    color:
+#232f3e;
     
 }
 .loginbar a:hover{
     background-color: white;
-    color:#232a30;
+    color:
+#232f3e;
     
 }
 .iconbar>*{
@@ -100,11 +120,14 @@ border:none;
   font-size: 1.5rem;
 }
 .loginbar{
+ display:inline;
   grid-column: 4/5;
   grid-row: 1/2;
+ 
 }
-.loginbar>*{
-    float: right;
+
+.loginbar >*{
+  float:right;
   width: 50px;
   text-align: center;
   padding: 12px 0;
@@ -112,7 +135,10 @@ border:none;
   color: white;
   font-size: 1.5rem;
 }
+
+
 #sidebar{
+  
   display:none;
   
 }
@@ -132,6 +158,25 @@ color:
 #232a30;
   font-size: 1rem;
   text-align: left;
+}
+#sidebutton button{
+  display:block;
+  text-decoration:none;
+padding: 12px;
+color: 
+#232a30;
+  font-size: 1rem;
+  text-align: left;
+}
+#dropdown-container a{
+
+display:block;
+text-decoration:none;
+padding: 12px;
+color: 
+#232a30;
+  font-size: 1rem;
+  text-align: left;
   
 
 }
@@ -143,7 +188,8 @@ color:
 }
 
 #sidebutton a:hover{
-  background-color: #232a30;
+  background-color: 
+#232f3e;
   color:white;
 
 }
@@ -165,10 +211,10 @@ color:
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
  grid-template-rows: auto 1fr auto;
 }
-header{grid-column:1/13;
+#header{grid-column:1/13;
 grid-row:1/2;}
 
-footer{
+#footer{
   grid-column: 1/13;grid-row: 4/5;
   
 }
@@ -189,11 +235,11 @@ white;
 
   
 }
-main{
+#main{
   
- grid-column:2/12;
+ grid-column:4/10;
  grid-row:2/3;
-
+border:1px solid black;
 
 }
 
@@ -204,8 +250,8 @@ main{
     </style>
 </head>
 <body>
-    <div class="container">
-<header id="header">
+    <div class="container" id="containerid">
+<div id="header">
     
     <div class="iconbar">
   <a href="#" onclick="openCloseSideNav()"><i class="fa fa-bars"></i></a> 
@@ -213,19 +259,20 @@ main{
 
    </div>
    <div class="loginbar">
-    <a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+  
+    <a href="#" id="loginbutton"><i class="fa fa-user-o" aria-hidden="true"></i></a>
    </div>
-</header>
-<main id="main">
+</div>
+<div id="main">
   <iframe id="iframemain" src="landingpage.html" name="iframe" scrolling="no"></iframe>
-</main>
+</div>
 
-<footer>
+<div id="footer">
 <div class="footerbar">
   <a href="#"><i class="fa fa-envelope"></i></a>
   <a href="#"><i class="fa fa-twitter"></i></a>
 </div>
-</footer>
+</div>
 <div id="sidenav">
  <div id="exitbutton">
   <a href="#" onclick="openCloseSideNav()"><i class="fa fa-window-close"></i></a> 
@@ -233,16 +280,27 @@ main{
     
   
   <div id="sidebutton">
+    <button id="dropdown-btn">Übung 1 
+      <i class="fa fa-caret-down"></i>
+    </button>
     
-  <a href="übungen.html" target="iframe" >Übungen</a>
+  <a href="übung1.html" target="iframe">Übung 1</a>
   
-  <a href="#">Platzhalter</a>
+  <a href="übung1_2.html" target="iframe" >Übung 1.2</a>
   <a href="#">Platzhalter</a>
   <a href="#">Platzhalter</a>
   </div>
+  <div id="dropdown-container">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+    </div>
+  
+
  
 
 </div>
+
 
 
 

@@ -7,13 +7,21 @@
     <title>Document</title>
     <style>
         .container{
-            
-            display:grid;
-         grid-template-columns:repeat(12, 1fr);
-         grid-template-rows:1fr 1fr 1fr 1fr;
-         grid-gap:20px;
+            display: flex;
+  margin-left: auto;
+  margin-right: auto;
          background-color: #ddd;
+         justify-content: center;
+         
         
+        }
+        #bild{
+            border:2rem solid white;
+           border-radius: 100%;
+            height:auto;
+            width:50%;
+            
+           margin-top: 50px;
         }
         #eins{
             grid-column:1/13;
@@ -52,6 +60,7 @@
 </head>
 <body>
     <div class="container">
+        <img src="https://img.freepik.com/fotos-premium/desktop-quellcode-und-wallpaper-by-computer-sprache-mit-codierung-und-programmierung_33771-595.jpg?w=1380" id="bild">
     </div>
 
 </body>
