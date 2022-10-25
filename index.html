@@ -37,6 +37,12 @@
         document.getElementById("sidenav").style.width = "0px";
        
       }
+      function showIframe(){
+        document.getElementById("iframemain").style.display="block";
+      }
+      function hideIframe(){
+        document.getElementById("iframemain").style.display="none ";
+      }
     
       
       </script>
@@ -49,26 +55,26 @@
     display:grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto 1fr auto;
-    background-color: #ddd;
+    background-color: #f9f9f9;
    
     
 }
 
 
 #main{z-index: 0;
-  background-color: #ddd;
+  display:flex;
+  background-color: #f9f9f9;
   height: 800px;
   
   
 grid-column: 1/5;
 grid-row:2/3;}
 #header{ grid-column: 1/5;grid-row: 1/2;background-color: 
-#232f3e;display:grid;}
+  #232f3e;display:grid;}
 #footer{
   grid-column: 1/5;grid-row: 3/4;
   background-color: 
   
-
   #232f3e;
   
 }
@@ -79,6 +85,9 @@ width:100%;
 height:100%;
 
 border:none;
+display:none;
+margin:10px;
+border-radius:10px;
 
 }
 #dropdown-container{
@@ -87,9 +96,15 @@ width:250px;
 
 
 }
-#sidenav{
-
-  display:none;
+#sidenav {
+display:none;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  transition: 0.5s;
+  background-color: white;
 }
 
 
@@ -101,13 +116,13 @@ width:250px;
 .iconbar a:hover{
     background-color: white;
     color:
-#232f3e;
+    #4e5bf8;
     
 }
 .loginbar a:hover{
     background-color: white;
     color:
-#232f3e;
+    #4e5bf8;
     
 }
 .iconbar>*{
@@ -160,6 +175,8 @@ color:
   text-align: left;
 }
 #sidebutton button{
+  border:none;
+  background-color:white;
   display:block;
   text-decoration:none;
 padding: 12px;
@@ -181,15 +198,10 @@ color:
 
 }
 
-hr{
-  
-color:
-#cc334d;
-}
 
 #sidebutton a:hover{
   background-color: 
-#232f3e;
+  #4e5bf8;
   color:white;
 
 }
@@ -204,6 +216,7 @@ color:
   padding:12px;
   width:50px;
 }
+
 
 
 @media screen and (min-width: 992px) {
@@ -284,7 +297,7 @@ border:1px solid black;
       <i class="fa fa-caret-down"></i>
     </button>
     
-  <a href="übung1.html" target="iframe">Übung 1</a>
+  <a href="übung1.html" onclick="showIframe()" target="iframe">Übung 1</a>
   
   <a href="übung1_2.html" target="iframe" >Übung 1.2</a>
   <a href="#">Platzhalter</a>
