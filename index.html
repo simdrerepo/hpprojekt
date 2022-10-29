@@ -5,51 +5,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Title</title>
    
-      <script>
-        var status = 0;
-      
-      
-      function openCloseSideNav(){
-       
-      
-        
-        if(status == 0){
-          openSidenav();
-          
-          status = 1;
-          return;
-        }
-        if(status == 1){
-          closeSidenav();
-          status = 0;
-          return;
-        }
-      }
-      function openSidenav(){
-        document.getElementById("sidenav").style.display = "block";
-        document.getElementById("sidenav").style.width = "250px";
-       
-      
-      }
-      
-      function closeSidenav(){
-        document.getElementById("sidenav").style.display = "none";
-        document.getElementById("sidenav").style.width = "0px";
-       
-      }
-      function showIframe(){
-        document.getElementById("iframemain").style.display="block";
-      }
-      function hideIframe(){
-        document.getElementById("iframemain").style.display="none ";
-      }
-    
-      
-      </script>
-    
+  
+  
     
     <style>
-     
+     body{
+      font-family: Verdana, sans-serif;
+     }
      
 .container{
     display:grid;
@@ -62,34 +24,28 @@
 
 
 #main{z-index: 0;
-  display:flex;
+ 
   background-color: #f9f9f9;
-  height: 800px;
+ height:900px;
   
   
 grid-column: 1/5;
 grid-row:2/3;}
 #header{ grid-column: 1/5;grid-row: 1/2;background-color: 
-  #232f3e;display:grid;}
+  #232f3e;display:grid;
+ grid-template-columns: 1fr 2fr 1fr;
+ grid-template-rows: 1fr;
+}
 #footer{
   grid-column: 1/5;grid-row: 3/4;
+  
   background-color: 
   
   #232f3e;
   
 }
 
-iframe{
-  
-width:100%;
-height:100%;
 
-border:none;
-display:none;
-margin:10px;
-border-radius:10px;
-
-}
 #dropdown-container{
 
 width:250px;
@@ -135,20 +91,25 @@ display:none;
   font-size: 1.5rem;
 }
 .loginbar{
- display:inline;
-  grid-column: 4/5;
-  grid-row: 1/2;
+ display:block;
+grid-column: 3/4;
+
+
  
 }
 
-.loginbar >*{
+
+#loginbutton{
   float:right;
-  width: 50px;
-  text-align: center;
-  padding: 12px 0;
-  transition: all 0.3s ease;
-  color: white;
-  font-size: 1.5rem;
+ border-radius: 15px;
+  font-size: 1rem;
+ margin-top: 10px;
+ margin-bottom: 10px;
+ margin-right:10px;
+ width:100px;
+ background-color:  
+white;
+ 
 }
 
 
@@ -216,6 +177,12 @@ color:
   padding:12px;
   width:50px;
 }
+#loginbuttondiv{
+  display:flex;
+  justify-content: center;
+  
+  height:50px;
+}
 
 
 
@@ -250,9 +217,9 @@ white;
 }
 #main{
   
- grid-column:4/10;
+ grid-column:3/11;
  grid-row:2/3;
-border:1px solid black;
+
 
 }
 
@@ -272,13 +239,14 @@ border:1px solid black;
 
    </div>
    <div class="loginbar">
-  
-    <a href="#" id="loginbutton"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+    <div id ="loginbuttondiv">
+  <button id="loginbutton">Login</button>
+    </div>
    </div>
 </div>
-<div id="main">
-  <iframe id="iframemain" src="landingpage.html" name="iframe" scrolling="no"></iframe>
-</div>
+<main id="main">
+  
+</main>
 
 <div id="footer">
 <div class="footerbar">
@@ -297,7 +265,7 @@ border:1px solid black;
       <i class="fa fa-caret-down"></i>
     </button>
     
-  <a href="übung1.html" onclick="showIframe()" target="iframe">Übung 1</a>
+  <a href="übung1.html" onclick="" target="iframe">Übung 1</a>
   
   <a href="übung1_2.html" target="iframe" >Übung 1.2</a>
   <a href="#">Platzhalter</a>
@@ -313,7 +281,371 @@ border:1px solid black;
  
 
 </div>
+<script>
+ 
+var mainref = document.getElementById("main"); 
 
+
+var main_container = document.createElement("div");
+main_container.setAttribute("id","main_container");
+var main_header = document.createElement("header");
+main_header.setAttribute("id","mainheader");
+
+var main_main = document.createElement("main");
+main_main.setAttribute("id","main_main");
+mainref.appendChild(main_container);
+main_container.appendChild(main_header);
+main_container.appendChild(main_main);
+main_header.style.backgroundColor="white";
+main_main.style.backgroundColor="white";
+
+
+class Redner{
+constructor(name){
+  this.name = name;
+  this.std=0;
+  this.min=0;
+  this.sek=0;
+  this.counting=0;
+  this.intervalids=[];
+}
+counting;
+std;
+min;
+sek;
+intervalids;
+}
+class RednerArray{
+constructor(array){
+  this.array = [];
+}
+array;
+}
+
+var rednerarray = new RednerArray();
+
+
+
+
+function myTimer(objekt,ticker) {
+
+ objekt.sek++;
+
+
+if(objekt.sek===60){
+  objekt.min++;
+  objekt.sek=0;
+  if(objekt.min===60){
+    objekt.std++;
+    objekt.min=0;
+  
+  }
+}
+ticker.textContent = String(objekt.std)+':'+String(objekt.min)+':'+String(objekt.sek);
+}
+
+function setAllButtonTextToStop(){
+  var collection = document.querySelectorAll("button");
+  var start = 'Stop';
+  
+  
+  for (let i = 0; i < collection.length; i++) {
+    console.log(collection[i].textContent);
+      if(collection[i].textContent === start){
+        collection[i].textContent = 'Start';
+        
+      }
+  }
+}
+function stopAll(){
+  if(rednerarray.array.length!=0){
+ 
+ for(i=0;i<rednerarray.array.length;i++){
+ for(j=0;j<rednerarray.array[i].intervalids.length;j++){
+ 
+ clearInterval(rednerarray.array[i].intervalids[j]);
+ 
+ }
+ rednerarray.array[i].counting = 0;
+ }
+   }
+
+}
+
+function myEventHandler(rednerobj,tiker,button){
+  
+   var event = rednerobj.counting;
+   console.log(rednerobj.counting);
+  if(event === 0){
+    stopAll();
+    setAllButtonTextToStop();
+    interval = setInterval(myTimer,1000,rednerobj,tiker);
+    rednerobj.intervalids.push(interval);
+    rednerobj.counting = 1;
+    button.textContent = 'Stop';
+    
+    
+  }
+  if(event === 1 ){
+    
+    for(i=0;i<rednerobj.intervalids.length;i++){
+      
+      clearInterval(rednerobj.intervalids[i]);
+    }
+    
+    rednerobj.counting = 0;
+    button.textContent = 'Start';
+    
+  }
+  
+}
+
+
+function addRednerInListe(liste, rednerobjintabelle){
+ 
+  let li = document.createElement("li");
+  li.appendChild(rednerobjintabelle);
+  liste.appendChild(li);
+  
+  
+
+}
+
+
+function createRedner(rednerobj){
+
+ 
+  const tabelle = document.createElement("table");
+let reihe = tabelle.insertRow(-1);
+var button = document.createElement("button");
+button.appendChild(document.createTextNode('Start'));
+
+reihe.insertCell(0);
+reihe.appendChild(document.createTextNode(rednerobj.name));
+reihe.insertCell(1);
+reihe.appendChild(button);
+let timer = document.createElement("p");
+reihe.insertCell(2);
+var tiker = document.createTextNode('0:0:0');
+var interval = setInterval(myTimer,1000,rednerobj,tiker);
+    button.textContent = 'Stop';
+    rednerobj.counting = 1;
+    
+rednerobj.intervalids.push(interval);
+button.addEventListener("click",()=>myEventHandler(rednerobj,tiker,button));
+
+timer.appendChild(tiker);
+reihe.appendChild(timer);
+if(rednerarray.array.length!=0){
+ 
+for(i=0;i<rednerarray.array.length;i++){
+for(j=0;j<rednerarray.array[i].intervalids.length;j++){
+
+clearInterval(rednerarray.array[i].intervalids[j]);
+
+}
+rednerarray.array[i].counting = 0;
+}
+  }
+  var collection = document.querySelectorAll("button");
+  var start = 'Stop';
+  
+  
+  for (let i = 0; i < collection.length; i++) {
+    console.log(collection[i].textContent);
+      if(collection[i].textContent === start){
+        collection[i].textContent = 'Start';
+        
+      }
+  }
+  
+rednerarray.array.push(rednerobj);
+
+return tabelle;
+
+  }
+
+ 
+function setupU_5_1(){
+ 
+  const ueberschrift = document.createElement("h1");
+  ueberschrift.setAttribute("id","headline");
+ueberschrift.textContent = 'Übung 5.1';
+main_header.appendChild(ueberschrift);
+
+
+main_main.innerHTML = '<table id="benchmarks"><tr><th>Name</th><th>Ergebnis</th></tr>'+
+  '<tr><td>innerHTML</td><td>TBA</td></tr>' + '<tr><td>textContent</td><td>TBA</td></tr>' +
+  '<tr><td>innerHTML</td><td>TBA</td></tr>' + '</table>';
+
+var tab = document.getElementById("benchmarks");
+tab.style.textAlign = "center";
+tab.style.border = "1px solid black";
+
+
+main_main.style.display = "block";
+
+main_main.style.height ="700px";
+main_header.style.textAlign = "center";
+
+}
+
+
+function setupU_5_2(){
+  main_main.innerHTML = '';
+  let us = document.getElementById("mainheader");
+ let h1= document.createElement("h1");
+ h1.appendChild(document.createTextNode('Übung 5.2'));
+  us.appendChild(h1);
+  
+  let mainref = document.getElementById("main_main");
+  us.style.display = "flex";
+  us.style.justifyContent = "center";
+
+  let ues = document.createElement("h2");
+ues.appendChild(document.createTextNode("Rednerliste"));
+mainref.appendChild(ues);
+let eingabediv = document.createElement("div");
+var liste = document.createElement("ul");
+let eingabe = document.createElement("input");
+eingabe.setAttribute("type","search");
+eingabe.setAttribute("id","eingabe");
+eingabe.appendChild(document.createTextNode(''));
+let eingabelabel = document.createElement("label");
+eingabelabel.textContent='Neuer Redner:';
+eingabelabel.setAttribute("for","eingabe");
+var eingabebutton = document.createElement("button");
+eingabebutton.setAttribute("id","btn");
+eingabebutton.textContent = 'hinzufügen';
+eingabediv.appendChild(eingabelabel);
+eingabediv.appendChild(eingabe);
+eingabediv.appendChild(eingabebutton);
+mainref.appendChild(eingabediv);
+mainref.appendChild(liste);
+mainref.style.display = "block";
+ues.style.textAlign = "Center";
+
+ 
+ let btn = document.getElementById("btn");
+ btn.addEventListener("click",()=> addRednerInListe(liste,createRedner(new Redner( document.getElementById("eingabe").value))));
+
+}
+
+
+
+setupU_5_2();
+       
+var mainheader = document.getElementById("mainheader");
+         var headerinhalt = '<h1 id="u5headerHeadline">Übung 5.1</h1>';
+ 
+function benchmarkInnerHTML(){
+
+  let header = document.getElementById("u5header");
+
+let text = '<h1 id ="u5headerHeadline">Überschrift geändert</h1>';
+
+
+let t0 = performance.now();
+
+ for(i=0;i<1000;i++){
+header.innerHTML=text;
+ }
+
+let t1 = performance.now();
+
+return t1-t0;
+
+}
+function benchmarkInnerText(){
+  let header = document.getElementById("u5header");
+
+let text = 'Überschrift geändert';
+
+let t0 = performance.now();
+
+  for(i=0;i<1000;i++){
+header.innerText = text;
+  }
+
+let t1 = performance.now();
+
+return t1-t0;
+
+}
+function benchmarkTextContent(){
+  let header = document.getElementById("u5header");
+
+let text = 'Überschrift geändert';
+
+let t0 = performance.now();
+for(i=0;i<1000;i++){
+  header.textContent= text;
+}
+let t1 = performance.now();
+
+return t1-t0;
+
+}
+
+function benchmarkOuterHTML(){
+
+let main = document.getElementById("u5headerHeadline");
+
+let text = '<h1 id ="u5headerHeadline">Überschrift geändert</h1>';
+
+
+let t0 = performance.now();
+
+  main.outerHTML=text;
+ 
+
+
+
+let t1 = performance.now();
+
+return t1-t0; 
+
+}
+
+ 
+         var status = 0;
+       
+       
+       function openCloseSideNav(){
+        
+       
+         
+         if(status == 0){
+           openSidenav();
+           
+           status = 1;
+           return;
+         }
+         if(status == 1){
+           closeSidenav();
+           status = 0;
+           return;
+         }
+       }
+       function openSidenav(){
+         document.getElementById("sidenav").style.display = "block";
+         document.getElementById("sidenav").style.width = "250px";
+        
+       
+       }
+       
+       function closeSidenav(){
+         document.getElementById("sidenav").style.display = "none";
+         document.getElementById("sidenav").style.width = "0px";
+        
+       }
+    
+       
+      
+ 
+ 
+ 
+ </script>
 
 
 
