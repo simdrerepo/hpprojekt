@@ -17,15 +17,32 @@
     display:grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto 1fr auto;
-    background-color: #f9f9f9;
+    background-color: #e7e9eb;
+    z-index: 0;
+    top:0;
+  
+   
+    
    
     
 }
+#sidenavoverlay{
+display:none;
+top:0;
+left:0;
+position:fixed;
+z-index: 1;
+background-color: black;
+height:100%;
+
+margin-left:250px;
+opacity:0.5;
+}
 
 
-#main{z-index: 0;
+#main{
  
-  background-color: #f9f9f9;
+  background-color: #e7e9eb;
  height:900px;
   
   
@@ -46,21 +63,27 @@ grid-row:2/3;}
 }
 
 
-#dropdown-container{
-
+.dropdown-container{
+display:none;
 width:250px;
+padding-left: 8px;
+background-color: #ddd;
 
 
 }
 #sidenav {
-display:none;
+  display:none;
   height: 100%;
   width: 0;
   position: fixed;
   z-index: 1;
-  overflow-x: hidden;
-  transition: 0.5s;
+top:0;
+left:0;
   background-color: white;
+  overflow-x: hidden;
+  
+ 
+  transition: 0.5s;
 }
 
 
@@ -72,14 +95,15 @@ display:none;
 .iconbar a:hover{
     background-color: white;
     color:
-    #4e5bf8;
+    #232f3e;
+    border-radius: 100%;
     
 }
 .loginbar a:hover{
     background-color: white;
     color:
-    #4e5bf8;
-    
+    #232f3e;
+  
 }
 .iconbar>*{
     float: left;
@@ -116,8 +140,11 @@ white;
 #sidebar{
   
   display:none;
-  
+ 
+ 
+
 }
+
 #exitbutton{
   padding:12px;
   display:grid;
@@ -131,18 +158,18 @@ display:block;
 text-decoration:none;
 padding: 12px;
 color: 
-#232a30;
+black;
   font-size: 1rem;
   text-align: left;
 }
 #sidebutton button{
   border:none;
-  background-color:white;
+  background-color: white;
   display:block;
   text-decoration:none;
-padding: 12px;
-color: 
-#232a30;
+padding:12px;
+width:100%;
+color: black;
   font-size: 1rem;
   text-align: left;
 }
@@ -152,7 +179,7 @@ display:block;
 text-decoration:none;
 padding: 12px;
 color: 
-#232a30;
+black;
   font-size: 1rem;
   text-align: left;
   
@@ -160,10 +187,11 @@ color:
 }
 
 
+
 #sidebutton a:hover{
-  background-color: 
-  #4e5bf8;
-  color:white;
+  background-color: white;
+  color:black;
+  
 
 }
 .footerbar{
@@ -188,33 +216,17 @@ color:
 
 @media screen and (min-width: 992px) {
 .container{
-grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+grid-template-columns: repeat(12,1fr);
  grid-template-rows: auto 1fr auto;
 }
 #header{grid-column:1/13;
 grid-row:1/2;}
 
 #footer{
-  grid-column: 1/13;grid-row: 4/5;
+  grid-column: 1/13;grid-row: 3/4;
   
 }
-#sidenav{
-  
-  display:none;
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
 
- 
-  overflow-x: hidden;
-  transition: 0.5s;
- 
-  background-color: 
-white;
-
-  
-}
 #main{
   
  grid-column:3/11;
@@ -254,16 +266,22 @@ white;
   <a href="#"><i class="fa fa-twitter"></i></a>
 </div>
 </div>
-<div id="sidenav">
+
+ <div id="sidenav">
  <div id="exitbutton">
   <a href="#" onclick="openCloseSideNav()"><i class="fa fa-window-close"></i></a> 
  </div>
     
-  
-  <div id="sidebutton">
-    <button id="dropdown-btn">Übung 1 
+ 
+ <div id="sidebutton">
+    <button class="dropdownbutton">Übung 5 
       <i class="fa fa-caret-down"></i>
     </button>
+    <div class="dropdown-container">
+      <a href="#" onclick="setupU_5_1()">Übung 5.1</a>
+      <a href="#" onclick="setupU_5_2()">Übung 5.2</a>
+      <a href="#" onclick="setupU_5_3()">Übung 5.3</a>
+      </div>
     
   <a href="übung1.html" onclick="" target="iframe">Übung 1</a>
   
@@ -271,16 +289,14 @@ white;
   <a href="#">Platzhalter</a>
   <a href="#">Platzhalter</a>
   </div>
-  <div id="dropdown-container">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-    </div>
+  <div id="sidenavoverlay"></div>
+ 
   
 
  
 
 </div>
+
 <script>
  
 var mainref = document.getElementById("main"); 
@@ -290,15 +306,45 @@ var main_container = document.createElement("div");
 main_container.setAttribute("id","main_container");
 var main_header = document.createElement("header");
 main_header.setAttribute("id","mainheader");
+main_header.style.borderBottom = "1px solid lightgray"
+main_container.style.borderLeft = "5px solid white";
+main_container.style.borderRight = "5px solid white";
+
 
 var main_main = document.createElement("main");
 main_main.setAttribute("id","main_main");
 mainref.appendChild(main_container);
 main_container.appendChild(main_header);
+
 main_container.appendChild(main_main);
 main_header.style.backgroundColor="white";
 main_main.style.backgroundColor="white";
+main_container.style.backgroundColor='white';
 
+var dropdownbutton = document.getElementsByClassName("dropdownbutton");
+
+
+for(i=0;i<dropdownbutton.length;i++){
+  dropdownbutton[i].addEventListener("click",function(){
+    var dropdowndiv = this.nextElementSibling;
+    
+    if(dropdowndiv.style.display === 'block'){
+      dropdowndiv.style.display = 'none';
+      this.style.backgroundColor = "white";
+      this.style.color = "black";
+    }
+    else{dropdowndiv.style.display = 'block';
+    this.style.backgroundColor = "#232f3e";
+    this.style.color = "white";
+
+    
+  };
+  }
+   
+ 
+  )
+
+}
 
 class Redner{
 constructor(name){
@@ -321,7 +367,77 @@ constructor(array){
 }
 array;
 }
+class Graph{
+    constructor(){
+     this.knotenArray = new Array();
+    this.adj = new Array();
+    }
+    knotenArray;
+    adj;
+    addKnoten(knoten){
+      this.knotenArray.push(knoten);
+      this.adj.push([]);
+    }
+    addKante(k1,k2){
+      let indexfuerknoten=0;
+      for(let i=0;i<this.knotenArray.length;i++){
+        if(this.knotenArray[i]===k1){
+          indexfuerknoten=i;
+        }
+      }
+      
+      this.adj[indexfuerknoten].push(k2);
+    }
+    print(){
+    
+      for(let i=0;i<this.knotenArray.length;i++){
+        console.log(this.knotenArray[i]+" : ");
+        for(let j=0;j<this.adj.length;j++){
+          console.log(this.adj[i][j]);
+        }
+    
+      }
+    }
+    
+    topsorthelper(knoten, besucht,stack){
+      besucht.push(knoten);
+      console.log(knoten);
+      let indexfuerknoten=0;
+      for(let i=0;i<this.knotenArray.length;i++){
+        if(this.knotenArray[i]===knoten){
+          indexfuerknoten=i;
+        }
+      }
 
+      for(let i=0;i<this.adj[indexfuerknoten].length;i++){
+                    if(!besucht.includes(this.adj[indexfuerknoten][i])){
+                        
+                        this.topsorthelper(this.adj[indexfuerknoten][i], besucht, stack)
+                    }
+                    
+                }
+    stack.push(knoten);
+   
+    
+    }
+    topologischSortieren(){
+    
+      let stack = new Array();
+      let besucht = new Array();
+    
+      for (let i = 0 ; i < this.knotenArray.length ; i++){
+        if (!besucht.includes(this.knotenArray[i])){
+           
+            this.topsorthelper(this.knotenArray[i], besucht, stack);
+            
+        }
+    }
+    for(let i =0;i<stack.length;i++){
+        console.log(stack[i]);
+    }
+    }
+    
+    }
 var rednerarray = new RednerArray();
 
 
@@ -468,22 +584,24 @@ return tabelle;
  
 function setupU_5_1(){
  
-  const ueberschrift = document.createElement("h1");
+ main_main.innerHTML = '';
+ main_header.innerHTML = '';
+ console.log(main_header.innerHTML);
+ main_header.style.marginTop= "20px";
+
+  let ueberschrift = document.createElement("h1");
+  ueberschrift.appendChild(document.createTextNode("Übung 5.1"));
+  var tabelle = document.createElement("table");
+let reihe = tabelle.insertRow(-1);
+reihe.insertCell(0);
+reihe.appendChild(document.createTextNode("innerHTML"));
+reihe.insertCell(1);
+reihe.appendChild(document.createTextNode(benchmarkInnerHTML()));
   ueberschrift.setAttribute("id","headline");
-ueberschrift.textContent = 'Übung 5.1';
+
 main_header.appendChild(ueberschrift);
+main_main.appendChild(tabelle);
 
-
-main_main.innerHTML = '<table id="benchmarks"><tr><th>Name</th><th>Ergebnis</th></tr>'+
-  '<tr><td>innerHTML</td><td>TBA</td></tr>' + '<tr><td>textContent</td><td>TBA</td></tr>' +
-  '<tr><td>innerHTML</td><td>TBA</td></tr>' + '</table>';
-
-var tab = document.getElementById("benchmarks");
-tab.style.textAlign = "center";
-tab.style.border = "1px solid black";
-
-
-main_main.style.display = "block";
 
 main_main.style.height ="700px";
 main_header.style.textAlign = "center";
@@ -493,6 +611,9 @@ main_header.style.textAlign = "center";
 
 function setupU_5_2(){
   main_main.innerHTML = '';
+  main_header.innerHTML = '';
+  main_header.style.marginTop= "20px";
+
   let us = document.getElementById("mainheader");
  let h1= document.createElement("h1");
  h1.appendChild(document.createTextNode('Übung 5.2'));
@@ -503,7 +624,7 @@ function setupU_5_2(){
   us.style.justifyContent = "center";
 
   let ues = document.createElement("h2");
-ues.appendChild(document.createTextNode("Rednerliste"));
+ues.appendChild(document.createTextNode("Rednerliste mit Zeitmessung"));
 mainref.appendChild(ues);
 let eingabediv = document.createElement("div");
 var liste = document.createElement("ul");
@@ -531,27 +652,43 @@ ues.style.textAlign = "Center";
 
 }
 
+function setupU_5_3(){
+  main_main.innerHTML = '';
+  main_header.innerHTML = '';
+  let main_header_ref = document.getElementById("mainheader");
+  let main_main_ref = document.getElementById("main_header");
+  let headline = document.createElement("h1");
+  headline.appendChild(document.createTextNode("Übung 5.3"));
+  main_header_ref.appendChild(headline);
 
 
-setupU_5_2();
+
+}
+
+
        
 var mainheader = document.getElementById("mainheader");
          var headerinhalt = '<h1 id="u5headerHeadline">Übung 5.1</h1>';
  
 function benchmarkInnerHTML(){
 
-  let header = document.getElementById("u5header");
+  let main = document.getElementById("main_main");
+  let div = document.createElement("div");
+  div.setAttribute("id","testdiv");
+  main.appendChild(div);
+  let divref = document.getElementById("testdiv");
 
-let text = '<h1 id ="u5headerHeadline">Überschrift geändert</h1>';
+let text = '<h1>Eine Überschrift</h1>';
 
 
 let t0 = performance.now();
 
  for(i=0;i<1000;i++){
-header.innerHTML=text;
+divref.innerHTML=text;
  }
 
 let t1 = performance.now();
+main.removeChild(div);
 
 return t1-t0;
 
@@ -628,15 +765,23 @@ return t1-t0;
          }
        }
        function openSidenav(){
-         document.getElementById("sidenav").style.display = "block";
+       
+        document.getElementById("sidenav").style.display = "block";
          document.getElementById("sidenav").style.width = "250px";
+         document.getElementById("sidenavoverlay").style.display="block";
+         document.getElementById("sidenavoverlay").style.width="100%";
+        
+    
         
        
        }
        
        function closeSidenav(){
          document.getElementById("sidenav").style.display = "none";
-         document.getElementById("sidenav").style.width = "0px";
+         document.getElementById("sidenav").style.display = "0px";
+         document.getElementById("sidenavoverlay").style.display="none";
+         document.getElementById("sidenavoverlay").style.width="0px";
+        
         
        }
     
