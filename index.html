@@ -52,6 +52,7 @@ grid-row:2/3;}
   #232f3e;display:grid;
  grid-template-columns: 1fr 2fr 1fr;
  grid-template-rows: 1fr;
+
 }
 #footer{
   grid-column: 1/5;grid-row: 3/4;
@@ -67,7 +68,9 @@ grid-row:2/3;}
 display:none;
 width:250px;
 padding-left: 8px;
-background-color: #ddd;
+background-color: #cccccc;
+margin-left: 12px;
+
 
 
 }
@@ -154,6 +157,7 @@ white;
 
 #sidebutton a{
 
+  
 display:block;
 text-decoration:none;
 padding: 12px;
@@ -185,12 +189,21 @@ black;
   
 
 }
+#idiv{
+  float:right;
+}
 
+
+#drpdwnbtn:hover{
+background-color:#e7e9eb ;
+border-radius: 25px;
+}
 
 
 #sidebutton a:hover{
-  background-color: white;
+ text-decoration: underline;
   color:black;
+  
   
 
 }
@@ -211,7 +224,12 @@ black;
   
   height:50px;
 }
-
+#idiv{
+  display:inline;
+}
+#u1button:hover{
+  background-color: #e7e9eb;
+}
 
 
 @media screen and (min-width: 992px) {
@@ -267,28 +285,25 @@ grid-row:1/2;}
 </div>
 </div>
 
- <div id="sidenav">
+ <div class="sidenavigation" id="sidenav">
  <div id="exitbutton">
   <a href="#" onclick="openCloseSideNav()"><i class="fa fa-window-close"></i></a> 
  </div>
     
  
- <div id="sidebutton">
-    <button class="dropdownbutton">Übung 5 
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-container">
-      <a href="#" onclick="setupU_5_1()">Übung 5.1</a>
-      <a href="#" onclick="setupU_5_2()">Übung 5.2</a>
-      <a href="#" onclick="setupU_5_3()">Übung 5.3</a>
-      </div>
-    
-  <a href="übung1.html" onclick="" target="iframe">Übung 1</a>
+ <div id="sidebutton" class="sidebuttondiv">
+ <div>
+<p style="text-align:center">Übungen</p>
+<hr style="width:90%">
+<button onclick="setupU_4()">Übung 4</button>
+<button onclick="setupU_5_1()">Übung 5.1</button>
+<button onclick="setupU_5_2()">Übung 5.2</button>
+<button onclick="setupU_5_3()">Übung 5.3</button>
+
+
+ </div>
   
-  <a href="übung1_2.html" target="iframe" >Übung 1.2</a>
-  <a href="#">Platzhalter</a>
-  <a href="#">Platzhalter</a>
-  </div>
+  
   <div id="sidenavoverlay"></div>
  
   
@@ -298,54 +313,81 @@ grid-row:1/2;}
 </div>
 
 <script>
+  class Mainbereich{
+    constructor(){
+      this.main_container = null;
+      this.main_header = null;
+      this.main_main = null;
+
+    }
+    main_container;
+    main_header;
+    main_main;
+  }
  
 var mainref = document.getElementById("main"); 
 
 
-var main_container = document.createElement("div");
-main_container.setAttribute("id","main_container");
-var main_header = document.createElement("header");
-main_header.setAttribute("id","mainheader");
-main_header.style.borderBottom = "1px solid lightgray"
+var main_container = null;
+var main_header = null;
+var main_main = null;
+
+var sidebuttondiv = document.getElementById("sidebutton");
+var buttoncollection = sidebuttondiv.getElementsByTagName("button");
+
+for(let i=0;i<buttoncollection.length;i++){
+  buttoncollection[i].style.cursor = "pointer";
+  buttoncollection[i].addEventListener("mouseenter",function(){
+    this.style.backgroundColor = "#e7e9eb";
+    this.style.borderRadius = "15px";
+  })
+  buttoncollection[i].addEventListener("mouseout",function(){
+    this.style.backgroundColor = "white";
+    this.style.borderRadius = "0px";
+  })
+}
+
+
+
+
+
+
+
+function setupMainBereich(){
+  main_container = document.createElement("div");
+  main_container.setAttribute("id","main_container");
+  main_header = document.createElement("header");
+  main_header.setAttribute("id","mainheader");
+  main_main = document.createElement("main");
+  main_main.setAttribute("id","main_main");
+  main_header.style.borderBottom = "1px solid lightgray"
 main_container.style.borderLeft = "5px solid white";
 main_container.style.borderRight = "5px solid white";
-
-
-var main_main = document.createElement("main");
-main_main.setAttribute("id","main_main");
 mainref.appendChild(main_container);
 main_container.appendChild(main_header);
 
 main_container.appendChild(main_main);
-main_header.style.backgroundColor="white";
-main_main.style.backgroundColor="white";
-main_container.style.backgroundColor='white';
-
-var dropdownbutton = document.getElementsByClassName("dropdownbutton");
+main_header.style.display = "flex";
+main_header.style.justifyContent = "center";
+main_header.style.textAlign = "center";
 
 
-for(i=0;i<dropdownbutton.length;i++){
-  dropdownbutton[i].addEventListener("click",function(){
-    var dropdowndiv = this.nextElementSibling;
-    
-    if(dropdowndiv.style.display === 'block'){
-      dropdowndiv.style.display = 'none';
-      this.style.backgroundColor = "white";
-      this.style.color = "black";
-    }
-    else{dropdowndiv.style.display = 'block';
-    this.style.backgroundColor = "#232f3e";
-    this.style.color = "white";
-
-    
-  };
-  }
-   
- 
-  )
 
 }
+function BackgroundcolorWhite(){
+  main_header.style.backgroundColor="white";
+main_main.style.backgroundColor="white";
+main_container.style.backgroundColor='white';
+main_main.style.height ="700px";
+}
+setupMainBereich();
 
+
+
+
+
+
+ 
 class Redner{
 constructor(name){
   this.name = name;
@@ -401,7 +443,7 @@ class Graph{
     
     topsorthelper(knoten, besucht,stack){
       besucht.push(knoten);
-      console.log(knoten);
+      
       let indexfuerknoten=0;
       for(let i=0;i<this.knotenArray.length;i++){
         if(this.knotenArray[i]===knoten){
@@ -424,6 +466,7 @@ class Graph{
     
       let stack = new Array();
       let besucht = new Array();
+      let returnArray = new Array();
     
       for (let i = 0 ; i < this.knotenArray.length ; i++){
         if (!besucht.includes(this.knotenArray[i])){
@@ -432,9 +475,10 @@ class Graph{
             
         }
     }
-    for(let i =0;i<stack.length;i++){
-        console.log(stack[i]);
+    while(stack.length!=0){
+      returnArray.push(stack.pop());
     }
+    return returnArray;
     }
     
     }
@@ -580,39 +624,108 @@ rednerarray.array.push(rednerobj);
 return tabelle;
 
   }
-
+function setupU_4(){
+  main_main.innerHTML = '';
+  main_header.innerHTML = '';
+  BackgroundcolorWhite();
+  let main_header_ref = document.getElementById("mainheader");
+  let main_main_ref = document.getElementById("main_main");
+  let p = document.createElement("p");
+  let b = document.createElement("b");
+  let codediv = document.createElement("div");
+  
+ 
+  let h1 = document.createElement("h1");
+  b.appendChild(document.createTextNode("Schreiben Sie zwei binäre Funktionen add und mul, die Summe und Produkt berechnen."));
+  h1.appendChild(document.createTextNode("Übung 4"));
+  p.appendChild(b);
+  codediv.appendChild(document.createTextNode("function add(arg1, arg2){return arg1+arg2;}"));
+  codediv.style.backgroundColor ="#e5e7ea";
+  main_header_ref.appendChild(h1);
+  main_main_ref.appendChild(p);
+  main_main_ref.appendChild(codediv);
+  
+}
  
 function setupU_5_1(){
  
  main_main.innerHTML = '';
  main_header.innerHTML = '';
- console.log(main_header.innerHTML);
- main_header.style.marginTop= "20px";
+ 
+ 
 
   let ueberschrift = document.createElement("h1");
   ueberschrift.appendChild(document.createTextNode("Übung 5.1"));
   var tabelle = document.createElement("table");
+  
+  tabelle.setAttribute("id","benchmarktabelle");
+  tabelle.setAttribute("class","tabelle");
+  let reihe0 = tabelle.insertRow(-1);
+  let zelle = reihe0.insertCell(0);
+  zelle.appendChild(document.createTextNode("JS Methoden"));
+  zelle = reihe0.insertCell(1);
+  zelle.appendChild(document.createTextNode("Performance in Millisekunden für 1000 Iterationen"))
+  
 let reihe = tabelle.insertRow(-1);
-reihe.insertCell(0);
-reihe.appendChild(document.createTextNode("innerHTML"));
-reihe.insertCell(1);
-reihe.appendChild(document.createTextNode(benchmarkInnerHTML()));
+zelle = reihe.insertCell(0);
+
+zelle.appendChild(document.createTextNode("innerHTML"));
+
+zelle = reihe.insertCell(1);
+zelle.appendChild(document.createTextNode(benchmarkInnerHTML()));
+let reihe2 = tabelle.insertRow(-1);
+zelle = reihe2.insertCell(0);
+zelle.appendChild(document.createTextNode("innerText"));
+zelle = reihe2.insertCell(1);
+zelle.appendChild(document.createTextNode(benchmarkInnerText()));
+let reihe3 = tabelle.insertRow(-1);
+zelle = reihe3.insertCell(0);
+zelle.appendChild(document.createTextNode("textContent"));
+zelle = reihe3.insertCell(1);
+zelle.appendChild(document.createTextNode(benchmarkTextContent()));
+
   ueberschrift.setAttribute("id","headline");
-
+let tabellendiv = document.createElement("div");
+tabellendiv.setAttribute("id","tabellendiv");
+tabellendiv.appendChild(tabelle);
+tabellendiv.style.display = "flex";
+tabellendiv.style.justifyContent = "center";
+let mainueberschr = document.createElement("h2");
+mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
 main_header.appendChild(ueberschrift);
-main_main.appendChild(tabelle);
+main_main.appendChild(mainueberschr);
+main_main.firstChild.style.textAlign = "center";
+
+main_main.appendChild(tabellendiv);
+
+tabelle.style.border = "1px solid black";
+let trs = tabelle.getElementsByTagName("td");
+for(let i=0;i<trs.length;i++){
+  
+trs[i].style.border = "1px solid black";
+}
+var odd = tabelle.querySelectorAll("tr");
+
+for(let i=0;i<odd.length;i++){
+  if(i%2 === 0){
+  odd[i].style.backgroundColor = "#f4f4f4";}
+  else{
+    odd[i].style.backgroundColor = "white";
+  }
+}
 
 
-main_main.style.height ="700px";
-main_header.style.textAlign = "center";
 
+
+BackgroundcolorWhite();
 }
 
 
 function setupU_5_2(){
+  
   main_main.innerHTML = '';
   main_header.innerHTML = '';
-  main_header.style.marginTop= "20px";
+  
 
   let us = document.getElementById("mainheader");
  let h1= document.createElement("h1");
@@ -620,13 +733,14 @@ function setupU_5_2(){
   us.appendChild(h1);
   
   let mainref = document.getElementById("main_main");
-  us.style.display = "flex";
-  us.style.justifyContent = "center";
+  
 
   let ues = document.createElement("h2");
 ues.appendChild(document.createTextNode("Rednerliste mit Zeitmessung"));
 mainref.appendChild(ues);
 let eingabediv = document.createElement("div");
+let listendiv = document.createElement("div");
+listendiv.setAttribute("id","listendiv");
 var liste = document.createElement("ul");
 let eingabe = document.createElement("input");
 eingabe.setAttribute("type","search");
@@ -641,11 +755,19 @@ eingabebutton.textContent = 'hinzufügen';
 eingabediv.appendChild(eingabelabel);
 eingabediv.appendChild(eingabe);
 eingabediv.appendChild(eingabebutton);
-mainref.appendChild(eingabediv);
-mainref.appendChild(liste);
-mainref.style.display = "block";
-ues.style.textAlign = "Center";
+eingabediv.style.display = "flex";
+eingabediv.style.justifyContent = "center";
 
+listendiv.appendChild(liste);
+mainref.appendChild(eingabediv);
+mainref.appendChild(listendiv);
+
+
+mainref.style.display = "block";
+listendiv.style.display = "flex";
+listendiv.style.justifyContent = "center";
+ues.style.textAlign = "Center";
+BackgroundcolorWhite();
  
  let btn = document.getElementById("btn");
  btn.addEventListener("click",()=> addRednerInListe(liste,createRedner(new Redner( document.getElementById("eingabe").value))));
@@ -653,13 +775,171 @@ ues.style.textAlign = "Center";
 }
 
 function setupU_5_3(){
+  
   main_main.innerHTML = '';
   main_header.innerHTML = '';
+ var liste = document.createElement("ul");
+  var table = document.createElement("table");
+  let reihe0 = table.insertRow(-1);
+  let zelle = reihe0.insertCell(0);
+ var input1 = document.createElement("input");
+ input1.setAttribute("type","search");
+ input1.setAttribute("id","input1");
+ var input2 = document.createElement("input");
+ input2.setAttribute("type","search");
+ input2.setAttribute("id","input2");
   let main_header_ref = document.getElementById("mainheader");
-  let main_main_ref = document.getElementById("main_header");
+  let main_main_ref = document.getElementById("main_main");
   let headline = document.createElement("h1");
   headline.appendChild(document.createTextNode("Übung 5.3"));
   main_header_ref.appendChild(headline);
+  let button = document.createElement("button");
+  button.textContent ='sortieren';
+  let buttondiv = document.createElement("div");
+  let addbutton = document.createElement("button");
+  addbutton.textContent = 'hinzufügen';
+  zelle.appendChild(input1);
+  zelle = reihe0.insertCell(1);
+  zelle.appendChild(input2);
+  zelle = reihe0.insertCell(2);
+  zelle.appendChild(addbutton);
+
+let h2 = document.createElement("h2");
+h2.appendChild(document.createTextNode("5.3. TopSort als Web-App"));
+h2.style.textAlign = "center";
+
+var textdiv = document.createElement("div");
+var p = document.createElement("p");
+textdiv.setAttribute("id","textdiv");
+textdiv.setAttribute("contenteditable","true");
+p.appendChild(document.createTextNode("Katze Hund Hund Esel Hahn Katze"));
+p.style.height = "20px";
+textdiv.appendChild(p);
+textdiv.style.backgroundColor = "#e5e7ea";
+textdiv.style.borderRadius = "15px";
+
+
+
+
+textdiv.firstChild.style.margin ="15px";
+textdiv.firstChild.style.marginTop ="15px";
+
+BackgroundcolorWhite();
+
+main_main_ref.appendChild(h2);
+
+  main_main_ref.appendChild(table);
+  main_main_ref.appendChild(liste);
+  main_main_ref.appendChild(button);
+  var sortiert = 0;
+
+  button.addEventListener("click",()=>{
+if(sortiert===0){
+  
+
+    let col = liste.querySelectorAll("li");
+    let str ="";
+for(let i=0;i<col.length-1;i++){
+  str = str + col[i].textContent +" ";
+  
+}
+str = str + col[col.length-1].textContent;
+
+while(str.includes("[") || str.includes("]")){
+  if(str.includes("[")){
+let ar = str.replaceAll("[","");
+str = ar;
+  }
+  if(str.includes("]")){
+    let ar = str.replace("]","");
+    str = ar;
+  
+  }
+ 
+
+
+  
+}
+console.log(str);
+
+var strohnespace = str.split(" ");
+var array = str.replaceAll(","," ").split(" ");
+console.log(array);
+
+
+var knotenAr = new Array();
+let graph = new Graph();
+for(let i=0;i<array.length;i++){
+  if(!knotenAr.includes(array[i])){
+  knotenAr.push(array[i]);
+  }
+}
+console.log(knotenAr);
+for(let i=0;i<knotenAr.length;i++){
+  graph.addKnoten(knotenAr[i]);
+}
+var adja = new Array([]);
+for(let i in knotenAr){
+  adja[i] = new Array();
+}
+for(let i in strohnespace){
+  let tmp = strohnespace[i].split(",");
+ console.log(tmp);
+ graph.addKante(tmp[0],tmp[1]);
+}
+
+
+  
+
+
+
+let result = graph.topologischSortieren();
+let li = document.createElement("li");
+li.style.padding = "5px";
+li.style.borderLeft ="1px solid lightgrey";
+li.style.borderRight = "1px solid lightgrey";
+li.style.borderBottom = "1px solid lightgrey";
+li.style.backgroundColor ="lightyellow";
+let ergstr = "";
+for(let i in result){
+  ergstr = ergstr + result[i] +" ";
+}
+li.appendChild(document.createTextNode("Sortierung = "+ergstr))
+liste.appendChild(li);
+sortiert = 1;
+
+  console.log(result);
+
+
+}
+  })
+  var ele_cntr = 0;
+ addbutton.addEventListener("click",()=>{
+  if(sortiert ===0){
+  let li = document.createElement("li");
+  li.style.padding = "5px";
+  if(ele_cntr===0){
+  li.style.border = "1px solid lightgrey";}
+  if(ele_cntr%2===0){
+    li.style.backgroundColor ="#f4f4f4";
+  }
+  if(ele_cntr%2===1){
+    li.style.backgroundColor = "white";
+  }
+  if(ele_cntr!=0){li.style.borderLeft ="1px solid lightgrey";
+li.style.borderRight = "1px solid lightgrey";
+li.style.borderBottom = "1px solid lightgrey";};
+  
+  
+  li.appendChild(document.createTextNode("["+document.getElementById("input1").value+","+document.getElementById("input2").value+"]"));
+  liste.appendChild(li);
+  ele_cntr++;
+}
+
+ })
+
+
+let btn = buttondiv.querySelector("button");
 
 
 
@@ -694,31 +974,47 @@ return t1-t0;
 
 }
 function benchmarkInnerText(){
-  let header = document.getElementById("u5header");
 
-let text = 'Überschrift geändert';
+  let main = document.getElementById("main_main");
+  let div = document.createElement("div");
+  div.setAttribute("id","testdiv");
+  main.appendChild(div);
+  let divref = document.getElementById("testdiv");
+
+let text = '<h1>Eine Überschrift</h1>';
+
 
 let t0 = performance.now();
 
-  for(i=0;i<1000;i++){
-header.innerText = text;
-  }
+ for(i=0;i<1000;i++){
+divref.innerText=text;
+ }
 
 let t1 = performance.now();
+main.removeChild(div);
 
 return t1-t0;
 
 }
 function benchmarkTextContent(){
-  let header = document.getElementById("u5header");
 
-let text = 'Überschrift geändert';
+  let main = document.getElementById("main_main");
+  let div = document.createElement("div");
+  div.setAttribute("id","testdiv");
+  main.appendChild(div);
+  let divref = document.getElementById("testdiv");
+
+let text = '<h1>Eine Überschrift</h1>';
+
 
 let t0 = performance.now();
-for(i=0;i<1000;i++){
-  header.textContent= text;
-}
+
+ for(i=0;i<1000;i++){
+divref.textContent=text;
+ }
+
 let t1 = performance.now();
+main.removeChild(div);
 
 return t1-t0;
 
