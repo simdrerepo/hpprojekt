@@ -298,7 +298,8 @@ grid-row:1/2;}
 <button onclick="setupU_4()">Übung 4</button>
 <button onclick="setupU_5_1()">Übung 5.1</button>
 <button onclick="setupU_5_2()">Übung 5.2</button>
-<button onclick="setupU_5_3()">Übung 5.3</button>
+<button onclick="setupU_5_3()">TopSort als Web-App</button>
+<button onclick="setupU_6_1()">Klammerpaare</button>
 
 
  </div>
@@ -346,7 +347,8 @@ for(let i=0;i<buttoncollection.length;i++){
     this.style.borderRadius = "0px";
   })
 }
-
+var sidenavoverlay = document.getElementById("sidenavoverlay");
+sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
 
 
 
@@ -480,7 +482,7 @@ class Graph{
     }
     return returnArray;
     }
-    
+  
     }
 var rednerarray = new RednerArray();
 
@@ -778,6 +780,7 @@ function setupU_5_3(){
   
   main_main.innerHTML = '';
   main_header.innerHTML = '';
+  
  var liste = document.createElement("ul");
   var table = document.createElement("table");
   let reihe0 = table.insertRow(-1);
@@ -795,7 +798,7 @@ function setupU_5_3(){
   main_header_ref.appendChild(headline);
   let button = document.createElement("button");
   button.textContent ='sortieren';
-  let buttondiv = document.createElement("div");
+  let tablediv = document.createElement("div");
   let addbutton = document.createElement("button");
   addbutton.textContent = 'hinzufügen';
   zelle.appendChild(input1);
@@ -803,6 +806,8 @@ function setupU_5_3(){
   zelle.appendChild(input2);
   zelle = reihe0.insertCell(2);
   zelle.appendChild(addbutton);
+  zelle = reihe0.insertCell(3);
+  zelle.appendChild(button);
 
 let h2 = document.createElement("h2");
 h2.appendChild(document.createTextNode("5.3. TopSort als Web-App"));
@@ -818,19 +823,29 @@ textdiv.appendChild(p);
 textdiv.style.backgroundColor = "#e5e7ea";
 textdiv.style.borderRadius = "15px";
 
+let listdiv = document.createElement("div");
+
 
 
 
 textdiv.firstChild.style.margin ="15px";
 textdiv.firstChild.style.marginTop ="15px";
+tablediv.style.display = "flex";
+tablediv.style.justifyContent = "center";
+tablediv.style.display = "flex";
+tablediv.style.justifyContent = "center";
 
 BackgroundcolorWhite();
 
 main_main_ref.appendChild(h2);
+tablediv.appendChild(table);
+listdiv.appendChild(liste);
+  main_main_ref.appendChild(tablediv);
+  main_main_ref.appendChild(listdiv);
+ 
+ 
 
-  main_main_ref.appendChild(table);
-  main_main_ref.appendChild(liste);
-  main_main_ref.appendChild(button);
+  
   var sortiert = 0;
 
   button.addEventListener("click",()=>{
@@ -904,7 +919,7 @@ let ergstr = "";
 for(let i in result){
   ergstr = ergstr + result[i] +" ";
 }
-li.appendChild(document.createTextNode("Sortierung = "+ergstr))
+li.appendChild(document.createTextNode("Sortierung (v.l.n.r) = "+ergstr))
 liste.appendChild(li);
 sortiert = 1;
 
@@ -939,13 +954,117 @@ li.style.borderBottom = "1px solid lightgrey";};
  })
 
 
-let btn = buttondiv.querySelector("button");
+
 
 
 
 }
 
+function setupU_6_1(){
+  main_main.innerHTML = '';
+  main_header.innerHTML = '';
+ 
+ 
 
+  let main_main_ref = document.getElementById("main_main");
+  let main_header_ref = document.getElementById("mainheader");
+  
+  BackgroundcolorWhite();
+ 
+  
+  let eingabedivu6 = document.createElement("div");
+  let h1 = document.createElement("h1");
+  h1.appendChild(document.createTextNode("Klammerpaare"));
+  main_header_ref.appendChild(h1);
+ 
+
+ 
+  var eingabeu6 = document.createElement("input");
+  eingabeu6.setAttribute("type","search");
+  eingabedivu6.appendChild(eingabeu6);
+  eingabedivu6.style.display = "flex";
+  eingabedivu6.style.justifyContent = "center";
+  eingabeu6.style.marginTop = "25px";
+  
+  main_main_ref.appendChild(eingabedivu6);
+ 
+  eingabeu6.style.width = "700px";
+ 
+  eingabeu6.addEventListener("input",()=>{
+    const kp1_1 = '(';
+    const kp1_2 = ')';
+    const kp2_1 = '{';
+    const kp2_2 = '}';
+    const kp3_1 = '[';
+    const kp3_2 = ']';
+    const str = eingabeu6.value;
+    var klammerarray = new Array();
+    for(let i=0;i<str.length;i++){
+      if(str[i]===kp1_1||str[i]===kp2_1||str[i]===kp3_1||str[i]===kp1_2||str[i]===kp2_2||str[i]===kp3_2){
+        klammerarray.push(str[i]);
+      }
+    }
+    
+    if(klammerarray.length%2===1){
+eingabeu6.style.backgroundColor = "red";
+    }
+    else if(klammerarray.length%2===0){
+      var korrekt= 0;
+      if(eingabeu6.value===''){
+        eingabeu6.style.backgroundColor = "white";
+      }
+    
+     var left_array = new Array();
+     var right_array = new Array();
+     for(let i=0;i<klammerarray.length/2;i++){
+      right_array.push(klammerarray[(klammerarray.length-1)-i]);
+      left_array.push(klammerarray[i]);
+     }
+     console.log("vor dem umdrehen :"+right_array);
+     
+    console.log(right_array);
+    console.log(left_array);
+     for(let i in left_array){
+   
+      console.log(left_array[i]+" "+right_array[i]);
+      switch (left_array[i]){
+        case kp1_1
+        : 
+        if(right_array[i]===kp1_2){
+          korrekt = 1;
+
+        }
+        else {
+          korrekt = 0;
+        }
+        break;
+        case kp3_1:
+          if(right_array[i]===kp3_2){
+          korrekt = 1;}
+          else{
+            korrekt = 0;
+          }
+          break;
+          case kp2_1:
+            if(right_array[i]===kp2_2){
+              korrekt = 1;
+            }
+            else{korrekt = 0;}
+             break;
+
+      }
+      if(korrekt ===0){
+        eingabeu6.style.backgroundColor = "red";
+      }
+      else{
+        eingabeu6.style.backgroundColor = "white";
+      }
+      
+    
+     }
+    
+  }})
+}
        
 var mainheader = document.getElementById("mainheader");
          var headerinhalt = '<h1 id="u5headerHeadline">Übung 5.1</h1>';
