@@ -43,13 +43,14 @@ opacity:0.5;
 #main{
  
   background-color: #e7e9eb;
- height:900px;
+ min-height:900px;
   
   
 grid-column: 1/5;
 grid-row:2/3;}
 #header{ grid-column: 1/5;grid-row: 1/2;background-color: 
-  #232f3e;display:grid;
+  
+  #34568B;display:grid;
  grid-template-columns: 1fr 2fr 1fr;
  grid-template-rows: 1fr;
 
@@ -59,7 +60,7 @@ grid-row:2/3;}
   
   background-color: 
   
-  #232f3e;
+  #34568B;
   
 }
 
@@ -96,25 +97,23 @@ left:0;
     grid-row: 1/2;
 }
 .iconbar a:hover{
-    background-color: white;
-    color:
-    #232f3e;
-    border-radius: 100%;
+   
+ 
+  transform: scale(1.5);
+   
     
 }
 .loginbar a:hover{
-    background-color: white;
-    color:
-    #232f3e;
+ 
   
 }
 .iconbar>*{
     float: left;
   width: 50px;
   text-align: center;
-  padding: 12px 0;
+ padding: 12px 0;
   transition: all 0.3s ease;
-  color: white;
+  color:white;
   font-size: 1.5rem;
 }
 .loginbar{
@@ -300,6 +299,7 @@ grid-row:1/2;}
 <button onclick="setupU_5_2()">Übung 5.2</button>
 <button onclick="setupU_5_3()">TopSort als Web-App</button>
 <button onclick="setupU_6_1()">Klammerpaare</button>
+<button onclick="setupU_7()">Textanalyse</button>
 
 
  </div>
@@ -329,6 +329,7 @@ grid-row:1/2;}
 var mainref = document.getElementById("main"); 
 
 
+
 var main_container = null;
 var main_header = null;
 var main_main = null;
@@ -339,12 +340,11 @@ var buttoncollection = sidebuttondiv.getElementsByTagName("button");
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
   buttoncollection[i].addEventListener("mouseenter",function(){
-    this.style.backgroundColor = "#e7e9eb";
-    this.style.borderRadius = "15px";
+    this.style.textDecoration = "underline";
+   
   })
   buttoncollection[i].addEventListener("mouseout",function(){
-    this.style.backgroundColor = "white";
-    this.style.borderRadius = "0px";
+    this.style.textDecoration = "none";
   })
 }
 var sidenavoverlay = document.getElementById("sidenavoverlay");
@@ -362,16 +362,14 @@ function setupMainBereich(){
   main_header.setAttribute("id","mainheader");
   main_main = document.createElement("main");
   main_main.setAttribute("id","main_main");
-  main_header.style.borderBottom = "1px solid lightgray"
-main_container.style.borderLeft = "5px solid white";
-main_container.style.borderRight = "5px solid white";
+
+
 mainref.appendChild(main_container);
 main_container.appendChild(main_header);
 
 main_container.appendChild(main_main);
-main_header.style.display = "flex";
-main_header.style.justifyContent = "center";
-main_header.style.textAlign = "center";
+
+
 
 
 
@@ -380,10 +378,16 @@ function BackgroundcolorWhite(){
   main_header.style.backgroundColor="white";
 main_main.style.backgroundColor="white";
 main_container.style.backgroundColor='white';
-main_main.style.height ="700px";
+main_container.style.minHeight="700px";
+main_header.style.borderBottom = "1px solid lightgray"
+main_container.style.borderLeft = "5px solid white";
+main_container.style.borderRight = "5px solid white";
+main_header.style.display = "flex";
+main_header.style.justifyContent = "center";
+mainref.style.marginTop = "30px";
 }
-setupMainBereich();
 
+setupMainBereich();
 
 
 
@@ -961,15 +965,17 @@ li.style.borderBottom = "1px solid lightgrey";};
 }
 
 function setupU_6_1(){
-  main_main.innerHTML = '';
-  main_header.innerHTML = '';
+  main_main.replaceChildren();
+  main_header.replaceChildren();
+  
+  BackgroundcolorWhite();
  
  
 
   let main_main_ref = document.getElementById("main_main");
   let main_header_ref = document.getElementById("mainheader");
   
-  BackgroundcolorWhite();
+  
  
   
   let eingabedivu6 = document.createElement("div");
@@ -1065,7 +1071,30 @@ eingabeu6.style.backgroundColor = "red";
     
   }})
 }
-       
+function setupU_7(){
+      main_main.replaceChildren();
+  main_header.replaceChildren();
+  
+  BackgroundcolorWhite();
+  let main_main_ref = document.getElementById("main_main");
+  let main_header_ref = document.getElementById("mainheader");
+ let Plagiatsresolution = document.createElement("div");
+ let header = document.createElement("header");
+ header.innerHTML = '<h2 class="field field--name-title field--type-ds field--label-hidden">Plagiatsresolution und -maßnahmen</h2><p><strong>Resolution zum akademischen Ethos und zu den akademischen Standards</strong></p><p>In guter Tradition und anlässlich der öffentlichen Diskussion zum Plagiatsthema sieht sich die HochschuleBonn-Rhein-Sieg in der Pflicht, ihre Position klar und eindeutig zu bekunden und hochschulweit Maßnahmeneinzuleiten.</p> <p> 1. Die Hochschule Bonn-Rhein-Sieg bekennt sich mit dieser Resolution öffentlich zum akademischen Ethos und den akademischen Standards.</p><p> 2. Die Hochschule Bonn-Rhein-Sieg sieht sich verpflichtet, alle Studierende frühzeitig im Studium sowohlüber den wissenschaftlichen Auftrag und den akademischen Ethos als auch über die Konsequenzen seiner Missachtung aufzuklären. In allen Studiengängen wird intensiv in die wissenschaftliche Arbeits- undDenkweise eingeführt und über den akademischen Ethos und die akademischen Standards klar und eindeutig aufgeklärt.</p><p>3. In einer Selbstverpflichtungserklärung zum akademischen Ethos geben alle Studierende der Hochschule Bonn-Rhein-Sieg spätestens gegen Ende des ersten Studienjahres zum Ausdruck, dass sie sich von den Dozentinnen und Dozenten der Hochschule Bonn-Rhein-Sieg hinreichend über den akademischen Ethos und die akademischen Standards aufgeklärt sind und diese beachten werden.</p><p> Der Senat befürwortete in seiner Sitzung am 03.05.2012 die Resolution in der o.g. Fassung.</p><p><strong>Eckpunkte zur Plagiatsprüfung</strong></p>          <p>Der Senat empfiehlt:</p><p> 1. Die Aufklärung und das Bekenntnis zum akademischen Ethos und den akademischen Standards muss feste Bestandteil aller Curricula aller Studiengänge im ersten Studienjahr sein. Alle Curricula aller Studiengänge werden darauf hin geprüft und ggfs. ergänzt.</p><p>2. Alle Abschlussarbeiten werden auf Plagiate geprüft.</p><p>3. Alle Abschlussarbeiten mit Plagiaten werden grundsätzlich als Fehlversuch gewertet.</p><p> 4. Die Entscheidung, ob die Arbeit Plagiate enthält, liegt zuerst bei den Gutachterinnen und Gutachtern. Der Nachweis in einem Gutachten reicht.</p> <p> 5. Alle Abschlussarbeiten werden grundsätzlich auch in elektronischer Form (PDF-Format und Originalformat wie Word, OpenOffice, ...) eingereicht.</p> <p> 6. Alle Abschlussarbeiten ohne Sperrvermerk werden einem vom Fachbereich definierten Kreis zur Einsicht zur Verfügung gestellt. Alle Abschlussarbeiten sollten nach Möglichkeit grundsätzlich zur Veröffentlichung freigegeben werden. Wissenschaft zielt auf Veröffentlichung ab. Nichtveröffentlichung sollte nur in begründeten und durch den Prüfungsausschuss genehmigten Ausnahmefällen geschehen.</p><p>  7. Im Bereich von Seminar-, Hausarbeiten und Praktikumsberichten behält sich die Hochschule  stichprobenartige Plagiatsprüfungen vor.</p> <p>  <strong>Selbstverpflichtungserklärung der Studierenden:</strong></p> <p>  Eine akademische Arbeit stellt eine individuelle Leistung dar, die eigenständig und allein auf Basis der im Literaturverzeichnis angegebenen Quellen erstellt wurde und in der alle Zitate als solche gekennzeichnet sind.</p><p> "Ich erkläre hiermit, dass ich den akademischen Ehrencodex kenne und über die Folgen einer Missachtung oder Verletzung aufgeklärt worden bin."</p>';
+let content = document.createElement("div");
+content.setAttribute("class","content");
+content.innerHTML =  '<div class="paragraphs-items paragraphs-items-field-pcf-content paragraphs-items-field-pcf-content-full paragraphs-items-full"><div class="field field-name-field-pcf-content"><div class="entity entity-paragraphs-item paragraphs-item-para-text"><div class="field field--name-field-pf-text-wysiwyg field--type-text-long field--label-hidden"></div></div></div></div>';
+
+
+Plagiatsresolution.appendChild(header);
+Plagiatsresolution.appendChild(content);
+main_main_ref.appendChild(Plagiatsresolution);
+console.log(Plagiatsresolution);
+
+ 
+
+
+    }   
 var mainheader = document.getElementById("mainheader");
          var headerinhalt = '<h1 id="u5headerHeadline">Übung 5.1</h1>';
  
@@ -1200,7 +1229,13 @@ return t1-t0;
         
        }
     
-       
+       function removeAllChildren(referenz){
+        referenz.replaceChildren();
+        
+       }
+       function clearMainBereich(){
+        main_ref.replaceChildren();
+       }
       
  
  

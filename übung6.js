@@ -1,19 +1,23 @@
 class Vorrang{
     constructor(array2d){
   this.array2d = array2d;
-  this.knotenArray = new Array();
+  
       this.adj = new Array();
       this.stack = new Array();
-     
+      this.besucht = new Array();
+     this.alleKnoten = new Array();
       this.knotenSet = new Set();
+      this.anzahlVorrang = 0;
+      
       this.identifyKnoten(array2d);
      this.setupAdj(this.knotenSet.size);
+    
       for(let i in this.array2d){
         
             this.addKante(array2d[i][0],array2d[i][1]);
         
       }
-      this.topologischSortieren();
+      this.knotenSet.forEach((item)=>this.topologischSortieren(item));
     }
     printAdj(){
         for(let i in this.adj){
@@ -33,6 +37,7 @@ for(let i in this.stack){
     printKnotenSet(){
        this.knotenSet.forEach((item)=>{console.log(item)});
     }
+   
 
   
     identifyKnoten(){
@@ -40,7 +45,7 @@ for(let i in this.stack){
       for(let i in this.array2d){
         
         for(let j in this.array2d[i]){
-          
+          this.alleKnoten.push(this.array2d[i][j]);
          this.knotenSet.add(this.array2d[i][j]);
         }
       }
@@ -65,8 +70,33 @@ for(let i in this.stack){
         
         this.adj[index].push(k2);
       }
-      topsorthelper(knoten, besucht,stack){
-        besucht.push(knoten);
+      topsorthelper(knoten){
+       
+        this.besucht.push(knoten);
+        for(let i in this.array2d){
+         this.array2d[i] = this.array2d[i].filter(item => item!= knoten);
+         
+        }
+       var anzahl = 0;
+        for(let i in this.array2d){
+      
+        
+        if(this.array2d[i].length!=0){
+         anzahl++;
+        }
+        
+        }
+        this.anzahlVorrang = anzahl;
+        
+       
+        
+       
+        
+       
+        
+
+        
+        
         let knotenArray = Array.from(this.knotenSet);
         let indexfuerknoten=0;
         for(let i=0;i<knotenArray.length;i++){
@@ -76,60 +106,72 @@ for(let i in this.stack){
         }
   
         for(let i=0;i<this.adj[indexfuerknoten].length;i++){
-                      if(!besucht.includes(this.adj[indexfuerknoten][i])){
+         
+                      if(!this.besucht.includes(this.adj[indexfuerknoten][i])){
                           
-                          this.topsorthelper(this.adj[indexfuerknoten][i], besucht, stack)
+                          this.topsorthelper(this.adj[indexfuerknoten][i])
                       }
                       
                   }
-      stack.push(knoten);
+      this.stack.push(knoten);
+      
+      
+      
      
       
       }
-      topologischSortieren(){
-      let stack = new Array();
-      let besucht = new Array();
-      let knotenArray = Array.from(this.knotenSet);
-      
-      for (let i = 0 ; i < knotenArray.length ; i++){
-    
-        if (!besucht.includes(knotenArray[i])){
+      topologischSortieren(knoten){
+  
+        if (!this.besucht.includes(knoten)){
            
-            this.topsorthelper(knotenArray[i], besucht, stack);
+            this.topsorthelper(knoten);
             
         }
-    }
-   while(stack.length!=0){
-    this.stack.push(stack.pop());
-   }
+    
+  
    
   }
   
-  [Symbol.iterator]() {
+ * [Symbol.iterator]() {
+  
+  
+  
  
-  let i = 0;
-  return {
-  next:()=> { if(i<this.stack.length){
-    return {value: this.stack[i++],done:false};
-  }
-  else{
-    return{done:true};
+  
+  for(let i=0;i<this.knotenSet.size;i++ ){
+  
+yield this.stack[this.knotenSet.size-1-i];
   }
   
+
   }
   }
-  }
-  }
-  const vrng = new Vorrang([
+  const handler = {
+    
+    get: function(target,prop,value){
+      
+    if(prop===){
+      console.log(target[prop]);
+
+    }
+
+    }
+  };
+ 
+
+
+
+  const vorrangProxy = new Proxy(new Vorrang([
     [ "essen", "studieren" ],
     [ "schlafen", "essen" ],
     [ "studieren", "prüfen" ]
-  ]);
+  ]),handler);
   
   
   
-  for(const x of vrng){
-console.log(x);
-  }
+  
+  
+  
+
 
   
