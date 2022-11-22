@@ -87,16 +87,6 @@ for(let i in this.stack){
         
         }
         this.anzahlVorrang = anzahl;
-        
-       
-        
-       
-        
-       
-        
-
-        
-        
         let knotenArray = Array.from(this.knotenSet);
         let indexfuerknoten=0;
         for(let i=0;i<knotenArray.length;i++){
@@ -114,11 +104,6 @@ for(let i in this.stack){
                       
                   }
       this.stack.push(knoten);
-      
-      
-      
-     
-      
       }
       topologischSortieren(knoten){
   
@@ -127,9 +112,6 @@ for(let i in this.stack){
             this.topsorthelper(knoten);
             
         }
-    
-  
-   
   }
   
  * [Symbol.iterator]() {
