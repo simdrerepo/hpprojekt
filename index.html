@@ -68,9 +68,10 @@ grid-row:2/3;}
 .dropdown-container{
 display:none;
 width:250px;
-padding-left: 8px;
-background-color: #cccccc;
+
+
 margin-left: 12px;
+
 
 
 
@@ -103,10 +104,7 @@ left:0;
    
     
 }
-.loginbar a:hover{
- 
-  
-}
+
 .iconbar>*{
     float: left;
   width: 50px;
@@ -119,11 +117,7 @@ left:0;
 .loginbar{
  display:block;
 grid-column: 3/4;
-
-
- 
 }
-
 
 #loginbutton{
   float:right;
@@ -134,17 +128,11 @@ grid-column: 3/4;
  margin-right:10px;
  width:100px;
  background-color:  
-white;
- 
+white; 
 }
 
-
 #sidebar{
-  
   display:none;
- 
- 
-
 }
 
 #exitbutton{
@@ -154,17 +142,7 @@ white;
 }
 
 
-#sidebutton a{
 
-  
-display:block;
-text-decoration:none;
-padding: 12px;
-color: 
-black;
-  font-size: 1rem;
-  text-align: left;
-}
 #sidebutton button{
   border:none;
   background-color: white;
@@ -176,18 +154,7 @@ color: black;
   font-size: 1rem;
   text-align: left;
 }
-#dropdown-container a{
 
-display:block;
-text-decoration:none;
-padding: 12px;
-color: 
-black;
-  font-size: 1rem;
-  text-align: left;
-  
-
-}
 #idiv{
   float:right;
 }
@@ -199,13 +166,7 @@ border-radius: 25px;
 }
 
 
-#sidebutton a:hover{
- text-decoration: underline;
-  color:black;
-  
-  
 
-}
 .footerbar{
   display:flex;
   justify-content: center;
@@ -300,6 +261,14 @@ grid-row:1/2;}
 <button onclick="setupU_5_3()">TopSort als Web-App</button>
 <button onclick="setupU_6_1()">Klammerpaare</button>
 <button onclick="setupU_7()">Textanalyse</button>
+<button onclick="setupU_8_1()">Promise</button>
+<button onclick="setupU_8_2()">Async/await</button>
+<button class="drpdwnbtn" onclick="">CSS</button>
+<div class="dropdown-container"></div>
+<button class="drpdwnbtn" onclick="">HTML</button>
+<div class="dropdown-container"></div>
+<button class="drpdwnbtn" onclick="">JavaScript</button>
+<div class="dropdown-container"></div>
 
 
  </div>
@@ -315,17 +284,7 @@ grid-row:1/2;}
 
 <script>
   
-  class Mainbereich{
-    constructor(){
-      this.main_container = null;
-      this.main_header = null;
-      this.main_main = null;
 
-    }
-    main_container;
-    main_header;
-    main_main;
-  }
  
 var mainref = document.getElementById("main"); 
 
@@ -338,23 +297,40 @@ var main_main = null;
 var sidebuttondiv = document.getElementById("sidebutton");
 var buttoncollection = sidebuttondiv.getElementsByTagName("button");
 
+
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
   buttoncollection[i].addEventListener("mouseenter",function(){
-    this.style.textDecoration = "underline";
+   
+      
+    this.style.backgroundColor = "#34568B";
+    this.style.color = "white";
    
   })
   buttoncollection[i].addEventListener("mouseout",function(){
-    this.style.textDecoration = "none";
+    this.style.backgroundColor= "white";
+    this.style.color="black";
   })
 }
 var sidenavoverlay = document.getElementById("sidenavoverlay");
 sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
 
+    var dropdownbutton = sidebuttondiv.getElementsByClassName("drpdwnbtn");
+   
+    
+for(let i=0;i<dropdownbutton.length;i++){
+  dropdownbutton[i].addEventListener("click",function(){
+    var dropdown = this.nextElementSibling;
+if(dropdown.style.display === "block"){
+dropdown.style.display = "none";
+console.log("none");
+}
+else{dropdown.style.display="block";}
 
 
-
-
+  });
+}
+    
 
 function setupMainBereich(){
   main_container = document.createElement("div");
@@ -369,10 +345,6 @@ mainref.appendChild(main_container);
 main_container.appendChild(main_header);
 
 main_container.appendChild(main_main);
-
-
-
-
 
 }
 function BackgroundcolorWhite(){
@@ -389,10 +361,6 @@ mainref.style.marginTop = "30px";
 }
 
 setupMainBereich();
-
-
-
-
 
  
 class Redner{
@@ -848,9 +816,6 @@ listdiv.appendChild(liste);
   main_main_ref.appendChild(tablediv);
   main_main_ref.appendChild(listdiv);
  
- 
-
-  
   var sortiert = 0;
 
   button.addEventListener("click",()=>{
@@ -875,10 +840,7 @@ str = ar;
     str = ar;
   
   }
- 
 
-
-  
 }
 console.log(str);
 
@@ -908,11 +870,6 @@ for(let i in strohnespace){
  graph.addKante(tmp[0],tmp[1]);
 }
 
-
-  
-
-
-
 let result = graph.topologischSortieren();
 let li = document.createElement("li");
 li.style.padding = "5px";
@@ -929,8 +886,6 @@ liste.appendChild(li);
 sortiert = 1;
 
   console.log(result);
-
-
 }
   })
   var ele_cntr = 0;
@@ -957,12 +912,6 @@ li.style.borderBottom = "1px solid lightgrey";};
 }
 
  })
-
-
-
-
-
-
 }
 
 function setupU_6_1(){
@@ -976,15 +925,10 @@ function setupU_6_1(){
   let main_main_ref = document.getElementById("main_main");
   let main_header_ref = document.getElementById("mainheader");
   
-  
- 
-  
   let eingabedivu6 = document.createElement("div");
   let h1 = document.createElement("h1");
   h1.appendChild(document.createTextNode("Klammerpaare"));
   main_header_ref.appendChild(h1);
- 
-
  
   var eingabeu6 = document.createElement("input");
   eingabeu6.setAttribute("type","search");
@@ -1027,13 +971,11 @@ eingabeu6.style.backgroundColor = "red";
       right_array.push(klammerarray[(klammerarray.length-1)-i]);
       left_array.push(klammerarray[i]);
      }
-     console.log("vor dem umdrehen :"+right_array);
-     
-    console.log(right_array);
-    console.log(left_array);
+    
+   
      for(let i in left_array){
    
-      console.log(left_array[i]+" "+right_array[i]);
+      
       switch (left_array[i]){
         case kp1_1
         : 
@@ -1072,6 +1014,9 @@ eingabeu6.style.backgroundColor = "red";
     
   }})
 }
+async function sleep(ms){
+    return new Promise(resolve=>setTimeout(resolve,ms));
+  }
 function setupU_7(){
       main_main.replaceChildren();
   main_header.replaceChildren();
@@ -1082,27 +1027,15 @@ function setupU_7(){
  let Plagiatsresolution = document.createElement("div");
  Plagiatsresolution.setAttribute("id","plagiatresolution");
  let header = document.createElement("header");
- let analysebutton = document.createElement("button");
- let analysebuttondiv = document.createElement("div");
- analysebutton.setAttribute("id","analysebutton");
- analysebutton.textContent = "text analysieren";
-
-
 
  let ergebnisdiv = document.createElement("div");
  ergebnisdiv.style.display = "flex";
+
  ergebnisdiv.style.justifyContent ="space-evenly";
+ ergebnisdiv.style.flexWrap = "wrap";
  let analysecontainer = document.createElement("div");
  ergebnisdiv.setAttribute("id","ergebnisdiv");
- analysebuttondiv.appendChild(analysebutton);
- analysebuttondiv.style.display = "flex";
- analysebuttondiv.style.justifyContent = "center";
 
-
-
- analysecontainer.appendChild(analysebuttondiv);
- analysecontainer.appendChild(ergebnisdiv);
- 
  header.innerHTML = '<h2 class="field field--name-title field--type-ds field--label-hidden">Plagiatsresolution und -maßnahmen</h2>';
 let content = document.createElement("div");
 content.setAttribute("class","content");
@@ -1112,22 +1045,17 @@ let brschrft = document.createElement("h1");
 brschrft.appendChild(document.createTextNode("Textanalyse mit filter-map-reduce"));
 ueberschriftcontainer.appendChild(brschrft);
 
-
 Plagiatsresolution.appendChild(header);
 Plagiatsresolution.appendChild(content);
 main_header_ref.appendChild(ueberschriftcontainer);
 main_main_ref.appendChild(analysecontainer);
 main_main_ref.appendChild(Plagiatsresolution);
 let analysebuttonref = document.getElementById("analysebutton");
-analysebuttonref.addEventListener("click",()=>{
+
   let Plagiatsresolutionref = document.getElementById("plagiatresolution");
   let all = Array.from(Plagiatsresolutionref.getElementsByTagName("*"));
   let fil = all.map((item)=>item=item.nodeName.toLowerCase());
   let table = document.createElement("table");
- 
-  
-
-
   
 let tagset = new Set();
 let array2d = new Array();
@@ -1139,7 +1067,7 @@ for(let i=0;i<tagset.size;i++){
 
 let mostusedtag = array2d[0];
 for(let i=0;i<array2d.length;i++){
-  console.log(mostusedtag[1]+" "+array2d[i][1]);
+ 
 if(array2d[i][1]>mostusedtag[1]){
  
   mostusedtag = array2d[i];
@@ -1165,7 +1093,7 @@ for(let i=0;i<array2d.length;i++){
 
 }
 
-ergebnisdiv.appendChild(table);
+
 fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopwords-de.txt')
   .then(response => response.text())
   .then(text => { let stops = text.split(/\r?\n/);
@@ -1176,11 +1104,8 @@ fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopw
  let alltextsplitted = alltext.split(" "); 
  
  for(let i=0;i<stops.length;i++){
-  
   stoparray2d.push([stops[i],alltextsplitted.reduce((count, num) => num === stops[i] ? count + 1 : count, 0)]);
  }
-
-
  let filtered = stoparray2d.filter(x=>x[1]>=10);
  let tabelle = document.createElement("table");
  tabelle.style.textAlign = "center";
@@ -1199,44 +1124,227 @@ if(filtered.indexOf(x)%2==0){
 });
 let ergebnisdivref = document.getElementById("ergebnisdiv");
 ergebnisdivref.appendChild(tabelle);
-
-
-
-
   });
 
-});
+  ergebnisdiv.appendChild(table);
 
+  analysecontainer.appendChild(ergebnisdiv);
 
+    }   
 
+    function setupU_8_1(){
+      main_main.replaceChildren();
+  main_header.replaceChildren();
+  
+  BackgroundcolorWhite();
+  
+  const main_main_ref = document.getElementById("main_main");
+  const main_header_ref = document.getElementById("mainheader");
+  let promisediv = document.createElement("div");
+  promisediv.style.textAlign ="center";
+  let textAdiv = document.createElement("div");
+  let textBdiv = document.createElement("div");
+  main_main_ref.appendChild(textAdiv);
+  main_main_ref.appendChild(textBdiv);
+  main_main_ref.appendChild(promisediv);
+  let h1 = document.createElement("h1");
+  
+  h1.appendChild(document.createTextNode("Promises"));
+  main_header_ref.appendChild(h1);
 
-
-
-
-
+      fetch('http://127.0.0.1:5500/A.txt').then(response=>response.text()).then(text=>{let arrayA = text.split(/\r?\n/);
+        fetch('http://127.0.0.1:5500/B.txt').then(response=>response.text()).then(text=>{let arrayB = text.split(/\r?\n/);
+    for(let i=0;i<arrayB.length;i++){
+      setTimeout(()=>promisediv.innerHTML+= arrayA[i],100);
+      setTimeout(()=>promisediv.innerHTML+= arrayB[i]+'<br>',100);
+    }
  
+      });
+  
+    });
+     
 
+    }
+    
+function setupU_8_2(){
+  main_main.replaceChildren();
+  main_header.replaceChildren();
 
+  BackgroundcolorWhite();
+  const main_main_ref = document.getElementById("main_main");
+  const main_header_ref = document.getElementById("mainheader");
+  let promisediv = document.createElement("div");
+  promisediv.style.textAlign ="center";
+  let textAdiv = document.createElement("div");
+  let textBdiv = document.createElement("div");
+  main_main_ref.appendChild(textAdiv);
+  main_main_ref.appendChild(textBdiv);
+  main_main_ref.appendChild(promisediv);
+  let h1 = document.createElement("h1");
+  
+  h1.appendChild(document.createTextNode("async / await"));
+  main_header_ref.appendChild(h1);
   
 
 
+(async _=>{
+let responsea = await fetch('http://127.0.0.1:5500/A.txt');
+let responseb = await fetch('http://127.0.0.1:5500/B.txt');
+let texta = await responsea.text();let arrayA = texta.split(/\r?\n/);
+let textb = await responseb.text();let arrayB = textb.split(/\r?\n/);
+let i = 0;
+while(i<arrayA.length){
+  sleep(100); promisediv.innerHTML+= arrayA[i];
+sleep(100); promisediv.innerHTML+= arrayB[i]+'<br>';
+i++;
+}
+})();
 
- 
+}
+
+function getAnzahlKeysInKeys(obj){
+
+
+}
+
+function getContentFromKeys(json){
+  let keys = getJsonKeys(json);
+  let array = new Array();
+
+  for(let k of keys){
+array.push(json[k]);
+  }
+  return array;
+
+}
+function addButtonToDropdownContainerAndSetName(container,input){
+  let button = document.createElement("button");
+  button.style.backgroundColor = "#dddddd";
+  button.textContent = input;
+  container.appendChild(button);
+  return button;
+}
+const main_main_ref = document.getElementById("main_main");
+  const main_header_ref = document.getElementById("mainheader");
+const dropdwncntnr = Array.from(document.getElementsByClassName("dropdown-container"));
+function populateHeader(input){
+  main_header.replaceChildren();
+  let h1 = document.createElement("h1");
+  
+  h1.appendChild(document.createTextNode(input));
+  main_header_ref.appendChild(h1);
+}
+
+function populateMain(input){
+  main_main.replaceChildren();
+  let contentdiv = document.createElement("div");
+  let p = document.createElement("p");
+  p.appendChild(document.createTextNode(input));
+  contentdiv.appendChild(p);
+  
+  main_main_ref.appendChild(contentdiv);
+}
+
+function addListenerToButton(button,maininput,headerinput){
+button.addEventListener("click",()=>{BackgroundcolorWhite(); populateMain(maininput);populateHeader(headerinput)});
+
+}
+function printValues(obj) {
+    for(var k in obj) {
+        if(obj[k] instanceof Object) {
+            printValues(obj[k]);
+        } else {
+            console.log(obj[k]);
+        };
+    }
+}
+
+function getKeys(obj,fromwhat){
+return Object.keys(obj[fromwhat]);
+
+}
+
+function getContent(obj,whatcontent){
+
+  return obj[whatcontent];
+
+}
+const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
+function setupU_8_3(){
+  (async _=>{
+    let response = await fetch('http://127.0.0.1:5500/content.json');
+    let json = await response.json();
+   
+
+    for(let o of Object.keys(json)){
+      dropdownbuttoncollection[Object.keys(json).indexOf(o)].textContent = o;
+     
+      
+      for(let ob of Object.keys(json[o])){
+        let button = document.createElement("button");
+      button.style.backgroundColor = "#dddddd";
+      button.setAttribute("class","dropdowncontainerbutton");
+      button.textContent = ob;
+       
+        dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
+        
+      
+      }
+    }
+    const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
+    
 
 
 
+var i =0;
+    for(var o of Object.keys(json)){
+     
+   
+      for(var ob of Object.values(json[o])){
+       
+       let inhalt = Object.values(ob)[0];
+       let header = Object.keys(json[o])[Object.values(json[o]).indexOf(ob)];
+       
+       
+        dropdowncontainerbuttoncollection[i].addEventListener("click",()=>{
+          BackgroundcolorWhite();
+          populateHeader(header);
+          populateMain(inhalt);
+
+        });
+        
+        
+       i++;
+
+      }
+      
+    }
+
+  })();
+}
+
+function getJsonKeys(json){
+  let keys = new Array();
+  
+  for(const key of Object.keys(json)){
+   keys.push(key);}
+
+return keys;
+}
+
+function setButtonNamen(obj){
+  let buttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
+ let buttonnamen = getJsonKeys(obj);
+  for(const b of buttoncollection){
+    b.textContent = buttonnamen[buttoncollection.indexOf(b)];
+    
+  }
+
+}
+
+setupU_8_3();
 
 
-
-
-
-
-
-
-
-    }   
-var mainheader = document.getElementById("mainheader");
-         var headerinhalt = '<h1 id="u5headerHeadline">Übung 5.1</h1>';
  
 function benchmarkInnerHTML(){
 
