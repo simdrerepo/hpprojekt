@@ -20,11 +20,7 @@
     background-color: #e7e9eb;
     z-index: 0;
     top:0;
-  
-   
-    
-   
-    
+
 }
 #sidenavoverlay{
 display:none;
@@ -72,9 +68,6 @@ width:250px;
 
 margin-left: 12px;
 
-
-
-
 }
 #sidenav {
   display:none;
@@ -98,11 +91,9 @@ left:0;
     grid-row: 1/2;
 }
 .iconbar a:hover{
-   
- 
+
   transform: scale(1.5);
    
-    
 }
 
 .iconbar>*{
@@ -141,8 +132,6 @@ white;
   justify-content: right;
 }
 
-
-
 #sidebutton button{
   border:none;
   background-color: white;
@@ -159,10 +148,8 @@ color: black;
   float:right;
 }
 
-
-#drpdwnbtn:hover{
-background-color:#e7e9eb ;
-border-radius: 25px;
+.drpdwnbtn>*{
+  float:right;
 }
 
 
@@ -209,14 +196,8 @@ grid-row:1/2;}
   
  grid-column:3/11;
  grid-row:2/3;
-
-
 }
-
-
 }
-
-
     </style>
 </head>
 <body>
@@ -263,23 +244,18 @@ grid-row:1/2;}
 <button onclick="setupU_7()">Textanalyse</button>
 <button onclick="setupU_8_1()">Promise</button>
 <button onclick="setupU_8_2()">Async/await</button>
-<button class="drpdwnbtn" onclick="">CSS</button>
+<button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
-<button class="drpdwnbtn" onclick="">HTML</button>
+<button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
-<button class="drpdwnbtn" onclick="">JavaScript</button>
+<button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
-
 
  </div>
   
   
   <div id="sidenavoverlay"></div>
  
-  
-
- 
-
 </div>
 
 <script>
@@ -300,7 +276,7 @@ var buttoncollection = sidebuttondiv.getElementsByTagName("button");
 
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
-  buttoncollection[i].addEventListener("mouseenter",function(){
+  buttoncollection[i].addEventListener("mouseover",function(){
    
       
     this.style.backgroundColor = "#34568B";
@@ -311,6 +287,7 @@ for(let i=0;i<buttoncollection.length;i++){
     this.style.backgroundColor= "white";
     this.style.color="black";
   })
+  
 }
 var sidenavoverlay = document.getElementById("sidenavoverlay");
 sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
@@ -323,7 +300,7 @@ for(let i=0;i<dropdownbutton.length;i++){
     var dropdown = this.nextElementSibling;
 if(dropdown.style.display === "block"){
 dropdown.style.display = "none";
-console.log("none");
+
 }
 else{dropdown.style.display="block";}
 
@@ -485,7 +462,7 @@ function setAllButtonTextToStop(){
   
   
   for (let i = 0; i < collection.length; i++) {
-    console.log(collection[i].textContent);
+    
       if(collection[i].textContent === start){
         collection[i].textContent = 'Start';
         
@@ -838,15 +815,11 @@ str = ar;
   if(str.includes("]")){
     let ar = str.replace("]","");
     str = ar;
-  
   }
-
 }
-console.log(str);
-
 var strohnespace = str.split(" ");
 var array = str.replaceAll(","," ").split(" ");
-console.log(array);
+
 
 
 var knotenAr = new Array();
@@ -866,7 +839,7 @@ for(let i in knotenAr){
 }
 for(let i in strohnespace){
   let tmp = strohnespace[i].split(",");
- console.log(tmp);
+
  graph.addKante(tmp[0],tmp[1]);
 }
 
@@ -885,7 +858,7 @@ li.appendChild(document.createTextNode("Sortierung (v.l.n.r) = "+ergstr))
 liste.appendChild(li);
 sortiert = 1;
 
-  console.log(result);
+  
 }
   })
   var ele_cntr = 0;
@@ -1278,6 +1251,11 @@ function setupU_8_3(){
 
     for(let o of Object.keys(json)){
       dropdownbuttoncollection[Object.keys(json).indexOf(o)].textContent = o;
+      let itag = document.createElement("i");
+      itag.setAttribute("class","fa fa-caret-down");
+      dropdownbuttoncollection[Object.keys(json).indexOf(o)].appendChild(itag);
+      
+
      
       
       for(let ob of Object.keys(json[o])){
@@ -1285,6 +1263,7 @@ function setupU_8_3(){
       button.style.backgroundColor = "#dddddd";
       button.setAttribute("class","dropdowncontainerbutton");
       button.textContent = ob;
+      button.style.cursor = "pointer";
        
         dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
         
@@ -1292,7 +1271,23 @@ function setupU_8_3(){
       }
     }
     const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
+    for(let b of dropdownbuttoncollection){
+      b.addEventListener("click",function(){
     
+    if(this.lastChild.classList.contains("fa-caret-down")){
+      this.removeChild(this.lastChild);
+      let itag = document.createElement("i");
+      itag.setAttribute("class","fa fa-caret-up");
+      this.appendChild(itag);
+    }
+    else{this.removeChild(this.lastChild);
+      let itag = document.createElement("i");
+      itag.setAttribute("class","fa fa-caret-down");
+      this.appendChild(itag);
+    }
+    
+      })
+    }
 
 
 

@@ -1,0 +1,74 @@
+{
+    "Baden-Württem­berg"  :{
+    "name" : "Baden-Württem­berg",
+    "anzahl": 4900869
+ 
+   },
+
+  "Bayern":{
+    "name" : "Bayern",
+    "anzahl": 6544068
+   },
+   "Berlin":{
+    "name":"Berlin",
+    "anzahl": 1364779
+   },
+   "Brandenburg":{
+    "name":"Brandenburh",
+    "anzahl": 1061199
+   },
+   "Bremen":{
+    "name":"Bremen",
+    "anzahl": 286469
+   },
+   "Hamburg":{
+    "name":"Hamburg",
+    "anzahl": 778862
+   },
+   "Hessen":{
+    "name":"Hessen",
+    "anzahl": 2794781
+   },
+   "Mecklenburgvorpommern":{
+    "name":"Mecklenburgvorpommern",
+    "anzahl": 675982
+   },
+   "Niedersachsen":{
+    "name":"Niedersachsen",
+    "anzahl": 3603757
+   },
+   "Nordrhein-Westfalen":{
+    "name":"Nordrhein-Westfalen",
+    "anzahl": 7550647
+   },
+   "Rheinland-Pfalz":{
+    "name":"Rheinland-Pfalz",
+    "anzahl": 1686772
+   },
+   "Saarland":{
+    "name":"Saarland",
+    "anzahl": 470202
+   },
+   "Sachsen":{
+    "name":"Sachsen",
+    "anzahl": 1901120
+   },
+   "Sachsen-Anhalt":{
+    "name":"Sachsen-Anhalt",
+    "anzahl":927109
+   },
+   "Schleswig-Holstein":{
+    "name":"Schleswig-Holstein",
+    "anzahl":1120219
+   },
+   "Thüringen":{
+    "name":"Thüringen",
+    "anzahl": 863185
+   }
+
+
+
+
+
+
+}

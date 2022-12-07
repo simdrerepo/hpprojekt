@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        text{
+            font-size: 5px;
+            text-anchor: middle;
+            fill:white;
+        }
+    </style>
+</head>
+<body>
+
+<svg id ="svg" width="300"height="400" viewBox="0 0 25 25">
+<rect  x="0" y="0" width="25" height="27" fill="#cb798d"/>
+    <text x="7"y="5">Use</text>
+    <rect x="2"y="7"width="20"height="0.5"fill="white"/>
+    <text x="7"y="13">The</text>
+    <rect x="2"y="15"width="20"height="0.5"fill="white"/>
+    <text x="12"y="21">Platform</text>
+    <rect x="2"y="23"width="20"height="0.5"fill="white"/>
+    
+
+
+</svg>
+
+<script>
+let svg = document.getElementById("svg");
+
+svg.addEventListener("mouseover",function(){
+this.style.width = "600";
+this.style.height = "800";
+});
+svg.addEventListener("mouseout",function(){
+    this.style.width = "300";
+this.style.height = "400";
+})
+
+</script>
+
+
+    
+</body>
+</html>
