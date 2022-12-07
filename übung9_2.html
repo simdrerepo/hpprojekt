@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div></div>
+    <script>
+ 
+        class tic_tac_toe{
+
+            constructor(){
+                this.spieler="o";
+               this.controller = new AbortController();
+                this.spielfeld = [null,null,null,null,null,null,null,null,null];
+            }
+            werFaengtAn(){
+                let oneOrZero = (Math.random()>=0.5)? 1 : 0;
+                if(oneOrZero===1){
+                    this.spieler = "x";
+                }
+                else{
+                    this.spieler = "o";
+                }
+
+            }
+            setupSpielfeld(div){
+                
+                div.innerHTML = '<svg id ="svg" width="300"height="400"viewBox="0 0 32 32">'
+                    +   '<line x1="10.5"y1="0"x2="10.5"y2="32"stroke="black"stroke-width="1"></line>'+
+       '<line x1="21.5"y1="0"x2="21.5"y2="32"stroke="black"stroke-width="1"></line>'+
+       '<line x1="0"y1="10.5"x2="32"y2="10.5"stroke="black"stroke-width="1"></line>'+
+       '<line x1="0"y1="21.5"x2="32"y2="21.5"stroke="black"stroke-width="1"></line>'+
+       '<rect x="0"y="0"width="10"height="10"fill="white"></rect>'+
+       '<rect x="11"y="0"width="10"height="10"fill="white"></rect>'+
+       '<rect x="22"y="0"width="10"height="10"fill="white"></rect>'+
+
+       '<rect x="0"y="11"width="10"height="10"fill="white"></rect>'+
+       '<rect x="11"y="11"width="10"height="10"fill="white"></rect>'+
+       '<rect x="22"y="11"width="10"height="10"fill="white"></rect>'+
+
+       '<rect x="0"y="22"width="10"height="10"fill="white"></rect>'+
+       '<rect x="11"y="22"width="10"height="10"fill="white"></rect>'+
+       '<rect x="22"y="22"width="10"height="10"fill="white"></rect>'+
+       '</svg>';
+       
+       
+
+       
+    
+            }
+          
+            addListener(div){
+                const rectcollection =Array.from(div.querySelectorAll("rect"));
+                
+              var self = this;
+                rectcollection.forEach((rect)=>{
+                    rect.addEventListener("click",function handler(){
+
+                        
+                        var listenerid = rectcollection.indexOf(rect);
+                       
+                        if(self.istFrei(listenerid,self)){
+                        
+                        if(self.spieler==="o"){
+                            
+                           let coords = self.getKoordinaten(this);
+                           let circle = self.drawCircle(coords);
+                          self.drawOnSpielfeld(circle);
+                          
+                           self.spielfeld[listenerid]="o";
+                           setTimeout(()=>self.gibtEsEinenGewinner("o",self),10);
+                           self.changeSpieler(self);
+
+                           
+                           
+
+                        }
+                       else if(self.spieler==="x"){
+                            let coords = self.getKoordinaten(this);
+                            
+                            let linie1 = self.drawLine(coords);
+                            let linie2 = self.drawRotatedLine(coords);
+                            let cross = self.drawCross(linie1,linie2);
+                            self.drawOnSpielfeld(cross);
+            
+                            self.spielfeld[listenerid]="x";
+                            setTimeout(()=>self.gibtEsEinenGewinner("x",self),10);
+                           self.changeSpieler(self);
+
+
+                        }
+                    }
+
+
+
+                    },{signal: self.controller.signal});
+                });
+
+            }
+            changeSpieler(self){
+                if(self.spieler==="o"){
+                    self.spieler="x";
+                }
+                else{self.spieler="o"};
+
+
+            }
+            istFrei(index,self){
+                if(self.spielfeld[index]===null){
+                    return true;
+                }
+                else{return false;}
+
+            }
+            getKoordinaten(rect){
+            return [rect.getAttribute("x"),rect.getAttribute("y")];
+
+        }
+        drawRotatedLine(coords){
+            let linie = document.createElementNS("http://www.w3.org/2000/svg","line");
+           let x1 = coords[0];
+           let y1 = coords[1];
+            let x1cor = Number(x1)+8;
+            let y1cor = Number(y1)+2;
+            let x2cor = Number(x1)+2;
+            let y2cor = Number(y1)+8;
+            linie.setAttribute("x1",String(x1cor));
+        linie.setAttribute("y1",String(y1cor));
+        linie.setAttribute("x2",String(x2cor));
+        linie.setAttribute("y2",String(y2cor));
+        linie.setAttribute("stroke","red");
+        
+        return linie;
+
+
+        }
+        drawLine(coords){
+            
+            let linie = document.createElementNS("http://www.w3.org/2000/svg","line");
+            let x1 = coords[0];
+           let y1 = coords[1];
+            let x1cor = Number(x1)+2;
+            let y1cor = Number(y1)+2;
+            let x2cor = Number(x1)+8;
+            let y2cor = Number(y1)+8;
+            linie.setAttribute("x1",String(x1cor));
+        linie.setAttribute("y1",String(y1cor));
+        linie.setAttribute("x2",String(x2cor));
+        linie.setAttribute("y2",String(y2cor));
+        linie.setAttribute("stroke","red");
+        return linie;
+
+        }
+        drawCircle(coords){
+            let circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+           
+            let x = Number(coords[0])+5;
+           
+            
+            let y = Number(coords[1])+5;
+            circle.setAttribute("cx",String(x));
+            circle.setAttribute("cy",String(y));
+            circle.setAttribute("r","4");
+            circle.setAttribute("fill","royalblue");
+            
+            return circle;
+
+        
+
+        }
+        drawCross(linie1,linie2){
+           
+
+            let gruppe = document.createElementNS("http://www.w3.org/2000/svg","g");
+            gruppe.appendChild(linie1);
+            gruppe.appendChild(linie2);
+            return gruppe;
+            
+            
+
+        }
+         drawOnSpielfeld(element){
+            const svg = document.querySelector("svg");
+            
+            svg.appendChild(element);
+
+
+        }
+        
+        gibtEsEinenGewinner(zeichen,objthisref){
+            if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[1]===zeichen && objthisref.spielfeld[2]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[3]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[5]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[6]===zeichen && objthisref.spielfeld[7]===zeichen && objthisref.spielfeld[8]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[3]===zeichen && objthisref.spielfeld[6]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[1]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[7]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[2]===zeichen && objthisref.spielfeld[5]===zeichen && objthisref.spielfeld[8]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[8]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+            if(objthisref.spielfeld[6]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[2]===zeichen){
+                objthisref.controller.abort();
+                if(zeichen==="x"){
+               alert("Kreuz hat gewonnen!");}
+               if(zeichen==="o"){alert("Kreis hat gewonnen!");}
+            }
+
+        }
+
+    
+            
+        }
+        
+        let ttt = new tic_tac_toe();
+        ttt.setupSpielfeld(div);
+        ttt.werFaengtAn();
+        ttt.addListener(div);
+        
+        
+          
+
+       
+       
+
+       
+
+
+
+    </script>
+</body>
+</html>
