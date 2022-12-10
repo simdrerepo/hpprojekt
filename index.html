@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Title</title>
    
@@ -46,9 +47,9 @@ grid-column: 1/5;
 grid-row:2/3;}
 #header{ grid-column: 1/5;grid-row: 1/2;background-color: 
   
-  #34568B;display:grid;
- grid-template-columns: 1fr 2fr 1fr;
- grid-template-rows: 1fr;
+  #34568B;display:flex;
+  justify-content: space-between;
+
 
 }
 #footer{
@@ -194,7 +195,7 @@ grid-row:1/2;}
 
 #main{
   
- grid-column:3/11;
+ grid-column:4/10;
  grid-row:2/3;
 }
 }
@@ -228,15 +229,15 @@ grid-row:1/2;}
 
  <div class="sidenavigation" id="sidenav">
  <div id="exitbutton">
-  <a href="#" onclick="openCloseSideNav()"><i class="fa fa-window-close"></i></a> 
+  <a href="#" onclick="openCloseSideNav()"><i class="fa fa-times"></i></a> 
  </div>
     
  
  <div id="sidebutton" class="sidebuttondiv">
  <div>
-<p style="text-align:center">Übungen</p>
+<p style="text-align:center">Hallo, Gast</p>
 <hr style="width:90%">
-<button onclick="setupU_4()">Übung 4</button>
+
 <button onclick="setupU_5_1()">Performanz-Messungen von DOM-Operationen</button>
 <button onclick="setupU_5_2()">Rednerliste mit Zeitmessung</button>
 <button onclick="setupU_5_3()">TopSort als Web-App</button>
@@ -251,6 +252,7 @@ grid-row:1/2;}
 <button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
 <button onclick="setup_tic_tac_toe()">Tic Tac Toe</button>
+<button onclick="setup_covid19_barchart()">Covid19 Fälle</button>
 
  </div>
   
@@ -270,34 +272,38 @@ var mainref = document.getElementById("main");
 var main_container = null;
 var main_header = null;
 var main_main = null;
+var controller = new AbortController();
 
 var sidebuttondiv = document.getElementById("sidebutton");
 var buttoncollection = sidebuttondiv.getElementsByTagName("button");
+function mouseOver(){
+  this.style.backgroundColor = "#34568B";
+    this.style.color = "white";
 
+}
+function mouseOut(){
+  this.style.backgroundColor = "white";
+    this.style.color="black";
 
+}
+
+// hovereffekt für sidenav button
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
-  buttoncollection[i].addEventListener("mouseover",function(){
-   
-      
-    this.style.backgroundColor = "#34568B";
-    this.style.color = "white";
-   
-  })
-  buttoncollection[i].addEventListener("mouseout",function(){
-    this.style.backgroundColor= "white";
-    this.style.color="black";
-  })
+  buttoncollection[i].addEventListener("mouseover",mouseOver);
+  buttoncollection[i].addEventListener("mouseout",mouseOut);
   
 }
+
 var sidenavoverlay = document.getElementById("sidenavoverlay");
 sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
 
-    var dropdownbutton = sidebuttondiv.getElementsByClassName("drpdwnbtn");
-   
-    
+//Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
+    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
 for(let i=0;i<dropdownbutton.length;i++){
+  
   dropdownbutton[i].addEventListener("click",function(){
+  
     var dropdown = this.nextElementSibling;
 if(dropdown.style.display === "block"){
 dropdown.style.display = "none";
@@ -306,39 +312,66 @@ dropdown.style.display = "none";
 else{dropdown.style.display="block";}
 
 
-  });
+  }
+  );
+ 
+ 
+
 }
+var buttonclicked = new Array();
+
+dropdownbutton.forEach((button)=>{buttonclicked.push(false)});
+
+dropdownbutton.forEach((button)=>{button.addEventListener("click",function(){
+if(buttonclicked[dropdownbutton.indexOf(button)]===false){
+  button.removeEventListener("mouseout",mouseOut);
+  buttonclicked[dropdownbutton.indexOf(button)]=true;
+}
+else{button.addEventListener("mouseout",mouseOut);
+buttonclicked[dropdownbutton.indexOf(button)]=false;}
+  
+})});
+
     
 
-function setupMainBereich(){
+(function setupMainBereich(){
+  // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
   main_container = document.createElement("div");
   main_container.setAttribute("id","main_container");
   main_header = document.createElement("header");
   main_header.setAttribute("id","mainheader");
   main_main = document.createElement("main");
   main_main.setAttribute("id","main_main");
+  main_footer = document.createElement("footer");
+  main_footer.setAttribute("id","main_footer");
 
 
 mainref.appendChild(main_container);
 main_container.appendChild(main_header);
 
 main_container.appendChild(main_main);
+main_container.appendChild(main_footer);
 
-}
+})();
 function BackgroundcolorWhite(){
+  // styling für den Bereich(header,main)
   main_header.style.backgroundColor="white";
 main_main.style.backgroundColor="white";
+main_main.style.marginTop = "40px";
+main_main.style.marginLeft = "40px";
+main_main.style.marginRight = "40px";
 main_container.style.backgroundColor='white';
 main_container.style.minHeight="700px";
 main_header.style.borderBottom = "1px solid lightgray"
-main_container.style.borderLeft = "5px solid white";
-main_container.style.borderRight = "5px solid white";
+main_container.style.borderLeft = "10px solid white";
+main_container.style.borderRight = "10px solid white";
 main_header.style.display = "flex";
 main_header.style.justifyContent = "center";
 mainref.style.marginTop = "30px";
+
 }
 
-setupMainBereich();
+
 
 
 
@@ -446,6 +479,7 @@ constructor(){
     this.spielfeld = [null,null,null,null,null,null,null,null,null];
 }
 werFaengtAn(){
+  //Beginnender Spieler wird zufällig ermittelt
     let oneOrZero = (Math.random()>=0.5)? 1 : 0;
     if(oneOrZero===1){
         this.spieler = "x";
@@ -456,7 +490,8 @@ werFaengtAn(){
 
 }
 setupSpielfeld(div){
-    
+    //Das Spielfeld wird in ein div nach Wahl geladen
+    //Jedes Feld ist 10x10 Groß
     div.innerHTML = '<svg id ="svg" width="300"height="400"viewBox="0 0 32 32">'
         +   '<line x1="10.5"y1="0"x2="10.5"y2="32"stroke="black"stroke-width="1"></line>'+
 '<line x1="21.5"y1="0"x2="21.5"y2="32"stroke="black"stroke-width="1"></line>'+
@@ -482,25 +517,30 @@ setupSpielfeld(div){
 }
 
 addListener(div){
+  //Click-Listener für jedes Feld
     const rectcollection =Array.from(div.querySelectorAll("rect"));
-    
+    //Objekt this-Referenz abspeichern
   var self = this;
     rectcollection.forEach((rect)=>{
         rect.addEventListener("click",function handler(){
 
-            
+            //Vergabe einer id für ein Feld
             var listenerid = rectcollection.indexOf(rect);
            
             if(self.istFrei(listenerid,self)){
-            
+            //Wenn ein Feld noch nicht bespielt wurde, dann...
             if(self.spieler==="o"){
-                
+                // Koordinaten des Feldes ermitteln
                let coords = self.getKoordinaten(this);
+               // Kreis erzeugen
                let circle = self.drawCircle(coords);
+               // Aufs Spielfeld damit
               self.drawOnSpielfeld(circle);
-              
+              //Feld wird markiert mit aktuellem Spieler
                self.spielfeld[listenerid]="o";
+               //Gewinn Bedingungen checken
                setTimeout(()=>self.gibtEsEinenGewinner("o",self),10);
+               //Nächster Spieler ist jetzt dran
                self.changeSpieler(self);
 
                
@@ -508,15 +548,22 @@ addListener(div){
 
             }
            else if(self.spieler==="x"){
+            // Spieler mit Kreuz
+            // Koordinaten einholen
                 let coords = self.getKoordinaten(this);
-                
+                //Linie erzeugen
                 let linie1 = self.drawLine(coords);
+                //Gedrehte Linie erzeugen
                 let linie2 = self.drawRotatedLine(coords);
+                //Kreuz erzeugen
                 let cross = self.drawCross(linie1,linie2);
+                //Kreuz auf Spielfeld anzeigen
                 self.drawOnSpielfeld(cross);
-
+                //Feld markieren
                 self.spielfeld[listenerid]="x";
+                //Gewonnen?
                 setTimeout(()=>self.gibtEsEinenGewinner("x",self),10);
+                //Kreis ist jetzt dran
                self.changeSpieler(self);
 
 
@@ -529,7 +576,9 @@ addListener(div){
     });
 
 }
+
 changeSpieler(self){
+  //nach jedem "Zug" wird der Spieler gewechselt
     if(self.spieler==="o"){
         self.spieler="x";
     }
@@ -537,7 +586,9 @@ changeSpieler(self){
 
 
 }
+
 istFrei(index,self){
+  //Check ob ein Feld schon belegt ist
     if(self.spielfeld[index]===null){
         return true;
     }
@@ -545,10 +596,12 @@ istFrei(index,self){
 
 }
 getKoordinaten(rect){
+  // Gibt die (x,y) Koordinaten eines Felds(rect) zurück
 return [rect.getAttribute("x"),rect.getAttribute("y")];
 
 }
 drawRotatedLine(coords){
+  //Gibt eine um 90Grad gedrehte Linie zurück
 let linie = document.createElementNS("http://www.w3.org/2000/svg","line");
 let x1 = coords[0];
 let y1 = coords[1];
@@ -567,10 +620,12 @@ return linie;
 
 }
 drawLine(coords){
+// Gibt eine linie zurück, passend zu den übergebenen Koordinaten
 
 let linie = document.createElementNS("http://www.w3.org/2000/svg","line");
 let x1 = coords[0];
 let y1 = coords[1];
+//Koordinaten werden modifiziert damit die Linie nicht von Rand zu Rand verläuft
 let x1cor = Number(x1)+2;
 let y1cor = Number(y1)+2;
 let x2cor = Number(x1)+8;
@@ -584,6 +639,7 @@ return linie;
 
 }
 drawCircle(coords){
+  //Gibt einen,in ein Feld passenden Kreis zurück
 let circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
 
 let x = Number(coords[0])+5;
@@ -601,7 +657,7 @@ return circle;
 
 }
 drawCross(linie1,linie2){
-
+//Gibt eine Gruppe Kreuz zurück
 
 let gruppe = document.createElementNS("http://www.w3.org/2000/svg","g");
 gruppe.appendChild(linie1);
@@ -612,6 +668,7 @@ return gruppe;
 
 }
 drawOnSpielfeld(element){
+  //Fügt ein Element dem svg-Element hinzu
 const svg = document.querySelector("svg");
 
 svg.appendChild(element);
@@ -620,6 +677,7 @@ svg.appendChild(element);
 }
 
 gibtEsEinenGewinner(zeichen,objthisref){
+  //Hier wird gecheckt ob die Bedingungen für einen Sieg erfüllt sind
 if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[1]===zeichen && objthisref.spielfeld[2]===zeichen){
     objthisref.controller.abort();
     if(zeichen==="x"){
@@ -1184,54 +1242,56 @@ function setupU_6_1(){
         klammerarray.push(str[i]);
       }
     }
+   
     
     if(klammerarray.length%2===1){
 eingabeu6.style.backgroundColor = "red";
     }
     else if(klammerarray.length%2===0){
-      var korrekt= 0;
+      var zustand = false;
       if(eingabeu6.value===''){
         eingabeu6.style.backgroundColor = "white";
       }
     
-     var left_array = new Array();
-     var right_array = new Array();
-     for(let i=0;i<klammerarray.length/2;i++){
-      right_array.push(klammerarray[(klammerarray.length-1)-i]);
-      left_array.push(klammerarray[i]);
+   
+     for(let i=0; i< klammerarray.length/2;i++){
+      if(klammerarray[i]===kp1_1){
+        if(klammerarray[(klammerarray.length-1)-i]===kp1_2){
+          zustand = true;
+        }
+        else{zustand = false;break;}
+      }
+      if(klammerarray[i]===kp1_2){
+        zustand=false;break;
+      }
+      if(klammerarray[i]===kp2_1){
+        if(klammerarray[(klammerarray.length-1)-i]===kp2_2){
+          zustand = true;
+        }
+        else{zustand = false;break;}
+      }
+      if(klammerarray[i]===kp2_2){
+        zustand=false;break;
+      }
+      if(klammerarray[i]===kp3_1){
+        if(klammerarray[(klammerarray.length-1)-i]===kp3_2){
+          zustand = true;
+        }
+        else{zustand = false;break;}
+      }
+      if(klammerarray[i]===kp3_2){
+        zustand=false;break;
+      }
      }
+
+     
+    
     
    
-     for(let i in left_array){
    
+
       
-      switch (left_array[i]){
-        case kp1_1
-        : 
-        if(right_array[i]===kp1_2){
-          korrekt = 1;
-
-        }
-        else {
-          korrekt = 0;
-        }
-        break;
-        case kp3_1:
-          if(right_array[i]===kp3_2){
-          korrekt = 1;}
-          else{
-            korrekt = 0;
-          }
-          break;
-          case kp2_1:
-            if(right_array[i]===kp2_2){
-              korrekt = 1;
-            }
-            else{korrekt = 0;}
-             break;
-
-      }
-      if(korrekt ===0){
+      if(zustand ===false){
         eingabeu6.style.backgroundColor = "red";
       }
       else{
@@ -1239,9 +1299,9 @@ eingabeu6.style.backgroundColor = "red";
       }
       
     
-     }
+     }});
     
-  }})
+  
 }
 async function sleep(ms){
     return new Promise(resolve=>setTimeout(resolve,ms));
@@ -1257,12 +1317,12 @@ function setupU_7(){
  Plagiatsresolution.setAttribute("id","plagiatresolution");
  let header = document.createElement("header");
 
- let ergebnisdiv = document.createElement("div");
+ var ergebnisdiv = document.createElement("div");
  ergebnisdiv.style.display = "flex";
 
  ergebnisdiv.style.justifyContent ="space-evenly";
  ergebnisdiv.style.flexWrap = "wrap";
- let analysecontainer = document.createElement("div");
+ var analysecontainer = document.createElement("div");
  ergebnisdiv.setAttribute("id","ergebnisdiv");
 
  header.innerHTML = '<h2 class="field field--name-title field--type-ds field--label-hidden">Plagiatsresolution und -maßnahmen</h2>';
@@ -1279,54 +1339,10 @@ Plagiatsresolution.appendChild(content);
 main_header_ref.appendChild(ueberschriftcontainer);
 main_main_ref.appendChild(analysecontainer);
 main_main_ref.appendChild(Plagiatsresolution);
-let analysebuttonref = document.getElementById("analysebutton");
-
-  let Plagiatsresolutionref = document.getElementById("plagiatresolution");
-  let all = Array.from(Plagiatsresolutionref.getElementsByTagName("*"));
-  let fil = all.map((item)=>item=item.nodeName.toLowerCase());
-  let table = document.createElement("table");
-  
-let tagset = new Set();
-let array2d = new Array();
-fil.forEach((x)=>tagset.add(x));
-for(let i=0;i<tagset.size;i++){
-  array2d.push([Array.from(tagset)[i],fil.reduce((count, num) => num === Array.from(tagset)[i] ? count + 1 : count, 0)]);
-
-}
-
-let mostusedtag = array2d[0];
-for(let i=0;i<array2d.length;i++){
- 
-if(array2d[i][1]>mostusedtag[1]){
- 
-  mostusedtag = array2d[i];
-}
-}
-table.style.textAlign = "center";
-let reihe = table.insertRow(-1);
-  let zelle = reihe.insertCell(0);
-  zelle.innerHTML = '<b>HTML-Tag</b>';
-  zelle = reihe.insertCell(1);
-  zelle.innerHTML = '<b>Anzahl</b>';
-  
-for(let i=0;i<array2d.length;i++){
-  let reihe = table.insertRow(-1);
-  let zelle = reihe.insertCell(0);
-  zelle.appendChild(document.createTextNode("<"+array2d[i][0]+">"));
-  zelle = reihe.insertCell(1);
-  zelle.appendChild(document.createTextNode(array2d[i][1]));
-  if(i%2==0){
-    reihe.style.backgroundColor = "#dddd";
-  }
-
-
-}
-
-
-fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopwords-de.txt')
-  .then(response => response.text())
-  .then(text => { let stops = text.split(/\r?\n/);
-
+(async _=>{
+  let response = await fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopwords-de.txt');
+  const stopwörter = await response.text(); 
+  let stops = stopwörter.split(/\r?\n/);
   let stoparray2d = new Array();
   
   let alltext = main_container.textContent.toLowerCase().replaceAll(",","").replaceAll(".","").replaceAll("-","").replaceAll("(","").replaceAll(")","").replaceAll(":","");
@@ -1350,16 +1366,65 @@ column = row.appendChild(document.createTextNode(x[1]));
 if(filtered.indexOf(x)%2==0){
     row.style.backgroundColor = "#dddd";
   }
-});
-let ergebnisdivref = document.getElementById("ergebnisdiv");
-ergebnisdivref.appendChild(tabelle);
-  });
+ });
 
-  ergebnisdiv.appendChild(table);
+ergebnisdiv.appendChild(tabelle);
 
-  analysecontainer.appendChild(ergebnisdiv);
 
-    }   
+  
+
+let Plagiatsresolutionref = document.getElementById("plagiatresolution");
+let all = Array.from(Plagiatsresolutionref.getElementsByTagName("*"));
+let fil = all.map((item)=>item=item.nodeName.toLowerCase());
+let table = document.createElement("table");
+
+let tagset = new Set();
+let array2d = new Array();
+fil.forEach((x)=>tagset.add(x));
+for(let i=0;i<tagset.size;i++){
+array2d.push([Array.from(tagset)[i],fil.reduce((count, num) => num === Array.from(tagset)[i] ? count + 1 : count, 0)]);
+
+}
+
+let mostusedtag = array2d[0];
+for(let i=0;i<array2d.length;i++){
+
+if(array2d[i][1]>mostusedtag[1]){
+
+mostusedtag = array2d[i];
+}
+}
+table.style.textAlign = "center";
+let reihe = table.insertRow(-1);
+let zelle = reihe.insertCell(0);
+zelle.innerHTML = '<b>HTML-Tag</b>';
+zelle = reihe.insertCell(1);
+zelle.innerHTML = '<b>Anzahl</b>';
+
+for(let i=0;i<array2d.length;i++){
+let reihe = table.insertRow(-1);
+let zelle = reihe.insertCell(0);
+zelle.appendChild(document.createTextNode("<"+array2d[i][0]+">"));
+zelle = reihe.insertCell(1);
+zelle.appendChild(document.createTextNode(array2d[i][1]));
+if(i%2==0){
+  reihe.style.backgroundColor = "#dddd";
+}
+
+
+} 
+setTimeout(()=>ergebnisdiv.appendChild(table),100);
+  setTimeout(()=>analysecontainer.appendChild(ergebnisdiv),100);
+
+  
+
+
+
+}
+)();
+}
+
+     
 
     function setupU_8_1(){
       main_main.replaceChildren();
@@ -1431,21 +1496,10 @@ i++;
 
 }
 
-function getAnzahlKeysInKeys(obj){
 
 
-}
 
-function getContentFromKeys(json){
-  let keys = getJsonKeys(json);
-  let array = new Array();
 
-  for(let k of keys){
-array.push(json[k]);
-  }
-  return array;
-
-}
 function addButtonToDropdownContainerAndSetName(container,input){
   let button = document.createElement("button");
   button.style.backgroundColor = "#dddddd";
@@ -1478,20 +1532,8 @@ function addListenerToButton(button,maininput,headerinput){
 button.addEventListener("click",()=>{BackgroundcolorWhite(); populateMain(maininput);populateHeader(headerinput)});
 
 }
-function printValues(obj) {
-    for(var k in obj) {
-        if(obj[k] instanceof Object) {
-            printValues(obj[k]);
-        } else {
-            console.log(obj[k]);
-        };
-    }
-}
 
-function getKeys(obj,fromwhat){
-return Object.keys(obj[fromwhat]);
 
-}
 
 function getContent(obj,whatcontent){
 
@@ -1499,7 +1541,7 @@ function getContent(obj,whatcontent){
 
 }
 const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
-function setupU_8_3(){
+(function setupU_8_3(){
   (async _=>{
     let response = await fetch('http://127.0.0.1:5500/content.json');
     let json = await response.json();
@@ -1527,6 +1569,18 @@ function setupU_8_3(){
       }
     }
     const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
+    //hover effekt für die button im dropdowncontainer
+    for(let dcb of dropdowncontainerbuttoncollection){
+      dcb.addEventListener("mouseover",function(){
+        this.style.backgroundColor ="#34568B";
+        this.style.color="white";
+      });
+      dcb.addEventListener("mouseleave",function(){
+        this.style.backgroundColor = "#dddddd";
+        this.style.color = "black";
+      })
+    }
+    //dropdownicons für button im sidenav
     for(let b of dropdownbuttoncollection){
       b.addEventListener("click",function(){
     
@@ -1543,6 +1597,7 @@ function setupU_8_3(){
     }
     
       })
+      
     }
 
 
@@ -1572,16 +1627,87 @@ var i =0;
     }
 
   })();
-}
+})();
 
-function getJsonKeys(json){
-  let keys = new Array();
+function setup_covid19_barchart(){
+  main_main.replaceChildren();
+  main_header.replaceChildren();
+  let h1 = document.createElement("h1");
+  h1.appendChild(document.createTextNode("Covid-19 Fälle"));
+  main_header.appendChild(h1);
+  let div = document.createElement("div");
+  div.setAttribute("id","barchartdiv");
+  div.style.display = "flex";
+  div.style.justifyContent = "center";
+  main_main.append(div);
   
-  for(const key of Object.keys(json)){
-   keys.push(key);}
+  
+  BackgroundcolorWhite();
+  (async _=>{
+            let response = await fetch("http://127.0.0.1:5500/covid-19.json");
+            let json = await response.json();
+            const data = Object.values(json);
+            
+            var margin = {top: 10, right: 30, bottom: 90, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
 
-return keys;
+// append the svg object to the body of the page
+var svg = d3.select("#barchartdiv")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, d3.max(data,d=>d.anzahl)])
+  .range([ height, 0]);
+svg.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+svg.selectAll("rect")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("width", x.bandwidth())
+    .attr("fill", "royalblue")
+    // no bar at the beginning thus:
+    .attr("height", function(d) { return height - y(0); }) // always equal to 0
+    .attr("y", function(d) { return y(0); })
+
+// Animation
+svg.selectAll("rect")
+  .transition()
+  .duration(800)
+  .attr("y", function(d) { return y(d.anzahl); })
+  .attr("height", function(d) { return height - y(d.anzahl); })
+  .delay(function(d,i){return(i*100)})
+
+ 
+
+        })();
+
 }
+
 
 function setButtonNamen(obj){
   let buttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
@@ -1593,7 +1719,7 @@ function setButtonNamen(obj){
 
 }
 
-setupU_8_3();
+
 
 
 
@@ -1731,13 +1857,7 @@ return t1-t0;
         
        }
     
-       function removeAllChildren(referenz){
-        referenz.replaceChildren();
-        
-       }
-       function clearMainBereich(){
-        main_ref.replaceChildren();
-       }
+     
       
  
  
