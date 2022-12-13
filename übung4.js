@@ -57,10 +57,10 @@ const personarray = [p1,p2,p3];
 console.log(conflict(new Auto("Opel"),personarray));
 
 function fibonacci(){
-    let fiboarr = new Array(2000);
+    const fiboarr = new Array(2000);
    fiboarr[0] = 1;
    fiboarr[1] = 1;
-   let erg;
+  
    for(i = 2;i<fiboarr.length;i++){
 fiboarr[i] = fiboarr[i-1] + fiboarr[i-2];
 console.log(fiboarr[i]); 
