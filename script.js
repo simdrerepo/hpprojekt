@@ -34,26 +34,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var main_container;
-var main_header;
-var main_main;
-var controller = new AbortController();
+function removeChildrenInDiv(div) {
+    div.replaceChildren();
+}
+var loginbutton = document.getElementById("loginbutton");
+loginbutton.addEventListener("mouseover", function () { this.style.textDecoration = "underline"; this.style.textUnderlineOffset = "0.3em"; });
+loginbutton.addEventListener("mouseleave", function () { this.style.textDecoration = "none"; });
 var setup_login = function () {
     var mainref = document.getElementById("main");
-    mainref.replaceChildren();
+    removeChildrenInDiv(mainref);
     var container = document.createElement("div");
     var usernameInput = document.createElement("input");
     var passwortInput = document.createElement("input");
     var loginButton = document.createElement("button");
     var cancelButton = document.createElement("button");
-    var tabelle = document.createElement("table");
     container.style.backgroundColor = "white";
     container.style.marginTop = "30px";
     container.style.minHeight = "700px";
+    var tabelle = createTable(2, 2);
+    container.appendChild(tabelle);
+    console.log(container);
     mainref.appendChild(container);
 };
-var sidebuttondiv = document.getElementById("sidebutton");
-var buttoncollection = sidebuttondiv.getElementsByTagName("button");
 function mouseOver() {
     this.style.backgroundColor = "#34568B";
     this.style.color = "white";
@@ -64,6 +66,8 @@ function mouseOut() {
 }
 (function hoverForSidenavBtn() {
     // hovereffekt für sidenav button
+    var sidebuttondiv = document.getElementById("sidebutton");
+    var buttoncollection = sidebuttondiv.getElementsByTagName("button");
     for (var i = 0; i < buttoncollection.length; i++) {
         buttoncollection[i].style.cursor = "pointer";
         buttoncollection[i].addEventListener("mouseover", mouseOver);
@@ -71,6 +75,7 @@ function mouseOut() {
     }
 })();
 (function AddDropdownButtonListener() {
+    var sidebuttondiv = document.getElementById("sidebutton");
     var sidenavoverlay = document.getElementById("sidenavoverlay");
     sidenavoverlay.addEventListener("click", function () { openCloseSideNav(); });
     //Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
@@ -185,18 +190,12 @@ var tic_tac_toe = /** @class */ (function () {
                 if (self.istFrei(listenerid, self)) {
                     //Wenn ein Feld noch nicht bespielt wurde, dann...
                     if (self.spieler === "o") {
-                        // Koordinaten des Feldes ermitteln
-                        var coords = self.getKoordinaten(this);
-                        // Kreis erzeugen
-                        var circle = self.drawCircle(coords);
-                        // Aufs Spielfeld damit
-                        self.drawOnSpielfeld(circle);
-                        //Feld wird markiert mit aktuellem Spieler
-                        self.spielfeld[listenerid] = "o";
-                        //Gewinn Bedingungen checken
-                        setTimeout(function () { return self.gibtEsEinenGewinner("o", self); }, 10);
-                        //Nächster Spieler ist jetzt dran
-                        self.changeSpieler(self);
+                        var coords = self.getKoordinaten(this); // Koordinaten des Feldes ermitteln               
+                        var circle = self.drawCircle(coords); // Kreis erzeugen
+                        self.drawOnSpielfeld(circle); // Aufs Spielfeld damit
+                        self.spielfeld[listenerid] = "o"; //Feld wird markiert mit aktuellem Spieler
+                        setTimeout(function () { return self.gibtEsEinenGewinner("o", self); }, 10); //Gewinn Bedingungen checken
+                        self.changeSpieler(self); //Nächster Spieler ist jetzt dran
                     }
                     else if (self.spieler === "x") {
                         // Spieler mit Kreuz
@@ -449,7 +448,17 @@ var Redner = /** @class */ (function () {
     Redner.prototype.setStartStopSymbol = function (string) {
         this.startstopsymbol = string;
     };
-    Redner.prototype.timer = function () {
+    Redner.prototype.timer = function (htmlElement) {
+        this.sek++;
+        if (this.sek === 60) {
+            this.min++;
+            this.sek = 0;
+            if (this.min === 60) {
+                this.std++;
+                this.min = 0;
+            }
+        }
+        htmlElement.textContent = String(this.std) + ':' + String(this.min) + ':' + String(this.sek);
     };
     Redner.prototype.swapSymbols = function () {
         if (this.startstopsymbol === "Stop") {
@@ -473,15 +482,13 @@ var RednerArray = /** @class */ (function () {
     }
     return RednerArray;
 }());
-var rednerarray = new RednerArray();
 function setup_tic_tac_toe() {
     var mainref = document.getElementById("main");
+    removeChildrenInDiv(mainref);
+    setupMainBereich();
+    BackgroundcolorWhite();
     var main_header = document.getElementById("mainheader");
     var main_main = document.getElementById("main_main");
-    var main_container = document.getElementById("main_container");
-    main_main.replaceChildren();
-    main_header.replaceChildren();
-    BackgroundcolorWhite();
     var div = document.createElement("div");
     var header = document.createElement("h1");
     header.appendChild(document.createTextNode("Tic Tac Toe"));
@@ -494,18 +501,6 @@ function setup_tic_tac_toe() {
     div.style.display = "flex";
     div.style.justifyContent = "center";
 }
-function myTimer(objekt, ticker) {
-    objekt.sek++;
-    if (objekt.sek === 60) {
-        objekt.min++;
-        objekt.sek = 0;
-        if (objekt.min === 60) {
-            objekt.std++;
-            objekt.min = 0;
-        }
-    }
-    ticker.textContent = String(objekt.std) + ':' + String(objekt.min) + ':' + String(objekt.sek);
-}
 function setAllButtonTextToStop() {
     var collection = document.querySelectorAll("button");
     var start = 'Stop';
@@ -515,30 +510,32 @@ function setAllButtonTextToStop() {
         }
     }
 }
-function stopAll() {
-    if (rednerarray.array.length != 0) {
-        for (var i = 0; i < rednerarray.array.length; i++) {
-            for (var j = 0; j < rednerarray.array[i].intervalids.length; j++) {
-                clearInterval(rednerarray.array[i].intervalids[j]);
-            }
-            rednerarray.array[i].counting = 0;
+function stopAll(rednerArray) {
+    rednerArray.forEach(function (redner) { redner.clearAllIntervalIds(); redner.counting = 0; });
+}
+function createTable(reihen, zeilen) {
+    var table = document.createElement("table");
+    for (var i = 0; i < zeilen; i++) {
+        var reihe = table.insertRow(-1);
+        for (var j = 0; j < reihen; j++) {
+            reihe.insertCell(j);
         }
     }
+    return table;
 }
-function myEventHandler(rednerobj, tiker, button) {
+function myEventHandler(rednerobj, htmlElement, button, rednerArray) {
     var event = rednerobj.counting;
     if (event === 0) {
-        stopAll();
+        stopAll(rednerArray);
         setAllButtonTextToStop();
-        var interval = setInterval(myTimer, 1000, rednerobj, tiker);
+        var interval = setInterval(rednerobj.timer.bind(rednerobj), 1000, htmlElement);
         rednerobj.intervalids.push(interval);
         rednerobj.counting = 1;
-        button.textContent = 'Stop';
+        rednerobj.startstopsymbol = 'Stop';
+        button.textContent = rednerobj.startstopsymbol;
     }
     if (event === 1) {
-        for (var i = 0; i < rednerobj.intervalids.length; i++) {
-            clearInterval(rednerobj.intervalids[i]);
-        }
+        rednerobj.clearAllIntervalIds();
         rednerobj.counting = 0;
         button.textContent = 'Start';
     }
@@ -548,52 +545,42 @@ function addRednerInListe(liste, rednerobjintabelle) {
     li.appendChild(rednerobjintabelle);
     liste.appendChild(li);
 }
-function createRedner(rednerobj) {
-    var tabelle = document.createElement("table");
-    var reihe = tabelle.insertRow(-1);
-    var button = document.createElement("button");
-    button.appendChild(document.createTextNode('Start'));
-    reihe.insertCell(0);
-    reihe.appendChild(document.createTextNode(rednerobj.name));
-    reihe.insertCell(1);
-    reihe.appendChild(button);
-    var timer = document.createElement("p");
-    reihe.insertCell(2);
-    var tiker = document.createTextNode('0:0:0');
-    var interval = setInterval(myTimer, 1000, rednerobj, tiker);
-    button.textContent = 'Stop';
-    rednerobj.counting = 1;
-    rednerobj.intervalids.push(interval);
-    button.addEventListener("click", function () { return myEventHandler(rednerobj, tiker, button); });
-    timer.appendChild(tiker);
-    reihe.appendChild(timer);
-    if (rednerarray.array.length != 0) {
-        for (var i = 0; i < rednerarray.array.length; i++) {
-            for (var j = 0; j < rednerarray.array[i].intervalids.length; j++) {
-                clearInterval(rednerarray.array[i].intervalids[j]);
-            }
-            rednerarray.array[i].counting = 0;
+function createRedner(name, rednerarray) {
+    if (name !== "") {
+        var rednerobj_1 = new Redner(name);
+        var tabelle = document.createElement("table");
+        var reihe = tabelle.insertRow(-1);
+        var button = document.createElement("button");
+        button.appendChild(document.createTextNode('Start'));
+        reihe.insertCell(0);
+        reihe.appendChild(document.createTextNode(rednerobj_1.name));
+        reihe.insertCell(1);
+        reihe.appendChild(button);
+        var timer_1 = document.createElement("p");
+        reihe.insertCell(2);
+        var display = document.createTextNode("0:0:0");
+        timer_1.appendChild(display);
+        var interval = setInterval(rednerobj_1.timer.bind(rednerobj_1), 1000, timer_1);
+        button.textContent = rednerobj_1.startstopsymbol;
+        rednerobj_1.counting = 1;
+        rednerobj_1.intervalids.push(interval);
+        button.addEventListener("click", function () { return myEventHandler(rednerobj_1, timer_1, button, rednerarray); });
+        reihe.appendChild(timer_1);
+        if (rednerarray.length != 0) {
+            rednerarray.forEach(function (redner) { redner.clearAllIntervalIds(); redner.counting = 0; });
         }
+        setAllButtonTextToStop();
+        rednerarray.push(rednerobj_1);
+        return tabelle;
     }
-    var collection = document.querySelectorAll("button");
-    var start = 'Stop';
-    for (var i = 0; i < collection.length; i++) {
-        if (collection[i].textContent === start) {
-            collection[i].textContent = 'Start';
-        }
-    }
-    rednerarray.array.push(rednerobj);
-    return tabelle;
 }
 function setupU_5_1() {
     var mainref = document.getElementById("main");
-    mainref.replaceChildren();
+    removeChildrenInDiv(mainref);
     setupMainBereich();
+    BackgroundcolorWhite();
     var main_header = document.getElementById("mainheader");
     var main_main = document.getElementById("main_main");
-    var main_container = document.getElementById("main_container");
-    main_main.innerHTML = '';
-    main_header.innerHTML = '';
     var ueberschrift = document.createElement("h1");
     ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
     var tabelle = document.createElement("table");
@@ -669,7 +656,6 @@ function setupU_5_1() {
             odd[i].style.backgroundColor = "white";
         }
     }
-    BackgroundcolorWhite();
 }
 function setupU_5_2() {
     var main = document.getElementById("main");
@@ -715,9 +701,8 @@ function setupU_5_2() {
     listendiv.style.justifyContent = "center";
     ues.style.textAlign = "Center";
     BackgroundcolorWhite();
-    var btn = document.getElementById("btn");
-    var eingabefeld = document.getElementById("eingabe");
-    btn.addEventListener("click", function () { return addRednerInListe(liste, createRedner(new Redner(eingabefeld.value))); });
+    var rednerarray = new Array();
+    eingabebutton.addEventListener("click", function () { return addRednerInListe(liste, createRedner(eingabe.value, rednerarray)); });
 }
 function setupU_5_3() {
     var mainref = document.getElementById("main");
@@ -745,9 +730,19 @@ function setupU_5_3() {
     main_header_ref.appendChild(headline);
     var button = document.createElement("button");
     button.textContent = 'sortieren';
+    button.style.backgroundColor = "white";
+    button.style.color = "black";
+    button.style.height = "1.5rem";
+    button.addEventListener("mouseover", function () { changeBackgroundColorAndColor(this); });
+    button.addEventListener("mouseleave", function () { changeBackgroundColorAndColor(this); });
     var tablediv = document.createElement("div");
     var addbutton = document.createElement("button");
     addbutton.textContent = 'hinzufügen';
+    addbutton.style.backgroundColor = "white";
+    addbutton.style.color = "black";
+    addbutton.style.height = "1.5rem";
+    addbutton.addEventListener("mouseover", function () { this.style.backgroundColor = "#73aca5"; });
+    addbutton.addEventListener("mouseleave", function () { this.style.backgroundColor = "#a9d7d1"; });
     zelle.appendChild(input1);
     zelle = reihe0.insertCell(1);
     zelle.appendChild(input2);
@@ -1024,14 +1019,15 @@ function setupU_7() {
                     tabelle.style.textAlign = "center";
                     row = tabelle.insertRow(-1);
                     column = row.insertCell(0);
-                    column.innerHTML = '<b>Stopwörter</b>';
+                    column.innerHTML = '<b>Stopwort</b>';
                     column = row.insertCell(1);
                     column.innerHTML = '<b>Anzahl</b>';
                     filtered.forEach(function (x) {
                         var row = tabelle.insertRow(-1);
                         var column = row.insertCell(0);
                         column.appendChild(document.createTextNode(x[0]));
-                        column = row.appendChild(document.createTextNode(x[1]));
+                        column = row.insertCell(1);
+                        column.appendChild(document.createTextNode(x[1]));
                         if (filtered.indexOf(x) % 2 == 0) {
                             row.style.backgroundColor = "#dddd";
                         }
@@ -1106,10 +1102,10 @@ function setupU_8_1() {
         fetch('http://127.0.0.1:5500/B.txt').then(function (response) { return response.text(); }).then(function (text) {
             var arrayB = text.split(/\r?\n/);
             var _loop_3 = function (i) {
-                setTimeout(function () { return promisediv.innerHTML += arrayA[i]; }, 100);
-                setTimeout(function () { return promisediv.innerHTML += arrayB[i] + '<br>'; }, 100);
+                setTimeout(function () { return promisediv.innerHTML += arrayA[i]; }, 10);
+                setTimeout(function () { return promisediv.innerHTML += arrayB[i] + '<br>'; }, 10);
             };
-            for (var i = 0; i < arrayB.length; i++) {
+            for (var i = 0; i < arrayA.length; i++) {
                 _loop_3(i);
             }
         });
@@ -1126,8 +1122,6 @@ function setupU_8_2() {
     main_main.replaceChildren();
     main_header.replaceChildren();
     BackgroundcolorWhite();
-    var main_main_ref = document.getElementById("main_main");
-    var main_header_ref = document.getElementById("mainheader");
     var promisediv = document.createElement("div");
     promisediv.style.textAlign = "center";
     var textAdiv = document.createElement("div");
@@ -1191,11 +1185,14 @@ function populateMain(input) {
 function addListenerToButton(button, maininput, headerinput) {
     button.addEventListener("click", function () { BackgroundcolorWhite(); populateMain(maininput); populateHeader(headerinput); });
 }
-var dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
+function changeBackgroundColorAndColor(buttonreferenz, backgroundColor, textcolor) {
+    buttonreferenz.style.backgroundColor = backgroundColor;
+    buttonreferenz.style.color = textcolor;
+}
 (function setupU_8_3() {
     var _this = this;
     (function (_) { return __awaiter(_this, void 0, void 0, function () {
-        var response, json, _i, _a, o_1, itag, _b, _c, ob_1, button, dropdowncontainerbuttoncollection, _d, dropdowncontainerbuttoncollection_1, dcb, _e, dropdownbuttoncollection_1, b, i, _f, _g, o, _loop_4, _h, _j, ob;
+        var response, json, dropdownbuttoncollection, _i, _a, o_1, itag, _b, _c, ob_1, button, dropdowncontainerbuttoncollection, _d, dropdowncontainerbuttoncollection_1, dcb, _e, dropdownbuttoncollection_1, b, i, _f, _g, o, _loop_4, _h, _j, ob;
         return __generator(this, function (_k) {
             switch (_k.label) {
                 case 0: return [4 /*yield*/, fetch('http://127.0.0.1:5500/content.json')];
@@ -1204,6 +1201,7 @@ var dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdw
                     return [4 /*yield*/, response.json()];
                 case 2:
                     json = _k.sent();
+                    dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
                     for (_i = 0, _a = Object.keys(json); _i < _a.length; _i++) {
                         o_1 = _a[_i];
                         dropdownbuttoncollection[Object.keys(json).indexOf(o_1)].textContent = o_1;
@@ -1224,14 +1222,8 @@ var dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdw
                     //hover effekt für die button im dropdowncontainer
                     for (_d = 0, dropdowncontainerbuttoncollection_1 = dropdowncontainerbuttoncollection; _d < dropdowncontainerbuttoncollection_1.length; _d++) {
                         dcb = dropdowncontainerbuttoncollection_1[_d];
-                        dcb.addEventListener("mouseover", function () {
-                            this.style.backgroundColor = "#34568B";
-                            this.style.color = "white";
-                        });
-                        dcb.addEventListener("mouseleave", function () {
-                            this.style.backgroundColor = "#dddddd";
-                            this.style.color = "black";
-                        });
+                        dcb.addEventListener("mouseover", function () { changeBackgroundColorAndColor(this, "#34568B", "white"); });
+                        dcb.addEventListener("mouseleave", function () { changeBackgroundColorAndColor(this, "#dddddd", "black"); });
                     }
                     //dropdownicons für button im sidenav
                     for (_e = 0, dropdownbuttoncollection_1 = dropdownbuttoncollection; _e < dropdownbuttoncollection_1.length; _e++) {
@@ -1288,7 +1280,6 @@ function setup_covid19_barchart() {
     setupMainBereich();
     var main_header = document.getElementById("mainheader");
     var main_main = document.getElementById("main_main");
-    var main_container = document.getElementById("main_container");
     main_main.replaceChildren();
     main_header.replaceChildren();
     var h1 = document.createElement("h1");
@@ -1296,12 +1287,18 @@ function setup_covid19_barchart() {
     main_header.appendChild(h1);
     var div = document.createElement("div");
     div.setAttribute("id", "barchartdiv");
+    var mapdiv = document.createElement("div");
+    var listendiv = document.createElement("div");
+    mapdiv.setAttribute("id", "mapdiv");
     div.style.display = "flex";
     div.style.justifyContent = "center";
+    mapdiv.style.border = "1px solid red";
+    mapdiv.style.display = "flex";
+    mapdiv.style.justifyContent = "center";
     main_main.append(div);
     BackgroundcolorWhite();
     (function (_) { return __awaiter(_this, void 0, void 0, function () {
-        var response, json, data, margin, width, height, svg, x, y;
+        var response, json, data, datasorted, i, tabelle, row, cell, margin, width, height, svg, x, y;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, fetch("http://127.0.0.1:5500/covid-19.json")];
@@ -1311,16 +1308,38 @@ function setup_covid19_barchart() {
                 case 2:
                     json = _a.sent();
                     data = Object.values(json);
-                    margin = { top: 10, right: 30, bottom: 90, left: 60 }, width = 460 - margin.left - margin.right, height = 450 - margin.top - margin.bottom;
+                    datasorted = data.sort(function (a, b) { return d3.descending(a.anzahl, b.anzahl); });
+                    i = 0;
+                    tabelle = document.createElement("table");
+                    tabelle.style.textAlign = "center";
+                    row = tabelle.insertRow(-1);
+                    cell = row.insertCell(0);
+                    cell.innerHTML = "<b>Bundesland</b>";
+                    cell = row.insertCell(1);
+                    cell.innerHTML = "<b>Fälle</b>";
+                    data.forEach(function (d) {
+                        var row = tabelle.insertRow(-1);
+                        var cell = row.insertCell(0);
+                        cell.textContent = data[data.indexOf(d)].name;
+                        cell = row.insertCell(1);
+                        cell.textContent = data[data.indexOf(d)].anzahl;
+                        if (i % 2 === 0) {
+                            row.style.backgroundColor = "#dddddd";
+                        }
+                        i++;
+                    });
+                    listendiv.appendChild(tabelle);
+                    margin = { top: 10, right: 30, bottom: 90, left: 60 }, width = 500 - margin.left - margin.right, height = 400 - margin.top - margin.bottom;
                     svg = d3.select("#barchartdiv")
                         .append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
+                        .attr("viewBox", "0 0 ".concat(width + margin.left + margin.right, " ").concat(height + margin.top + margin.bottom))
                         .append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                     x = d3.scaleBand()
                         .range([0, width])
-                        .domain(data.map(function (d) { return d.name; }))
+                        .domain(datasorted.map(function (d) { return d.name; }))
                         .padding(0.2);
                     svg.append("g")
                         .attr("transform", "translate(0," + height + ")")
@@ -1329,13 +1348,13 @@ function setup_covid19_barchart() {
                         .attr("transform", "translate(-10,0)rotate(-45)")
                         .style("text-anchor", "end");
                     y = d3.scaleLinear()
-                        .domain([0, d3.max(data, function (d) { return d.anzahl; })])
+                        .domain([0, d3.max(datasorted, function (d) { return d.anzahl; })])
                         .range([height, 0]);
                     svg.append("g")
                         .call(d3.axisLeft(y));
                     // Bars
-                    svg.selectAll("rect")
-                        .data(data)
+                    svg.selectAll("svg")
+                        .data(datasorted)
                         .enter()
                         .append("rect")
                         .attr("x", function (d) { return x(d.name); })
@@ -1351,6 +1370,57 @@ function setup_covid19_barchart() {
                         .attr("y", function (d) { return y(d.anzahl); })
                         .attr("height", function (d) { return height - y(d.anzahl); })
                         .delay(function (d, i) { return (i * 100); });
+                    return [2 /*return*/];
+            }
+        });
+    }); })();
+    (function (_) { return __awaiter(_this, void 0, void 0, function () {
+        var width, height, svg, georesponse, geo, dataresponse, geodata, geodatavalues, projection, data, colorScheme, colorScale;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    width = 300;
+                    height = 400;
+                    svg = d3.select("#mapdiv").append("svg").attr("width", width).attr("height", height);
+                    return [4 /*yield*/, fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json")];
+                case 1:
+                    georesponse = _a.sent();
+                    return [4 /*yield*/, georesponse.json()];
+                case 2:
+                    geo = _a.sent();
+                    return [4 /*yield*/, fetch("http://127.0.0.1:5500/covid-19.json")];
+                case 3:
+                    dataresponse = _a.sent();
+                    return [4 /*yield*/, dataresponse.json()];
+                case 4:
+                    geodata = _a.sent();
+                    geodatavalues = Object.values(geodata);
+                    projection = d3.geoMercator()
+                        .center([10, 50])
+                        .scale(1500)
+                        .translate([width / 2, height / 2]);
+                    data = d3.map();
+                    geodatavalues.forEach(function (d) { data.set(d.id, d.anzahl); }); // Daten der Bundesländer in einer map speichern
+                    colorScheme = d3.schemeReds[6];
+                    colorScale = d3.scaleThreshold()
+                        .domain([1000, 10000, 100000, 1000000, 3000000, 7000000])
+                        .range(colorScheme);
+                    // Draw the map
+                    svg.append("g")
+                        .selectAll("path")
+                        .data(geo.features)
+                        .enter()
+                        .append("path")
+                        // draw each country
+                        .attr("d", d3.geoPath()
+                        .projection(projection))
+                        // set the color of each country
+                        .attr("fill", function (d) {
+                        // Für jedes Land holen wir uns die Fallzahlen aus der Map
+                        // Die Werte wurden in der Map mit dem Kürzel des jeweiligen Bundeslandes(hier id) gespeichert
+                        var dataforbl = data.get(d.properties.id);
+                        return colorScale(dataforbl);
+                    });
                     return [2 /*return*/];
             }
         });
@@ -1428,3 +1498,45 @@ function closeSidenav() {
     sidenavoverlay.style.display = "none";
     sidenavoverlay.style.width = "0px";
 }
+function vue_singlefile() {
+    var mainref = document.getElementById("main");
+    removeChildrenInDiv(mainref);
+    setupMainBereich();
+    BackgroundcolorWhite();
+    var main_header = document.getElementById("mainheader");
+    var main_main = document.getElementById("main_main");
+    var headerdiv = document.createElement("div");
+    var header = document.createElement("h1");
+    header.appendChild(document.createTextNode("Vue Single Component"));
+    headerdiv.appendChild(header);
+    main_header.appendChild(headerdiv);
+    var div = document.createElement("div");
+    div.setAttribute("id", "vuediv");
+    var para1 = document.createElement("p");
+    var para2 = document.createElement("p");
+    var para3 = document.createElement("p");
+    para1.textContent = "Buchstaben : {{buchstaben}}";
+    para2.appendChild(document.createTextNode("Leerzeichen :{{leerzeichen}}"));
+    para3.appendChild(document.createTextNode("Worte : {{worte}}"));
+    div.appendChild(para1);
+    div.appendChild(para2);
+    div.appendChild(para3);
+    var input = document.createElement("input");
+    main_main.appendChild(div);
+    new Vue({
+        el: '#vuediv',
+        data: {
+            buchstaben: 0,
+            leerzeichen: 0,
+            worte: 0
+        }
+    });
+}
+new Vue({
+    el: "#vue",
+    data: {
+        buchstaben: 0,
+        leerzeichen: 0,
+        woerter: 0
+    }
+});
