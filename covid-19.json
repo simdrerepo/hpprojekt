@@ -1,67 +1,83 @@
 {
     "Baden-Württem­berg"  :{
+      "id":"DE-BW",
     "name" : "Baden-Württem­berg",
     "anzahl": 4900869
  
    },
 
   "Bayern":{
+    "id":"DE-BY",
     "name" : "Bayern",
     "anzahl": 6544068
    },
    "Berlin":{
+    "id":"DE-BE",
     "name":"Berlin",
     "anzahl": 1364779
    },
    "Brandenburg":{
+    "id":"DE-BB",
     "name":"Brandenburg",
     "anzahl": 1061199
    },
    "Bremen":{
+    "id":"DE-HB",
     "name":"Bremen",
     "anzahl": 286469
    },
    "Hamburg":{
+    "id":"DE-HH",
     "name":"Hamburg",
     "anzahl": 778862
    },
    "Hessen":{
+    "id":"DE-HE",
     "name":"Hessen",
     "anzahl": 2794781
    },
    "Mecklenburgvorpommern":{
+    "id":"DE-MV",
     "name":"Mecklenburgvorpommern",
     "anzahl": 675982
    },
    "Niedersachsen":{
+    "id":"DE-NI",
     "name":"Niedersachsen",
     "anzahl": 3603757
    },
    "Nordrhein-Westfalen":{
+    "id":"DE-NW",
     "name":"Nordrhein-Westfalen",
     "anzahl": 7550647
    },
    "Rheinland-Pfalz":{
+    "id":"DE-RP",
     "name":"Rheinland-Pfalz",
     "anzahl": 1686772
    },
    "Saarland":{
+    "id":"DE-SL",
     "name":"Saarland",
     "anzahl": 470202
    },
    "Sachsen":{
+    "id":"DE-SN",
     "name":"Sachsen",
     "anzahl": 1901120
    },
    "Sachsen-Anhalt":{
+    "id":"DE-ST",
     "name":"Sachsen-Anhalt",
     "anzahl":927109
    },
    "Schleswig-Holstein":{
+    "id":"DE-SH",
     "name":"Schleswig-Holstein",
     "anzahl":1120219
    },
    "Thüringen":{
+    "id":"DE-TH",
     "name":"Thüringen",
     "anzahl": 863185
    }

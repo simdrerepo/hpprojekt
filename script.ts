@@ -2,44 +2,56 @@
 
 
 
-var main_container:HTMLDivElement;
-var main_header:HTMLDivElement;
-var main_main:HTMLDivElement;
-var controller = new AbortController();
+function removeChildrenInDiv(div:HTMLElement): void{
+  
+  div.replaceChildren();
+}
+
+const loginbutton = document.getElementById("loginbutton")!;
+loginbutton.addEventListener("mouseover",function(){this.style.textDecoration="underline";this.style.textUnderlineOffset="0.3em";});
+loginbutton.addEventListener("mouseleave",function(){this.style.textDecoration="none";});
 
 const setup_login = ():void => {
   const mainref = <HTMLDivElement>document.getElementById("main");
-  mainref.replaceChildren();
+ removeChildrenInDiv(mainref);
   
   let container = document.createElement("div");
   let usernameInput = document.createElement("input");
   let passwortInput = document.createElement("input");
   let loginButton = document.createElement("button");
   let cancelButton = document.createElement("button");
-  let tabelle = document.createElement("table");
+  
   container.style.backgroundColor ="white";
   container.style.marginTop = "30px";
   container.style.minHeight = "700px";
- 
+  let tabelle = createTable(2,2);
+ container.appendChild(tabelle);
+ console.log(container);
   mainref.appendChild(container);
 
 };
 
-var sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
-var buttoncollection = sidebuttondiv.getElementsByTagName("button");
+
+
 
 function mouseOver(this: any):void{
-  this.style.backgroundColor = "#34568B";
-    this.style.color = "white";
+ 
+  this.style.backgroundColor= "#34568B";
+  this.style.color="white";
+  
+    
 
 }
 function mouseOut(this: any):void{
-  this.style.backgroundColor = "white";
-    this.style.color="black";
+  this.style.backgroundColor="white";
+  this.style.color ="black";
+   
 
 }
 (function hoverForSidenavBtn():void{
 // hovereffekt für sidenav button
+const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
+const buttoncollection = sidebuttondiv.getElementsByTagName("button");
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
   buttoncollection[i].addEventListener("mouseover",mouseOver);
@@ -47,7 +59,7 @@ for(let i=0;i<buttoncollection.length;i++){
 }})();
 
 (function AddDropdownButtonListener():void{
-
+  const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
 var sidenavoverlay = <HTMLDivElement>document.getElementById("sidenavoverlay");
 sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
 
@@ -58,15 +70,8 @@ for(let i=0;i<dropdownbutton.length;i++){
   dropdownbutton[i].addEventListener("click",function(this:any){
  
     var dropdown = this.nextElementSibling;
-if(dropdown.style.display === "block"){
-dropdown.style.display = "none";
-
-}
-else{dropdown.style.display="block";}
-
-
-  }
-  );
+if(dropdown.style.display === "block"){dropdown.style.display = "none";}
+else{dropdown.style.display="block";}});
  
  
 
@@ -186,18 +191,13 @@ class tic_tac_toe{
               if(self.istFrei(listenerid,self)){
               //Wenn ein Feld noch nicht bespielt wurde, dann...
               if(self.spieler==="o"){
-                  // Koordinaten des Feldes ermitteln
-                 let coords = self.getKoordinaten(this);
-                 // Kreis erzeugen
-                 let circle = self.drawCircle(coords);
-                 // Aufs Spielfeld damit
-                self.drawOnSpielfeld(circle);
-                //Feld wird markiert mit aktuellem Spieler
-                 self.spielfeld[listenerid]="o";
-                 //Gewinn Bedingungen checken
-                 setTimeout(()=>self.gibtEsEinenGewinner("o",self),10);
-                 //Nächster Spieler ist jetzt dran
-                 self.changeSpieler(self);
+                  
+                 let coords = self.getKoordinaten(this);// Koordinaten des Feldes ermitteln               
+                 let circle = self.drawCircle(coords);// Kreis erzeugen
+                self.drawOnSpielfeld(circle); // Aufs Spielfeld damit
+                self.spielfeld[listenerid]="o";//Feld wird markiert mit aktuellem Spieler
+               setTimeout(()=>self.gibtEsEinenGewinner("o",self),10);//Gewinn Bedingungen checken
+                 self.changeSpieler(self);//Nächster Spieler ist jetzt dran
               }
              else if(self.spieler==="x"){
               // Spieler mit Kreuz
@@ -480,12 +480,24 @@ counting:number;
 std:number;
 min:number;
 sek:number;
-intervalids:number[];
+intervalids:any[];
 setStartStopSymbol(string:string){
 this.startstopsymbol=string;
 }
-timer(){
+timer(htmlElement:HTMLElement):void{
+  this.sek++;
 
+
+  if(this.sek===60){
+    this.min++;
+    this.sek=0;
+    if(this.min===60){
+      this.std++;
+      this.min=0;
+    
+    }
+  }
+  htmlElement.textContent = String(this.std)+':'+String(this.min)+':'+String(this.sek);
 }
 swapSymbols(){
 if(this.startstopsymbol==="Stop"){
@@ -506,18 +518,19 @@ constructor(){
 array:Redner[];
 }
 
-var rednerarray = new RednerArray();
+
 
 
 function setup_tic_tac_toe(){
   const mainref = <HTMLDivElement>document.getElementById("main");
+  removeChildrenInDiv(mainref);
+ setupMainBereich(); 
+  BackgroundcolorWhite();
+  
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
   const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
-  main_main.replaceChildren();
-  main_header.replaceChildren();
   
-  BackgroundcolorWhite();
+ 
 let div = document.createElement("div");
 let header = document.createElement("h1");
 header.appendChild(document.createTextNode("Tic Tac Toe"));
@@ -533,22 +546,7 @@ div.style.justifyContent="center";
 
 }
 
-function myTimer(objekt:Redner,ticker):void {
 
- objekt.sek++;
-
-
-if(objekt.sek===60){
-  objekt.min++;
-  objekt.sek=0;
-  if(objekt.min===60){
-    objekt.std++;
-    objekt.min=0;
-  
-  }
-}
-ticker.textContent = String(objekt.std)+':'+String(objekt.min)+':'+String(objekt.sek);
-}
 
 function setAllButtonTextToStop(){
   var collection = document.querySelectorAll("button");
@@ -563,41 +561,42 @@ function setAllButtonTextToStop(){
       }
   }
 }
-function stopAll(){
-  if(rednerarray.array.length!=0){
- 
- for(let i=0;i<rednerarray.array.length;i++){
- for(let j=0;j<rednerarray.array[i].intervalids.length;j++){
- 
- clearInterval(rednerarray.array[i].intervalids[j]);
- 
- }
- rednerarray.array[i].counting = 0;
- }
-   }
+function stopAll(rednerArray:Redner[]){
+ rednerArray.forEach((redner)=>{redner.clearAllIntervalIds();redner.counting=0;});
+
+}
+function createTable(reihen:number,zeilen:number):HTMLTableElement{
+  var table = document.createElement("table");
+  for(let i=0;i<zeilen;i++){
+   let reihe = table.insertRow(-1);
+    for(let j=0;j<reihen;j++){
+      reihe.insertCell(j);
+    }
+
+
+  }
+  return table;
 
 }
 
-function myEventHandler(rednerobj:Redner,tiker,button){
+function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElement,rednerArray:Redner[]){
   
    var event = rednerobj.counting;
   
   if(event === 0){
-    stopAll();
+   stopAll(rednerArray);
     setAllButtonTextToStop();
-    let interval = setInterval(myTimer,1000,rednerobj,tiker);
+    let interval = setInterval(rednerobj.timer.bind(rednerobj),1000,htmlElement);
     rednerobj.intervalids.push(interval);
     rednerobj.counting = 1;
-    button.textContent = 'Stop';
+    rednerobj.startstopsymbol = 'Stop';
+    button.textContent = rednerobj.startstopsymbol;
     
     
   }
   if(event === 1 ){
     
-    for(let i=0;i<rednerobj.intervalids.length;i++){
-      
-      clearInterval(rednerobj.intervalids[i]);
-    }
+   rednerobj.clearAllIntervalIds();
     
     rednerobj.counting = 0;
     button.textContent = 'Start';
@@ -607,7 +606,7 @@ function myEventHandler(rednerobj:Redner,tiker,button){
 }
 
 
-function addRednerInListe(liste, rednerobjintabelle){
+function addRednerInListe(liste:HTMLElement, rednerobjintabelle){
  
   let li = document.createElement("li");
   li.appendChild(rednerobjintabelle);
@@ -616,7 +615,11 @@ function addRednerInListe(liste, rednerobjintabelle){
 }
 
 
-function createRedner(rednerobj:Redner){
+function createRedner(name:string,rednerarray:Redner[]){
+  if(name!==""){
+  let rednerobj:Redner = new Redner(name);
+
+
 
  
   const tabelle = document.createElement("table");
@@ -630,56 +633,42 @@ reihe.insertCell(1);
 reihe.appendChild(button);
 let timer = document.createElement("p");
 reihe.insertCell(2);
-var tiker = document.createTextNode('0:0:0');
-var interval = setInterval(myTimer,1000,rednerobj,tiker);
-    button.textContent = 'Stop';
+var display = document.createTextNode("0:0:0");
+timer.appendChild(display);
+var interval = setInterval(rednerobj.timer.bind(rednerobj),1000,timer);
+    button.textContent = rednerobj.startstopsymbol;
     rednerobj.counting = 1;
     
 rednerobj.intervalids.push(interval);
-button.addEventListener("click",()=>myEventHandler(rednerobj,tiker,button));
+button.addEventListener("click",()=>myEventHandler(rednerobj,timer,button,rednerarray));
 
-timer.appendChild(tiker);
+
 reihe.appendChild(timer);
-if(rednerarray.array.length!=0){
- 
-for(let i=0;i<rednerarray.array.length;i++){
-for(let j=0;j<rednerarray.array[i].intervalids.length;j++){
+if(rednerarray.length!=0){
+rednerarray.forEach((redner)=>{redner.clearAllIntervalIds();redner.counting = 0;}); 
 
-clearInterval(rednerarray.array[i].intervalids[j]);
+  }
 
-}
-rednerarray.array[i].counting = 0;
-}
-  }
-  var collection = document.querySelectorAll("button");
-  var start = 'Stop';
   
   
-  for (let i = 0; i < collection.length; i++) {
-   
-      if(collection[i].textContent === start){
-        collection[i].textContent = 'Start';
-        
-      }
-  }
+ setAllButtonTextToStop();
   
-rednerarray.array.push(rednerobj);
+rednerarray.push(rednerobj);
+
 
 return tabelle;
-
+  }
   }
 
  
 function setupU_5_1():void{
   const mainref = <HTMLDivElement>document.getElementById("main");
-  mainref.replaceChildren();
+  removeChildrenInDiv(mainref);
   setupMainBereich();
-  
+  BackgroundcolorWhite();
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
   const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =<HTMLDivElement>document.getElementById("main_container");
- main_main.innerHTML = '';
- main_header.innerHTML = '';
+ 
  
  
  
@@ -781,7 +770,7 @@ for(let i=1;i<odd.length;i++){
 
 
 
-BackgroundcolorWhite();
+
 }
 
 
@@ -791,14 +780,14 @@ function setupU_5_2(){
   setupMainBereich();
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
   const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const main_container = <HTMLDivElement>document.getElementById("main_container");
 
   main_main.innerHTML = '';
   main_header.innerHTML = '';
   
 
-  let us = <HTMLDivElement>document.getElementById("mainheader");
- let h1= document.createElement("h1");
+  let us:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
+ let h1 = document.createElement("h1");
  h1.appendChild(document.createTextNode('Übung 5.2'));
   us.appendChild(h1);
   
@@ -838,10 +827,11 @@ listendiv.style.display = "flex";
 listendiv.style.justifyContent = "center";
 ues.style.textAlign = "Center";
 BackgroundcolorWhite();
+var rednerarray:Redner[] = new Array();
+
  
- let btn = <HTMLButtonElement>document.getElementById("btn");
- let eingabefeld = <HTMLInputElement>document.getElementById("eingabe");
- btn.addEventListener("click",()=> addRednerInListe(liste,createRedner(new Redner( eingabefeld.value))));
+ 
+ eingabebutton.addEventListener("click",()=> addRednerInListe(liste,createRedner(eingabe.value,rednerarray)));
 
 }
 
@@ -873,9 +863,21 @@ function setupU_5_3():void{
   main_header_ref.appendChild(headline);
   let button = document.createElement("button");
   button.textContent ='sortieren';
+  
+  button.style.backgroundColor ="white";
+  button.style.color ="black";
+  button.style.height ="1.5rem";
+  button.addEventListener("mouseover",function(){changeBackgroundColorAndColor(this,)});
+  button.addEventListener("mouseleave",function(){changeBackgroundColorAndColor(this,)})
   let tablediv = <HTMLDivElement>document.createElement("div");
   let addbutton = document.createElement("button");
   addbutton.textContent = 'hinzufügen';
+  addbutton.style.backgroundColor ="white";
+ 
+  addbutton.style.color="black";
+  addbutton.style.height ="1.5rem";
+  addbutton.addEventListener("mouseover",function(){this.style.backgroundColor="#73aca5";});
+  addbutton.addEventListener("mouseleave",function(){this.style.backgroundColor="#a9d7d1";})
   zelle.appendChild(input1);
   zelle = reihe0.insertCell(1);
   zelle.appendChild(input2);
@@ -1156,10 +1158,11 @@ main_main_ref.appendChild(Plagiatsresolution);
   let response = await fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopwords-de.txt');
   const stopwörter = await response.text(); 
   let stops = stopwörter.split(/\r?\n/);
-  let stoparray2d = new Array();
+  let stoparray2d:any[] = new Array();
   
-  let alltext = main_container.textContent.toLowerCase().replaceAll(",","").replaceAll(".","").replaceAll("-","").replaceAll("(","").replaceAll(")","").replaceAll(":","");
- let alltextsplitted = alltext.split(" "); 
+  let alltext = main_container.textContent!.toLowerCase().replaceAll(",","").replaceAll(".","").replaceAll("-","").replaceAll("(","").replaceAll(")","").replaceAll(":","");
+  
+ let alltextsplitted= alltext.split(" ");
  
  for(let i=0;i<stops.length;i++){
   stoparray2d.push([stops[i],alltextsplitted.reduce((count, num) => num === stops[i] ? count + 1 : count, 0)]);
@@ -1169,13 +1172,15 @@ main_main_ref.appendChild(Plagiatsresolution);
  tabelle.style.textAlign = "center";
  let row = tabelle.insertRow(-1);
  let column = row.insertCell(0);
- column.innerHTML = '<b>Stopwörter</b>';
+ column.innerHTML = '<b>Stopwort</b>';
  column = row.insertCell(1);
  column.innerHTML = '<b>Anzahl</b>';
  filtered.forEach(x=>{let row =tabelle.insertRow(-1);
 let column = row.insertCell(0);
 column.appendChild(document.createTextNode(x[0]));
-column = row.appendChild(document.createTextNode(x[1]));
+column = row.insertCell(1);
+column.appendChild(document.createTextNode(x[1]));
+
 if(filtered.indexOf(x)%2==0){
     row.style.backgroundColor = "#dddd";
   }
@@ -1188,7 +1193,9 @@ ergebnisdiv.appendChild(tabelle);
 
 let Plagiatsresolutionref = <HTMLDivElement>document.getElementById("plagiatresolution");
 let all = Array.from(Plagiatsresolutionref.getElementsByTagName("*"));
-let fil = all.map((item)=>item=item.nodeName.toLowerCase());
+let fil = all.map((item:any)=>item=item.nodeName.toLowerCase());
+
+
 let table = document.createElement("table");
 
 let tagset = new Set();
@@ -1251,15 +1258,15 @@ setTimeout(()=>ergebnisdiv.appendChild(table),100);
   main_header.appendChild(h1);
 
       fetch('http://127.0.0.1:5500/A.txt').then(response=>response.text()).then(text=>{let arrayA = text.split(/\r?\n/);
-        fetch('http://127.0.0.1:5500/B.txt').then(response=>response.text()).then(text=>{let arrayB = text.split(/\r?\n/);
-    for(let i=0;i<arrayB.length;i++){
-      setTimeout(()=>promisediv.innerHTML+= arrayA[i],100);
-      setTimeout(()=>promisediv.innerHTML+= arrayB[i]+'<br>',100);
-    }
+      fetch('http://127.0.0.1:5500/B.txt').then(response=>response.text()).then(text=>{let arrayB = text.split(/\r?\n/);
+    for(let i=0;i<arrayA.length;i++){
+      setTimeout(()=>promisediv.innerHTML+= arrayA[i],10);
+      setTimeout(()=>promisediv.innerHTML+= arrayB[i]+'<br>',10);
+      }
  
-      });
-  
     });
+   
+  });
      
 
     }
@@ -1276,8 +1283,7 @@ function setupU_8_2(){
   main_header.replaceChildren();
 
   BackgroundcolorWhite();
-  const main_main_ref = document.getElementById("main_main");
-  const main_header_ref = document.getElementById("mainheader");
+
   let promisediv = document.createElement("div");
   promisediv.style.textAlign ="center";
   let textAdiv = document.createElement("div");
@@ -1343,16 +1349,19 @@ button.addEventListener("click",()=>{BackgroundcolorWhite(); populateMain(mainin
 
 }
 
+function changeBackgroundColorAndColor(buttonreferenz:any,backgroundColor:string,textcolor:string):void{
+  buttonreferenz.style.backgroundColor = backgroundColor;
+buttonreferenz.style.color = textcolor;
+}
 
 
 
-const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
 (function setupU_8_3(){
   
   (async _=>{
     let response = await fetch('http://127.0.0.1:5500/content.json');
     let json = await response.json();
-    
+    const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
     
    
 
@@ -1380,15 +1389,8 @@ const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drp
     const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
     //hover effekt für die button im dropdowncontainer
     for(let dcb of dropdowncontainerbuttoncollection){
-      dcb.addEventListener("mouseover",function(this:any){
-        this.style.backgroundColor ="#34568B";
-        this.style.color="white";
-      });
-      dcb.addEventListener("mouseleave",function(this:any){
-        this.style.backgroundColor = "#dddddd";
-        this.style.color = "black";
-      })
-    }
+      dcb.addEventListener("mouseover" ,function(this:any){changeBackgroundColorAndColor(this,"#34568B","white")});
+      dcb.addEventListener("mouseleave",function(this:any){changeBackgroundColorAndColor(this,"#dddddd","black") })}
     //dropdownicons für button im sidenav
     for(let b of dropdownbuttoncollection){
       b.addEventListener("click",function(this:any){
@@ -1452,7 +1454,7 @@ function setup_covid19_barchart():void{
   
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
   const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  
   main_main.replaceChildren();
   main_header.replaceChildren();
   let h1 = document.createElement("h1");
@@ -1460,26 +1462,63 @@ function setup_covid19_barchart():void{
   main_header.appendChild(h1);
   let div = document.createElement("div");
   div.setAttribute("id","barchartdiv");
+  const mapdiv = document.createElement("div");
+  const listendiv = document.createElement("div");
+ 
+ 
+  mapdiv.setAttribute("id","mapdiv");
   div.style.display = "flex";
   div.style.justifyContent = "center";
+  mapdiv.style.border = "1px solid red";
+  mapdiv.style.display = "flex";
+  mapdiv.style.justifyContent = "center";
+  
+
   main_main.append(div);
+ 
+  
   
   
   BackgroundcolorWhite();
   (async _=>{
             let response = await fetch("http://127.0.0.1:5500/covid-19.json");
             let json = await response.json();
-            const data = Object.values(json);
+            const data:any[] = Object.values(json);
+            const datasorted = data.sort((a,b) => d3.descending(a.anzahl,b.anzahl));
+            var i =0;
+            var tabelle = document.createElement("table");
+            tabelle.style.textAlign="center";
+            let row = tabelle.insertRow(-1);
+            let cell = row.insertCell(0);
+            cell.innerHTML = "<b>Bundesland</b>"
+          cell = row.insertCell(1);
+          cell.innerHTML = "<b>Fälle</b>";
+            data.forEach(d=>{
+              let row = tabelle.insertRow(-1);
+            let cell = row.insertCell(0);
+            cell.textContent = data[data.indexOf(d)].name;
+            cell = row.insertCell(1);
+            cell.textContent = data[data.indexOf(d)].anzahl;
+            if(i%2===0){row.style.backgroundColor="#dddddd";}
+             
+              
+             
+              i++;
+
+            });
+            listendiv.appendChild(tabelle);
             
+            //Barchart
             var margin = {top: 10, right: 30, bottom: 90, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+    width = 500 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#barchartdiv")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("viewBox",`0 0 ${width+margin.left+margin.right} ${height+margin.top+margin.bottom}`)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
@@ -1489,7 +1528,7 @@ var svg = d3.select("#barchartdiv")
 // X axis
 var x = d3.scaleBand()
   .range([ 0, width ])
-  .domain(data.map(function(d) { return d.name; }))
+  .domain(datasorted.map(function(d) { return d.name; }))
   .padding(0.2);
 svg.append("g")
   .attr("transform", "translate(0," + height + ")")
@@ -1500,14 +1539,14 @@ svg.append("g")
 
 // Add Y axis
 var y = d3.scaleLinear()
-  .domain([0, d3.max(data,d=>d.anzahl)])
+  .domain([0, d3.max(datasorted,d=>d.anzahl)])
   .range([ height, 0]);
 svg.append("g")
   .call(d3.axisLeft(y));
 
 // Bars
-svg.selectAll("rect")
-  .data(data)
+svg.selectAll("svg")
+  .data(datasorted)
   .enter()
   .append("rect")
     .attr("x", function(d) { return x(d.name); })
@@ -1529,7 +1568,62 @@ svg.selectAll("rect")
 
         })();
 
+        (async _=>{
+        // Deutschlandkarte Covid-Fälle
+      var width = 300;
+      var height = 400;
+        var svg = d3.select("#mapdiv").append("svg").attr("width",width).attr("height",height);
+        const georesponse = await fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json");
+        const geo = await georesponse.json();
+        const dataresponse = await fetch("http://127.0.0.1:5500/covid-19.json");
+        const geodata = await dataresponse.json();
+        const geodatavalues = Object.values(geodata);
+       
+        
+        
+    var projection = d3.geoMercator()
+    .center([10, 50])
+                
+    .scale(1500)                       
+    .translate([width / 2, height / 2]);
+    var data = d3.map();
+    geodatavalues.forEach((d:any)=>{data.set(d.id,d.anzahl)}); // Daten der Bundesländer in einer map speichern
+    var colorScheme = d3.schemeReds[6];
+
+
+var colorScale = d3.scaleThreshold()
+  .domain([1000,10000,100000,1000000,3000000,7000000])
+  .range(colorScheme);
+    
+      
+
+      // Draw the map
+      svg.append("g")
+        .selectAll("path")
+        .data(geo.features)
+        .enter()
+        .append("path")
+          // draw each country
+          .attr("d", d3.geoPath()
+            .projection(projection)
+          )
+          // set the color of each country
+          .attr("fill", function (d) {
+            // Für jedes Land holen wir uns die Fallzahlen aus der Map
+            // Die Werte wurden in der Map mit dem Kürzel des jeweiligen Bundeslandes(hier id) gespeichert
+            let dataforbl = data.get(d.properties.id);
+             
+            
+           
+            return colorScale(dataforbl);
+          });
+        
+      })();
+      
+
 }
+
+
 
 
 
@@ -1657,6 +1751,55 @@ return t1-t0;
         
         
        }
+function vue_singlefile(){
+  const mainref = <HTMLDivElement>document.getElementById("main");
+  removeChildrenInDiv(mainref);
+  setupMainBereich();
+  BackgroundcolorWhite();
+  const main_header = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main = <HTMLDivElement>document.getElementById("main_main");
+  let headerdiv = document.createElement("div");
+  let header = document.createElement("h1");
+  header.appendChild(document.createTextNode("Vue Single Component")); 
+  headerdiv.appendChild(header);
+  main_header.appendChild(headerdiv);
+  let div = document.createElement("div");
+  div.setAttribute("id","vuediv");
+  let para1 = document.createElement("p");
+  let para2 = document.createElement("p");
+  let para3 = document.createElement("p");
+  para1.textContent = "Buchstaben : {{buchstaben}}";
+  para2.appendChild(document.createTextNode("Leerzeichen :{{leerzeichen}}"));
+  para3.appendChild(document.createTextNode("Worte : {{worte}}"));
+  div.appendChild(para1);
+  div.appendChild(para2);
+  div.appendChild(para3);
+   let input = document.createElement("input");
+  main_main.appendChild(div);
+new Vue({
+el:'#vuediv',
+data:{
+  buchstaben:0,
+  leerzeichen:0,
+  worte:0
+
+}
+
+
+});
+
+}
+
+new Vue({
+el:"#vue",
+  data:{
+    
+    buchstaben:0,
+     leerzeichen:0,
+     woerter:0
+  }
+});
+      
     
      
       

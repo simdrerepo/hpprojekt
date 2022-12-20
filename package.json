@@ -1,0 +1,24 @@
+{
+  
+  "name": "hpprojekt",
+  "version": "1.0.0",
+  "description": "Simon Dreckmann / sdreck2s",
+  "main": "node script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simdrerepo/hpprojekt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simdrerepo/hpprojekt/issues"
+  },
+  "homepage": "https://github.com/simdrerepo/hpprojekt#readme",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
+}
