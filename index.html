@@ -5,9 +5,10 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-<script src="https://unpkg.com/vue@2.6.0"></script>
+<script src="https://unpkg.com/vue@2.7"></script>
+
     
-</script>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Title</title>
    
   
@@ -185,6 +186,7 @@ color: black;
 #u1button:hover{
   background-color: #e7e9eb;
 }
+
 @media screen and (min-width: 450px){
 
   .container{
@@ -204,6 +206,12 @@ grid-row:1/2;}
   
  grid-column:2/8;
  grid-row:2/3;
+}
+#main_main{
+  margin-left:20px;
+margin-right:20px;
+
+
 }
 }
 
@@ -225,6 +233,12 @@ grid-row:1/2;}
  grid-column:4/10;
  grid-row:2/3;
 }
+#main_main{
+  margin-left:40px;
+margin-right:40px;
+
+
+}
 }
     </style>
 </head>
@@ -233,22 +247,18 @@ grid-row:1/2;}
 <div id="header">
     
     <div class="iconbar">
-  <a href="#" onclick="openCloseSideNav()"><i class="fa fa-bars"></i></a> 
+  <a href="#" id="sandwichbutton"><i class="fa fa-bars"></i></a> 
   <a href="index.html"><i class="fa fa-home"></i></a> 
 
    </div>
    <div class="loginbar">
     <div id ="loginbuttondiv">
-  <button id="loginbutton" onclick="setup_login()">  Login  </button>
+  <button id="loginbutton">  Login  </button>
     </div>
    </div>
 </div>
 <main id="main">
-  <div id ="vue">
-    <p>Buchstaben : {{buchstaben}}</p>
-    <p>Leerzeichen : {{leerzeichen}}</p>
-    <p>Wörter : {{woerter}}</p>
-  </div>
+
 </main>
 
 <div id="footer">
@@ -260,30 +270,31 @@ grid-row:1/2;}
 
  <div class="sidenavigation" id="sidenav">
  <div id="exitbutton">
-  <a href="#" onclick="openCloseSideNav()"><i class="fa fa-times"></i></a> 
+  <a href="#"><i class="fa fa-times"></i></a> 
  </div>
     
  
  <div id="sidebutton" class="sidebuttondiv">
- <div>
+ 
 <p style="text-align:center">Hallo, Gast</p>
 <hr style="width:90%">
 
-<button onclick="setupU_5_1()">Performanz-Messungen von DOM-Operationen</button>
-<button onclick="setupU_5_2()">Rednerliste mit Zeitmessung</button>
-<button onclick="setupU_5_3()">TopSort als Web-App</button>
-<button onclick="setupU_6_1()">Klammerpaare</button>
-<button onclick="setupU_7()">Textanalyse</button>
-<button onclick="setupU_8_1()">Promise</button>
-<button onclick="setupU_8_2()">Async/await</button>
+<button class="regularButton">Performanz-Messungen von DOM-Operationen</button>
+<button class="regularButton">Rednerliste mit Zeitmessung</button>
+<button class="regularButton">TopSort als Web-App</button>
+<button class="regularButton">Klammerpaare</button>
+<button class="regularButton">Textanalyse</button>
+<button class="regularButton">Promise</button>
+<button class="regularButton">Async/await</button>
 <button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
 <button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
 <button class="drpdwnbtn" onclick=""></button>
 <div class="dropdown-container"></div>
-<button onclick="setup_tic_tac_toe()">Tic Tac Toe</button>
-<button onclick="setup_covid19_barchart()">Covid19 Fälle in Deutschland</button>
+<button class="regularButton">Tic Tac Toe</button>
+<button class="regularButton">Covid19 Fälle in Deutschland</button>
+<button class="regularButton">Vue single component</button>
 
  </div>
   
@@ -293,8 +304,8 @@ grid-row:1/2;}
 </div>
 
 
-
-<script src="script.js"></script>
+<script>var exports = {};</script>
+<script type="module" src="script.js"></script>
 
 
 

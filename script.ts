@@ -7,133 +7,53 @@ function removeChildrenInDiv(div:HTMLElement): void{
   div.replaceChildren();
 }
 
+(function AddClickListenerToButton(){
+  //Clicklistener für die Button im Sidenav
+var sandwichbutton = document.getElementById("sandwichbutton")!;
+
+sandwichbutton.addEventListener("click",openCloseSideNav);
+console.log(sandwichbutton);
+var loginbutton = document.getElementById("loginbutton")!;
+loginbutton.addEventListener("click",()=>setup_login());
+
+
+const buttonarray = Array.from(document.getElementsByClassName("regularButton"));
+const functionArray = [domBenchmarks,setupU_5_2,setupU_5_3,setupU_6_1,setupU_7,setupU_8_1,setupU_8_2,setup_tic_tac_toe,setup_covid19_barchart,vue_singlefile];
+buttonarray.forEach(button=>{button.addEventListener("click",functionArray[buttonarray.indexOf(button)])});
+
+})();
+
+(function loginButtonStylingPlusHover(){
 const loginbutton = document.getElementById("loginbutton")!;
 loginbutton.addEventListener("mouseover",function(){this.style.textDecoration="underline";this.style.textUnderlineOffset="0.3em";});
 loginbutton.addEventListener("mouseleave",function(){this.style.textDecoration="none";});
-
+})();
 const setup_login = ():void => {
   const mainref = <HTMLDivElement>document.getElementById("main");
  removeChildrenInDiv(mainref);
   
   let container = document.createElement("div");
-  let usernameInput = document.createElement("input");
-  let passwortInput = document.createElement("input");
-  let loginButton = document.createElement("button");
-  let cancelButton = document.createElement("button");
+  var form = document.createElement("form");
+form.setAttribute("action","action='<?php echo $_SERVER['PHP_SELF'] ?>'");
+form.setAttribute("method","POST");
+
+ form.innerHTML =
+'E-mail: <input type="text" name="email"><br>'+
+'Passwort: <input type="text" name="pw"><br>'+
+'<input type="submit" id="submit">';
+
+
   
   container.style.backgroundColor ="white";
   container.style.marginTop = "30px";
   container.style.minHeight = "700px";
-  let tabelle = createTable(2,2);
- container.appendChild(tabelle);
+  
+ 
  console.log(container);
   mainref.appendChild(container);
+  
 
 };
-
-
-
-
-function mouseOver(this: any):void{
- 
-  this.style.backgroundColor= "#34568B";
-  this.style.color="white";
-  
-    
-
-}
-function mouseOut(this: any):void{
-  this.style.backgroundColor="white";
-  this.style.color ="black";
-   
-
-}
-(function hoverForSidenavBtn():void{
-// hovereffekt für sidenav button
-const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
-const buttoncollection = sidebuttondiv.getElementsByTagName("button");
-for(let i=0;i<buttoncollection.length;i++){
-  buttoncollection[i].style.cursor = "pointer";
-  buttoncollection[i].addEventListener("mouseover",mouseOver);
-  buttoncollection[i].addEventListener("mouseout",mouseOut);
-}})();
-
-(function AddDropdownButtonListener():void{
-  const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
-var sidenavoverlay = <HTMLDivElement>document.getElementById("sidenavoverlay");
-sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
-
-//Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
-    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
-for(let i=0;i<dropdownbutton.length;i++){
-  
-  dropdownbutton[i].addEventListener("click",function(this:any){
- 
-    var dropdown = this.nextElementSibling;
-if(dropdown.style.display === "block"){dropdown.style.display = "none";}
-else{dropdown.style.display="block";}});
- 
- 
-
-}
-})();
-var buttonclicked = <boolean[]>new Array();
-let dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
-dropdownbutton.forEach((button)=>{buttonclicked.push(false)});
-
-dropdownbutton.forEach((button)=>{button.addEventListener("click",function(){
-if(buttonclicked[dropdownbutton.indexOf(button)]===false){
-  button.removeEventListener("mouseout",mouseOut);
-  buttonclicked[dropdownbutton.indexOf(button)]=true;
-}
-else{button.addEventListener("mouseout",mouseOut);
-buttonclicked[dropdownbutton.indexOf(button)]=false;}
-  
-})});
-
-    
-
-function setupMainBereich():void{
-  // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
-  const mainref = <HTMLDivElement>document.getElementById("main"); 
- let main_container = <HTMLDivElement>document.createElement("div");
-  main_container.setAttribute("id","main_container");
- let main_header = <HTMLDivElement>document.createElement("div");
-  main_header.setAttribute("id","mainheader");
- let main_main = <HTMLDivElement>document.createElement("div");
-  main_main.setAttribute("id","main_main");
- let main_footer = <HTMLDivElement>document.createElement("div");
-  main_footer.setAttribute("id","main_footer");
-
-
-mainref.appendChild(main_container);
-main_container.appendChild(main_header);
-
-main_container.appendChild(main_main);
-main_container.appendChild(main_footer);
-
-}
-function BackgroundcolorWhite():void{
-  // styling für den Bereich(header,main)
-  const mainref = <HTMLDivElement>document.getElementById("main");
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
-  main_header.style.backgroundColor="white";
-main_main.style.backgroundColor="white";
-main_main.style.marginTop = "40px";
-main_main.style.marginLeft = "40px";
-main_main.style.marginRight = "40px";
-main_container.style.backgroundColor='white';
-main_container.style.minHeight="700px";
-main_header.style.borderBottom = "1px solid lightgray"
-main_container.style.borderLeft = "10px solid white";
-main_container.style.borderRight = "10px solid white";
-main_header.style.display = "flex";
-main_header.style.justifyContent = "center";
-mainref.style.marginTop = "30px";
-
-}
 class tic_tac_toe{
 
   constructor(){
@@ -384,142 +304,480 @@ class tic_tac_toe{
   }
   
   
-  
-  }
-
-class Graph{
-  constructor(){
-   this.knotenArray = new Array();
-  this.adj = new Array();
-  }
-  knotenArray:any[];
-  adj:any[];
-  addKnoten(knoten:any):void{
-    this.knotenArray.push(knoten);
-    this.adj.push([]);
-  }
-  addKante(k1:any,k2:any):void{
-    let indexfuerknoten=0;
-    for(let i=0;i<this.knotenArray.length;i++){
-      if(this.knotenArray[i]===k1){
-        indexfuerknoten=i;
-      }
-    }
-    
-    this.adj[indexfuerknoten].push(k2);
-  }
-  print():void{
-  
-    for(let i=0;i<this.knotenArray.length;i++){
-      console.log(this.knotenArray[i]+" : ");
-      for(let j=0;j<this.adj.length;j++){
-        console.log(this.adj[i][j]);
-      }
-  
-    }
-  }
-  
-  topsorthelper(knoten:any, besucht:any,stack:any):void{
-    besucht.push(knoten);
-    
-    let indexfuerknoten=0;
-    for(let i=0;i<this.knotenArray.length;i++){
-      if(this.knotenArray[i]===knoten){
-        indexfuerknoten=i;
-      }
-    }
-
-    for(let i=0;i<this.adj[indexfuerknoten].length;i++){
-                  if(!besucht.includes(this.adj[indexfuerknoten][i])){
-                      
-                      this.topsorthelper(this.adj[indexfuerknoten][i], besucht, stack)
-                  }
-                  
-              }
-  stack.push(knoten);
- 
-  
-  }
-  topologischSortieren():any[]{
-  
-    let stack = new Array();
-    let besucht = new Array();
-    let returnArray = new Array();
-  
-    for (let i = 0 ; i < this.knotenArray.length ; i++){
-      if (!besucht.includes(this.knotenArray[i])){
-         
-          this.topsorthelper(this.knotenArray[i], besucht, stack);
-          
-      }
-  }
-  while(stack.length!=0){
-    returnArray.push(stack.pop());
-  }
-  return returnArray;
-  }
-
-  }
-
-
-
- 
+}
 class Redner{
-constructor(name:string){
-  this.name = name;
-  this.std=0;
-  this.min=0;
-  this.sek=0;
-  this.counting=0;
-  this.intervalids=[];
-  this.startstopsymbol="Stop";
-}
-startstopsymbol:string;
-name:string;
-counting:number;
-std:number;
-min:number;
-sek:number;
-intervalids:any[];
-setStartStopSymbol(string:string){
-this.startstopsymbol=string;
-}
-timer(htmlElement:HTMLElement):void{
-  this.sek++;
-
-
-  if(this.sek===60){
-    this.min++;
+  constructor(name:string){
+    this.name = name;
+    this.std=0;
+    this.min=0;
     this.sek=0;
-    if(this.min===60){
-      this.std++;
-      this.min=0;
-    
+    this.counting=0;
+    this.intervalids=[];
+    this.startstopsymbol="Stop";
+  }
+  startstopsymbol:string;
+  name:string;
+  counting:number;
+  std:number;
+  min:number;
+  sek:number;
+  intervalids:any[];
+  setStartStopSymbol(string:string):void{
+  this.startstopsymbol=string;
+  }
+  timer(htmlElement:HTMLElement):void{
+    this.sek++;
+  
+  
+    if(this.sek===60){
+      this.min++;
+      this.sek=0;
+      if(this.min===60){
+        this.std++;
+        this.min=0;
+      
+      }
+    }
+    htmlElement.textContent = String(this.std)+':'+String(this.min)+':'+String(this.sek);
+  }
+  swapSymbols():void{
+  if(this.startstopsymbol==="Stop"){
+    this.startstopsymbol="Start";
+  }
+  else{this.startstopsymbol="Stop";}
+  }
+  clearAllIntervalIds():void{
+    for(const id of this.intervalids){
+      clearInterval(this.intervalids[this.intervalids.indexOf(id)]);
     }
   }
-  htmlElement.textContent = String(this.std)+':'+String(this.min)+':'+String(this.sek);
+  }
+class Vorrang{
+    constructor(array2d:any[][]){
+  this.array2d = array2d;
+  
+      this.adj = new Array();
+      this.stack = new Array();
+      this.besucht = new Array();
+     this.alleKnoten = new Array();
+      this.knotenSet = new Set();
+      this.anzahlVorrang = 0;
+      
+      this.identifyKnoten();
+     this.setupAdj(this.knotenSet.size);
+    
+      for(let i in this.array2d){
+        
+            this.addKante(array2d[i][0],array2d[i][1]);
+        
+      }
+      this.knotenSet.forEach((item:any)=>this.topologischSortieren(item));
+    }
+    array2d:any[][];
+    adj:any[];
+    stack:any[];
+    besucht:any[];
+    alleKnoten:any[];
+    knotenSet:any;
+    anzahlVorrang:number;
+
+    returnSortierung():any[]{
+      let ergarray = new Array();
+      this.stack.forEach(k=>{ergarray.push(this.stack[this.stack.length-1-this.stack.indexOf(k)])});
+return ergarray;
+    }
+
+    printAdj():void{
+        for(let i in this.adj){
+           
+            for(let j in this.adj[i]){
+                console.log(this.adj[i][j]);
+            }
+        }
+    }
+
+    printStack():void{
+for(let i in this.stack){
+    console.log(this.stack[i]);
 }
-swapSymbols(){
-if(this.startstopsymbol==="Stop"){
-  this.startstopsymbol="Start";
+
+    }
+    printKnotenSet():void{
+       this.knotenSet.forEach((item:any)=>{console.log(item)});
+    }
+   
+
+  
+    identifyKnoten():void{
+      
+      for(let i in this.array2d){
+        
+        for(let j in this.array2d[i]){
+          this.alleKnoten.push(this.array2d[i][j]);
+         this.knotenSet.add(this.array2d[i][j]);
+        }
+      }
+  
+    }
+  
+    setupAdj(setSize:number):void{
+      for(let i=0;i<setSize;i++){
+        this.adj.push([]);
+      }
+  
+    }
+    addKante(k1:any,k2:any):void{
+        let index = 0;
+        let knotenSetarray = Array.from(this.knotenSet);
+        for(let i=0;i<knotenSetarray.length;i++){
+            if(knotenSetarray[i]===k1){
+                index = i;
+            }
+
+        }
+        
+        this.adj[index].push(k2);
+      }
+      topsorthelper(knoten:any):void{
+       
+        this.besucht.push(knoten);
+        for(let i in this.array2d){
+         this.array2d[i] = this.array2d[i].filter(item => item!= knoten);
+         
+        }
+       var anzahl = 0;
+        for(let i in this.array2d){
+      
+        
+        if(this.array2d[i].length!=0){
+         anzahl++;
+        }
+        
+        }
+        this.anzahlVorrang = anzahl;
+        let knotenArray = Array.from(this.knotenSet);
+        let indexfuerknoten=0;
+        for(let i=0;i<knotenArray.length;i++){
+          if(knotenArray[i]===knoten){
+            indexfuerknoten=i;
+          }
+        }
+  
+        for(let i=0;i<this.adj[indexfuerknoten].length;i++){
+         
+                      if(!this.besucht.includes(this.adj[indexfuerknoten][i])){
+                          
+                          this.topsorthelper(this.adj[indexfuerknoten][i])
+                      }
+                      
+                  }
+      this.stack.push(knoten);
+      }
+      topologischSortieren(knoten:any):void{
+  
+        if (!this.besucht.includes(knoten)){
+           
+            this.topsorthelper(knoten);
+            
+        }
+  }
+  
+ * [Symbol.iterator]() {
+  
+
+  
+  for(let i=0;i<this.knotenSet.size;i++ ){
+  
+yield this.stack[this.knotenSet.size-1-i];
+  }
+  
+
+  }
+  }
+
+function mouseOver(this: any):void{
+ 
+  this.style.backgroundColor= "#34568B";
+  this.style.color="white";
+  
+    
+
 }
-else{this.startstopsymbol="Stop";}
+function mouseOut(this: any):void{
+  this.style.backgroundColor="white";
+  this.style.color ="black";
+   
+
 }
-clearAllIntervalIds(){
-  for(const id of this.intervalids){
-    clearInterval(this.intervalids[this.intervalids.indexOf(id)]);
+(function hoverForSidenavBtn():void{
+// hovereffekt für sidenav button
+const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
+const buttoncollection = sidebuttondiv.getElementsByTagName("button");
+for(let i=0;i<buttoncollection.length;i++){
+  buttoncollection[i].style.cursor = "pointer";
+  buttoncollection[i].addEventListener("mouseover",mouseOver);
+  buttoncollection[i].addEventListener("mouseout",mouseOut);
+}})();
+
+(function AddClickListenerToDropdownButton():void{
+  const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
+var sidenavoverlay = <HTMLDivElement>document.getElementById("sidenavoverlay");
+sidenavoverlay.addEventListener("click",()=>{openCloseSideNav()});
+
+//Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
+    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
+for(let i=0;i<dropdownbutton.length;i++){
+  
+  dropdownbutton[i].addEventListener("click",function(this:any){
+ 
+    var dropdown = this.nextElementSibling;
+if(dropdown.style.display === "block"){dropdown.style.display = "none";}
+else{dropdown.style.display="block";}});
+ 
+ 
+
+}
+})();
+(function addBackgroundEffectToDropdownButton(){
+  // Dropdownbutton haben einen festen Hintergrund wenn sie geklickt wurden
+var buttonclicked = <boolean[]>new Array();
+let dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
+dropdownbutton.forEach((button)=>{buttonclicked.push(false)});
+
+dropdownbutton.forEach((button)=>{button.addEventListener("click",function(){
+if(buttonclicked[dropdownbutton.indexOf(button)]===false){
+  button.removeEventListener("mouseout",mouseOut);
+  buttonclicked[dropdownbutton.indexOf(button)]=true;
+}
+else{button.addEventListener("mouseout",mouseOut);
+buttonclicked[dropdownbutton.indexOf(button)]=false;}
+  
+})});
+})();
+    
+
+function setupMainBereich():void{
+  // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
+  const mainref = <HTMLDivElement>document.getElementById("main"); 
+ let main_container = <HTMLDivElement>document.createElement("div");
+  main_container.setAttribute("id","main_container");
+ let main_header = <HTMLDivElement>document.createElement("div");
+  main_header.setAttribute("id","mainheader");
+ let main_main = <HTMLDivElement>document.createElement("div");
+  main_main.setAttribute("id","main_main");
+ let main_footer = <HTMLDivElement>document.createElement("div");
+  main_footer.setAttribute("id","main_footer");
+
+
+mainref.appendChild(main_container);
+main_container.appendChild(main_header);
+
+main_container.appendChild(main_main);
+main_container.appendChild(main_footer);
+
+}
+function BackgroundcolorWhite():void{
+  // styling für den Bereich(header,main)
+  const mainref = <HTMLDivElement>document.getElementById("main");
+  const main_header = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main = <HTMLDivElement>document.getElementById("main_main");
+  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  main_header.style.backgroundColor="white";
+main_main.style.backgroundColor="white";
+main_main.style.marginTop = "40px";
+
+main_container.style.backgroundColor='white';
+main_container.style.minHeight="700px";
+main_header.style.borderBottom = "1px solid lightgray"
+main_container.style.borderLeft = "10px solid white";
+main_container.style.borderRight = "10px solid white";
+main_header.style.display = "flex";
+main_header.style.justifyContent = "center";
+mainref.style.marginTop = "30px";
+
+}
+function domBenchmarks():void{
+  const mainref = <HTMLDivElement>document.getElementById("main");
+  mainref.replaceChildren();
+  setupMainBereich();
+  BackgroundcolorWhite();
+  const main_header = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main = <HTMLDivElement>document.getElementById("main_main");
+ 
+ 
+ 
+ 
+
+  let ueberschrift = <HTMLHeadElement> document.createElement("h1");
+  ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
+  var tabelle = <HTMLTableElement>document.createElement("table");
+  
+  tabelle.setAttribute("id","benchmarktabelle");
+  tabelle.setAttribute("class","tabelle");
+  let reihe0 = tabelle.insertRow(-1);
+  let zelle = reihe0.insertCell(0);
+  zelle.appendChild(document.createTextNode("Dom-Operation"));
+  zelle = reihe0.insertCell(1);
+  zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"))
+  
+let reihe = tabelle.insertRow(-1);
+zelle = reihe.insertCell(0);
+
+zelle.appendChild(document.createTextNode("innerHTML"));
+
+zelle = reihe.insertCell(1);
+zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
+let reihe2 = tabelle.insertRow(-1);
+zelle = reihe2.insertCell(0);
+zelle.appendChild(document.createTextNode("innerText"));
+zelle = reihe2.insertCell(1);
+zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
+let reihe3 = tabelle.insertRow(-1);
+zelle = reihe3.insertCell(0);
+zelle.appendChild(document.createTextNode("textContent"));
+zelle = reihe3.insertCell(1);
+zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
+
+  ueberschrift.setAttribute("id","headline");
+let tabellendiv = document.createElement("div");
+tabellendiv.setAttribute("id","tabellendiv");
+tabellendiv.appendChild(tabelle);
+tabellendiv.style.display = "flex";
+tabellendiv.style.justifyContent = "center";
+let mainueberschr = document.createElement("h2");
+mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
+main_header.appendChild(ueberschrift);
+main_header.style.textAlign="center";
+let codeblock = document.createElement("code");
+let codediv = document.createElement("div");
+let div = document.createElement("div");
+div.style.display ="flex";
+div.style.justifyContent="center";
+div.style.marginBottom = "40px";
+codediv.style.border ="1px solid lightgrey";
+codediv.style.padding = "10px";
+codediv.style.width = "500px";
+codediv.innerHTML = "<b>Codesample</b><br>..."+"<br>"+
+"<code>let t0 = performance.now();</code>"+"<br>"+
+"<code>for(i=0;i<500;i++){</code>"+"<br>"+
+"<code>div.innerHTML+=text;}</code>"+"<br>"+
+"<code>let t1 = performance.now();</code>"+"<br>"+
+"<code>return t1-t0;</code><br>"+
+"...";
+codediv.style.backgroundColor="#e7e9eb";
+
+
+
+
+
+  
+ //let text = '<h1>Eine Überschrift</h1>';
+
+
+//let t0 = performance.now();
+
+ //for(i=0;i<500;i++){
+//div.innerHTML+=text;
+// }
+
+//let t1 = performance.now();
+//main.removeChild(div);
+div.appendChild(codediv);
+main_main.appendChild(div);
+main_main.appendChild(tabellendiv);
+
+
+tabelle.style.border = "1px solid black";
+let trs = tabelle.getElementsByTagName("td");
+for(let i=0;i<trs.length;i++){
+  
+trs[i].style.border = "1px solid black";
+}
+var odd = tabelle.querySelectorAll("tr");
+
+for(let i=1;i<odd.length;i++){
+  odd[0].style.backgroundColor="lightyellow";
+  if(i%2 === 1){
+  odd[i].style.backgroundColor = "#f4f4f4";}
+  else{
+    odd[i].style.backgroundColor = "white";
   }
 }
-}
-class RednerArray{
-constructor(){
-  this.array = [];
-}
-array:Redner[];
-}
 
 
 
+
+
+}
+function benchmarkInnerHTML():number{
+
+  let main = <HTMLDivElement>document.getElementById("main_main");
+  let div = document.createElement("div");
+  
+  main.appendChild(div);
+  
+
+let text = '<h1>Eine Überschrift</h1>';
+
+
+let t0 = performance.now();
+
+ for(let i=0;i<500;i++){
+div.innerHTML+=text;
+ }
+
+let t1 = performance.now();
+main.removeChild(div);
+
+return t1-t0;
+
+}
+function benchmarkInnerText():number{
+
+  let main = <HTMLDivElement>document.getElementById("main_main");
+  let div = <HTMLDivElement>document.createElement("div");
+  div.setAttribute("id","testdiv");
+  main.appendChild(div);
+  let divref = <HTMLDivElement>document.getElementById("testdiv");
+
+let text = '<h1>Eine Überschrift</h1>';
+
+
+let t0 = performance.now();
+
+ for(let i=0;i<1000;i++){
+divref.innerText=text;
+ }
+
+let t1 = performance.now();
+main.removeChild(div);
+
+return t1-t0;
+
+}
+function benchmarkTextContent():number{
+
+  let main = <HTMLDivElement>document.getElementById("main_main");
+  let div = <HTMLDivElement>document.createElement("div");
+  div.setAttribute("id","testdiv");
+  main.appendChild(div);
+  let divref = <HTMLDivElement>document.getElementById("testdiv");
+
+let text = '<h1>Eine Überschrift</h1>';
+
+
+let t0 = performance.now();
+
+ for(let i=0;i<1000;i++){
+divref.textContent=text;
+ }
+
+let t1 = performance.now();
+main.removeChild(div);
+
+return t1-t0;
+
+}
 
 function setup_tic_tac_toe(){
   const mainref = <HTMLDivElement>document.getElementById("main");
@@ -546,9 +804,7 @@ div.style.justifyContent="center";
 
 }
 
-
-
-function setAllButtonTextToStop(){
+function setAllButtonTextToStop():void{
   var collection = document.querySelectorAll("button");
   var start = 'Stop';
   
@@ -561,7 +817,7 @@ function setAllButtonTextToStop(){
       }
   }
 }
-function stopAll(rednerArray:Redner[]){
+function stopAll(rednerArray:Redner[]):void{
  rednerArray.forEach((redner)=>{redner.clearAllIntervalIds();redner.counting=0;});
 
 }
@@ -579,7 +835,7 @@ function createTable(reihen:number,zeilen:number):HTMLTableElement{
 
 }
 
-function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElement,rednerArray:Redner[]){
+function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElement,rednerArray:Redner[]):void{
   
    var event = rednerobj.counting;
   
@@ -606,7 +862,7 @@ function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElem
 }
 
 
-function addRednerInListe(liste:HTMLElement, rednerobjintabelle){
+function addRednerInListe(liste:HTMLElement, rednerobjintabelle:any):void{
  
   let li = document.createElement("li");
   li.appendChild(rednerobjintabelle);
@@ -661,117 +917,7 @@ return tabelle;
   }
 
  
-function setupU_5_1():void{
-  const mainref = <HTMLDivElement>document.getElementById("main");
-  removeChildrenInDiv(mainref);
-  setupMainBereich();
-  BackgroundcolorWhite();
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
- 
- 
- 
- 
 
-  let ueberschrift = <HTMLHeadElement> document.createElement("h1");
-  ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-  var tabelle = <HTMLTableElement>document.createElement("table");
-  
-  tabelle.setAttribute("id","benchmarktabelle");
-  tabelle.setAttribute("class","tabelle");
-  let reihe0 = tabelle.insertRow(-1);
-  let zelle = reihe0.insertCell(0);
-  zelle.appendChild(document.createTextNode("JS Methoden"));
-  zelle = reihe0.insertCell(1);
-  zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"))
-  
-let reihe = tabelle.insertRow(-1);
-zelle = reihe.insertCell(0);
-
-zelle.appendChild(document.createTextNode("innerHTML"));
-
-zelle = reihe.insertCell(1);
-zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
-let reihe2 = tabelle.insertRow(-1);
-zelle = reihe2.insertCell(0);
-zelle.appendChild(document.createTextNode("innerText"));
-zelle = reihe2.insertCell(1);
-zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
-let reihe3 = tabelle.insertRow(-1);
-zelle = reihe3.insertCell(0);
-zelle.appendChild(document.createTextNode("textContent"));
-zelle = reihe3.insertCell(1);
-zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
-
-  ueberschrift.setAttribute("id","headline");
-let tabellendiv = document.createElement("div");
-tabellendiv.setAttribute("id","tabellendiv");
-tabellendiv.appendChild(tabelle);
-tabellendiv.style.display = "flex";
-tabellendiv.style.justifyContent = "center";
-let mainueberschr = document.createElement("h2");
-mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-main_header.appendChild(ueberschrift);
-main_header.style.textAlign="center";
-let codeblock = document.createElement("code");
-let codediv = document.createElement("div");
-let div = document.createElement("div");
-div.style.display ="flex";
-div.style.justifyContent="center";
-div.style.marginBottom = "40px";
-codediv.style.border ="1px solid lightgrey";
-codediv.style.padding = "10px";
-codediv.style.width = "500px";
-codediv.innerHTML = "..."+"<br>"+
-"<code>let t0 = performance.now();</code>"+"<br>"+
-"<code>for(i=0;i<500;i++){</code>"+"<br>"+
-"<code>div.innerHTML+=text;}</code>"+"<br>"+
-"<code>let t1 = performance.now();</code>"+"<br>"+
-"...";
-
-
-
-
-
-  
- //let text = '<h1>Eine Überschrift</h1>';
-
-
-//let t0 = performance.now();
-
- //for(i=0;i<500;i++){
-//div.innerHTML+=text;
-// }
-
-//let t1 = performance.now();
-//main.removeChild(div);
-div.appendChild(codediv);
-main_main.appendChild(div);
-main_main.appendChild(tabellendiv);
-
-
-tabelle.style.border = "1px solid black";
-let trs = tabelle.getElementsByTagName("td");
-for(let i=0;i<trs.length;i++){
-  
-trs[i].style.border = "1px solid black";
-}
-var odd = tabelle.querySelectorAll("tr");
-
-for(let i=1;i<odd.length;i++){
-  odd[0].style.backgroundColor="lightyellow";
-  if(i%2 === 1){
-  odd[i].style.backgroundColor = "#f4f4f4";}
-  else{
-    odd[i].style.backgroundColor = "white";
-  }
-}
-
-
-
-
-
-}
 
 
 function setupU_5_2(){
@@ -850,136 +996,109 @@ function setupU_5_3():void{
   var table = document.createElement("table");
   let reihe0 = table.insertRow(-1);
   let zelle = reihe0.insertCell(0);
- var input1 = document.createElement("input");
+ var input1:HTMLInputElement = document.createElement("input");
  input1.setAttribute("type","search");
  input1.setAttribute("id","input1");
- var input2 = document.createElement("input");
+ var input2:HTMLInputElement = document.createElement("input");
  input2.setAttribute("type","search");
  input2.setAttribute("id","input2");
   let main_header_ref = <HTMLDivElement>document.getElementById("mainheader");
   let main_main_ref = <HTMLDivElement>document.getElementById("main_main");
   let headline = document.createElement("h1");
-  headline.appendChild(document.createTextNode("Übung 5.3"));
+  headline.appendChild(document.createTextNode("TopSort als Web-App"));
   main_header_ref.appendChild(headline);
-  let button = document.createElement("button");
+  let button:HTMLButtonElement = document.createElement("button");
+  button.setAttribute("id","sortbutton");
   button.textContent ='sortieren';
-  
-  button.style.backgroundColor ="white";
-  button.style.color ="black";
   button.style.height ="1.5rem";
-  button.addEventListener("mouseover",function(){changeBackgroundColorAndColor(this,)});
-  button.addEventListener("mouseleave",function(){changeBackgroundColorAndColor(this,)})
-  let tablediv = <HTMLDivElement>document.createElement("div");
-  let addbutton = document.createElement("button");
-  addbutton.textContent = 'hinzufügen';
-  addbutton.style.backgroundColor ="white";
+  button.style.width = "5rem";
  
-  addbutton.style.color="black";
+  let div = <HTMLDivElement>document.createElement("div");
+  
+ 
+  let inputdiv = document.createElement("div");
+ 
+ 
+  let buttondiv = document.createElement("div");
+  
+  let addbutton:HTMLButtonElement = document.createElement("button");
+  addbutton.setAttribute("id","addbutton");
+  addbutton.textContent = 'hinzufügen';
   addbutton.style.height ="1.5rem";
-  addbutton.addEventListener("mouseover",function(){this.style.backgroundColor="#73aca5";});
-  addbutton.addEventListener("mouseleave",function(){this.style.backgroundColor="#a9d7d1";})
-  zelle.appendChild(input1);
-  zelle = reihe0.insertCell(1);
-  zelle.appendChild(input2);
-  zelle = reihe0.insertCell(2);
-  zelle.appendChild(addbutton);
-  zelle = reihe0.insertCell(3);
-  zelle.appendChild(button);
+  addbutton.style.width = "5rem";
+  inputdiv.appendChild(input1);
+  inputdiv.appendChild(input2);
+  buttondiv.appendChild(addbutton);
+  buttondiv.appendChild(button);
+  
 
-let h2 = document.createElement("h2");
-h2.appendChild(document.createTextNode("5.3. TopSort als Web-App"));
-h2.style.textAlign = "center";
+  div.appendChild(input1);
+  div.appendChild(input2);
+  div.appendChild(addbutton);
+  div.appendChild(button);
+ 
 
-var textdiv = <HTMLDivElement>document.createElement("div");
-var p:HTMLParagraphElement = document.createElement("p");
-
-p.appendChild(document.createTextNode("Katze Hund Hund Esel Hahn Katze"));
-p.style.height = "20px";
-textdiv.appendChild(p);
-textdiv.style.backgroundColor = "#e5e7ea";
-textdiv.style.borderRadius = "15px";
 
 let listdiv = document.createElement("div");
 
 
+div.style.display="flex";
+div.style.flexWrap="wrap";
+div.style.justifyContent="center";
 
 
 
-tablediv.style.display = "flex";
-tablediv.style.justifyContent = "center";
-tablediv.style.display = "flex";
-tablediv.style.justifyContent = "center";
+
+
 
 BackgroundcolorWhite();
 
-main_main_ref.appendChild(h2);
-tablediv.appendChild(table);
+
 listdiv.appendChild(liste);
-  main_main_ref.appendChild(tablediv);
+  main_main_ref.appendChild(div);
   main_main_ref.appendChild(listdiv);
  
   var sortiert = 0;
 
   button.addEventListener("click",()=>{
+   
 if(sortiert===0){
   
-
-    let col = liste.querySelectorAll("li");
-    let str ="";
-for(let i=0;i<col.length-1;i++){
-  str = str + col[i].textContent +" ";
+var vorrang2dArray:any[][] = new Array();
+    let col = Array.from(liste.querySelectorAll("li"));
   
-}
-str = str + col[col.length-1].textContent;
+col.forEach(ele=>{let str = ele.textContent!.replaceAll("[","").replaceAll("]","").replaceAll(","," ").split(" ");
 
-while(str.includes("[") || str.includes("]")){
-  if(str.includes("[")){
-let ar = str.replaceAll("[","");
-str = ar;
-  }
-  if(str.includes("]")){
-    let ar = str.replace("]","");
-    str = ar;
-  }
-}
-var strohnespace = str.split(" ");
-var array = str.replaceAll(","," ").split(" ");
+   vorrang2dArray.push(str);})
 
 
-
-var knotenAr:any[] = new Array();
-let graph = new Graph();
-for(let i=0;i<array.length;i++){if(!knotenAr.includes(array[i])){knotenAr.push(array[i]);}}
-
-for(let i=0;i<knotenAr.length;i++){
-  graph.addKnoten(knotenAr[i]);
-}
-var adja = new Array();
-
-for(let i of knotenAr){adja[adja.indexOf(i)] = new Array();}
-for(let i in strohnespace){let tmp = strohnespace[i].split(",");graph.addKante(tmp[0],tmp[1]);}
-
-let result = graph.topologischSortieren();
+let graph = new Vorrang(vorrang2dArray);
 let li = document.createElement("li");
 li.style.padding = "5px";
 li.style.borderLeft ="1px solid lightgrey";
 li.style.borderRight = "1px solid lightgrey";
 li.style.borderBottom = "1px solid lightgrey";
 li.style.backgroundColor ="lightyellow";
-let ergstr = "";
-for(let i in result){
-  ergstr = ergstr + result[i] +" ";
-}
+var ergstack = graph.returnSortierung();
+var ergstr="";
+
+ergstack.forEach(ele=>{ergstr+=ele+" ";})
+
 li.appendChild(document.createTextNode("Sortierung (v.l.n.r) = "+ergstr))
 liste.appendChild(li);
 sortiert = 1;
 
   
 }
+    
   })
   var ele_cntr = 0;
- addbutton.addEventListener("click",()=>{
-  if(sortiert ===0){
+ addbutton.addEventListener("click",(e)=>{
+  const input1 = <HTMLInputElement>document.getElementById("input1")!;
+  const input2 = <HTMLInputElement>document.getElementById("input2")!;
+  if(input1.value&&input2.value){
+ 
+  if(sortiert === 0){
   let li = document.createElement("li");
   li.style.padding = "5px";
   if(ele_cntr===0){
@@ -991,39 +1110,36 @@ sortiert = 1;
     li.style.backgroundColor = "white";
   }
   if(ele_cntr!=0){li.style.borderLeft ="1px solid lightgrey";li.style.borderRight = "1px solid lightgrey";li.style.borderBottom = "1px solid lightgrey";};
-let input1 = <HTMLInputElement>document.getElementById("input1");
-let input2 = <HTMLInputElement>document.getElementById("input2");
+
   
   li.appendChild(document.createTextNode("["+input1.value+","+input2.value+"]"));
   liste.appendChild(li);
   ele_cntr++;
+  input1.value="";
+  input2.value="";
 }
-
+}
  })
 }
 
-function setupU_6_1(){
-  const mainref = <HTMLDivElement>document.getElementById("main");
+function setupU_6_1():void{
+  const mainref = document.getElementById("main")!;
   mainref.replaceChildren();
   setupMainBereich();
   
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const main_header = document.getElementById("mainheader")!;
+  const main_main = document.getElementById("main_main")!;
+  const main_container = document.getElementById("main_container")!;
   main_main.replaceChildren();
   main_header.replaceChildren();
   
   BackgroundcolorWhite();
  
- 
-
-  let main_main_ref = <HTMLDivElement>document.getElementById("main_main");
-  let main_header_ref = <HTMLDivElement>document.getElementById("mainheader");
   
   let eingabedivu6 = document.createElement("div");
   let h1 = document.createElement("h1");
   h1.appendChild(document.createTextNode("Klammerpaare"));
-  main_header_ref.appendChild(h1);
+  main_header.appendChild(h1);
  
   var eingabeu6 = document.createElement("input");
   eingabeu6.setAttribute("type","search");
@@ -1032,7 +1148,7 @@ function setupU_6_1(){
   eingabedivu6.style.justifyContent = "center";
   eingabeu6.style.marginTop = "25px";
   
-  main_main_ref.appendChild(eingabedivu6);
+  main_main.appendChild(eingabedivu6);
  
   eingabeu6.style.width = "700px";
  
@@ -1092,13 +1208,6 @@ eingabeu6.style.backgroundColor = "red";
       }
      }
 
-     
-    
-    
-   
-   
-
-      
       if(zustand === false){
         eingabeu6.style.backgroundColor = "red";
       }
@@ -1114,20 +1223,19 @@ eingabeu6.style.backgroundColor = "red";
 async function sleep(ms:number){
     return new Promise(resolve=>setTimeout(resolve,ms));
   }
-function setupU_7(){
-  const mainref = <HTMLDivElement>document.getElementById("main");
-  mainref.replaceChildren();
+function setupU_7():void{
+  const mainref = document.getElementById("main")!;
+  removeChildrenInDiv(mainref);
   setupMainBereich();
  
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const main_header = document.getElementById("mainheader")!;
+  const main_main = document.getElementById("main_main")!;
+  const main_container = document.getElementById("main_container")!;
       main_main.replaceChildren();
   main_header.replaceChildren();
   
   BackgroundcolorWhite();
-  let main_main_ref = <HTMLDivElement>document.getElementById("main_main");
-  let main_header_ref = <HTMLDivElement>document.getElementById("mainheader");
+ 
  let Plagiatsresolution = document.createElement("div");
  Plagiatsresolution.setAttribute("id","plagiatresolution");
  let header = document.createElement("header");
@@ -1151,9 +1259,9 @@ ueberschriftcontainer.appendChild(brschrft);
 
 Plagiatsresolution.appendChild(header);
 Plagiatsresolution.appendChild(content);
-main_header_ref.appendChild(ueberschriftcontainer);
-main_main_ref.appendChild(analysecontainer);
-main_main_ref.appendChild(Plagiatsresolution);
+main_header.appendChild(ueberschriftcontainer);
+main_main.appendChild(analysecontainer);
+main_main.appendChild(Plagiatsresolution);
 (async _=>{
   let response = await fetch('https://raw.githubusercontent.com/stopwords-iso/stopwords-de/master/stopwords-de.txt');
   const stopwörter = await response.text(); 
@@ -1191,7 +1299,7 @@ ergebnisdiv.appendChild(tabelle);
 
   
 
-let Plagiatsresolutionref = <HTMLDivElement>document.getElementById("plagiatresolution");
+let Plagiatsresolutionref = document.getElementById("plagiatresolution")!;
 let all = Array.from(Plagiatsresolutionref.getElementsByTagName("*"));
 let fil = all.map((item:any)=>item=item.nodeName.toLowerCase());
 
@@ -1230,14 +1338,14 @@ setTimeout(()=>ergebnisdiv.appendChild(table),100);
 
      
 
-    function setupU_8_1(){
-      const mainref = <HTMLDivElement>document.getElementById("main");
+function setupU_8_1():void{
+      const mainref = document.getElementById("main")!;
       mainref.replaceChildren();
       setupMainBereich();
      
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const main_header = document.getElementById("mainheader")!;
+  const main_main = document.getElementById("main_main")!;
+  const main_container = document.getElementById("main_container")!;
       main_main.replaceChildren();
   main_header.replaceChildren();
   
@@ -1245,40 +1353,56 @@ setTimeout(()=>ergebnisdiv.appendChild(table),100);
   
   const main_main_ref = document.getElementById("main_main");
   const main_header_ref = document.getElementById("mainheader");
-  let promisediv = document.createElement("div");
-  promisediv.style.textAlign ="center";
+  var promisediv = document.createElement("div");
+  promisediv.style.display ="flex";
+  promisediv.style.justifyContent="center";
+  
   let textAdiv = document.createElement("div");
   let textBdiv = document.createElement("div");
+ 
   main_main.appendChild(textAdiv);
   main_main.appendChild(textBdiv);
-  main_main.appendChild(promisediv);
+  
   let h1 = document.createElement("h1");
   
-  h1.appendChild(document.createTextNode("Promises"));
+  h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit Promises"));
   main_header.appendChild(h1);
+  var p = document.createElement("p");
+ 
+ 
 
       fetch('http://127.0.0.1:5500/A.txt').then(response=>response.text()).then(text=>{let arrayA = text.split(/\r?\n/);
       fetch('http://127.0.0.1:5500/B.txt').then(response=>response.text()).then(text=>{let arrayB = text.split(/\r?\n/);
     for(let i=0;i<arrayA.length;i++){
-      setTimeout(()=>promisediv.innerHTML+= arrayA[i],10);
-      setTimeout(()=>promisediv.innerHTML+= arrayB[i]+'<br>',10);
+      
+      
+     
+      setTimeout(()=>p.innerHTML += arrayA[i],10);
+      setTimeout(()=>p.innerHTML += arrayB[i]+'<br>',10);
+    
+
+     
+    
       }
+      
  
     });
    
   });
-     
+  console.log(promisediv);
+  promisediv.appendChild(p);
+  main_main.appendChild(promisediv);
 
     }
     
-function setupU_8_2(){
+function setupU_8_2():void{
   const mainref = <HTMLDivElement>document.getElementById("main");
   mainref.replaceChildren();
   setupMainBereich();
 
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
   const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const main_container = <HTMLDivElement>document.getElementById("main_container");
   main_main.replaceChildren();
   main_header.replaceChildren();
 
@@ -1286,16 +1410,16 @@ function setupU_8_2(){
 
   let promisediv = document.createElement("div");
   promisediv.style.textAlign ="center";
-  let textAdiv = document.createElement("div");
-  let textBdiv = document.createElement("div");
-  main_main.appendChild(textAdiv);
-  main_main.appendChild(textBdiv);
-  main_main.appendChild(promisediv);
+ 
+ 
   let h1 = document.createElement("h1");
+  let h3 = document.createElement("h3");
+  h3.appendChild(document.createTextNode("Konkateniert werden die Gedichte Erlenkönig von Goethe sowie ... von ..."));
   
-  h1.appendChild(document.createTextNode("async / await"));
+  h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit async / await"));
   main_header.appendChild(h1);
-  
+  main_main.appendChild(h3);
+  main_main.appendChild(promisediv);
 
 
 (async _=>{
@@ -1309,6 +1433,8 @@ while(i<arrayA.length){
 sleep(100); promisediv.innerHTML+= arrayB[i]+'<br>';
 i++;
 }
+
+
 })();
 
 }
@@ -1332,7 +1458,7 @@ function populateHeader(input:any){
   main_header.appendChild(h1);
 }
 
-function populateMain(input:any){
+function populateMain(input:any):void{
   
   const main_main = <HTMLDivElement>document.getElementById("main_main");
   main_main.replaceChildren();
@@ -1344,10 +1470,7 @@ function populateMain(input:any){
   main_main.appendChild(contentdiv);
 }
 
-function addListenerToButton(button:HTMLButtonElement,maininput:any,headerinput:any):void{
-button.addEventListener("click",()=>{BackgroundcolorWhite(); populateMain(maininput);populateHeader(headerinput)});
 
-}
 
 function changeBackgroundColorAndColor(buttonreferenz:any,backgroundColor:string,textcolor:string):void{
   buttonreferenz.style.backgroundColor = backgroundColor;
@@ -1356,7 +1479,7 @@ buttonreferenz.style.color = textcolor;
 
 
 
-(function setupU_8_3(){
+(function setupU_8_3():void{
   
   (async _=>{
     let response = await fetch('http://127.0.0.1:5500/content.json');
@@ -1464,57 +1587,45 @@ function setup_covid19_barchart():void{
   div.setAttribute("id","barchartdiv");
   const mapdiv = document.createElement("div");
   const listendiv = document.createElement("div");
- 
- 
   mapdiv.setAttribute("id","mapdiv");
   div.style.display = "flex";
   div.style.justifyContent = "center";
   mapdiv.style.border = "1px solid red";
   mapdiv.style.display = "flex";
   mapdiv.style.justifyContent = "center";
-  
-
   main_main.append(div);
- 
-  
-  
-  
-  BackgroundcolorWhite();
+ BackgroundcolorWhite();
   (async _=>{
+    const georesponse = await fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json");
+    const geo = await georesponse.json();
+    const dataresponse = await fetch("http://127.0.0.1:5500/covid-19.json");
+    const geodata = await dataresponse.json();
+    
             let response = await fetch("http://127.0.0.1:5500/covid-19.json");
             let json = await response.json();
-            const data:any[] = Object.values(json);
-            const datasorted = data.sort((a,b) => d3.descending(a.anzahl,b.anzahl));
-            var i =0;
-            var tabelle = document.createElement("table");
-            tabelle.style.textAlign="center";
-            let row = tabelle.insertRow(-1);
-            let cell = row.insertCell(0);
-            cell.innerHTML = "<b>Bundesland</b>"
-          cell = row.insertCell(1);
-          cell.innerHTML = "<b>Fälle</b>";
-            data.forEach(d=>{
-              let row = tabelle.insertRow(-1);
-            let cell = row.insertCell(0);
-            cell.textContent = data[data.indexOf(d)].name;
-            cell = row.insertCell(1);
-            cell.textContent = data[data.indexOf(d)].anzahl;
-            if(i%2===0){row.style.backgroundColor="#dddddd";}
-             
-              
-             
-              i++;
-
-            });
-            listendiv.appendChild(tabelle);
+           let tabelle = dataTabelle(json);
             
-            //Barchart
-            var margin = {top: 10, right: 30, bottom: 90, left: 60},
-    width = 500 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+            listendiv.appendChild(tabelle);
+            barChart(json,"#barchartdiv",500,400);
+            mapChart(300,400,"#mapdiv",geodata,geo);
+ 
+
+ 
+
+        })();
+
+      
+
+}
+function barChart(json:any,divid:string,breite:number,hoehe:number){
+  const data:any[] = Object.values(json);
+  const datasorted = data.sort((a,b) => d3.descending(a.anzahl,b.anzahl));
+  var margin = {top: 10, right: 30, bottom: 90, left: 60},
+    width = breite - margin.left - margin.right,
+    height = hoehe - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#barchartdiv")
+var svg = d3.select(divid)
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -1528,7 +1639,7 @@ var svg = d3.select("#barchartdiv")
 // X axis
 var x = d3.scaleBand()
   .range([ 0, width ])
-  .domain(datasorted.map(function(d) { return d.name; }))
+  .domain(datasorted.map(function(d:any) { return d.name; }))
   .padding(0.2);
 svg.append("g")
   .attr("transform", "translate(0," + height + ")")
@@ -1539,7 +1650,7 @@ svg.append("g")
 
 // Add Y axis
 var y = d3.scaleLinear()
-  .domain([0, d3.max(datasorted,d=>d.anzahl)])
+  .domain([0, d3.max(datasorted,(d:any)=>d.anzahl)])
   .range([ height, 0]);
 svg.append("g")
   .call(d3.axisLeft(y));
@@ -1549,39 +1660,52 @@ svg.selectAll("svg")
   .data(datasorted)
   .enter()
   .append("rect")
-    .attr("x", function(d) { return x(d.name); })
+    .attr("x", function(d:any) { return x(d.name); })
     .attr("width", x.bandwidth())
     .attr("fill", "royalblue")
     // no bar at the beginning thus:
-    .attr("height", function(d) { return height - y(0); }) // always equal to 0
-    .attr("y", function(d) { return y(0); })
+    .attr("height", function(d:any) { return height - y(0); }) // always equal to 0
+    .attr("y", function(d:any) { return y(0); })
 
 // Animation
 svg.selectAll("rect")
   .transition()
   .duration(800)
-  .attr("y", function(d) { return y(d.anzahl); })
-  .attr("height", function(d) { return height - y(d.anzahl); })
-  .delay(function(d,i){return(i*100)})
+  .attr("y", function(d:any) { return y(d.anzahl); })
+  .attr("height", function(d:any) { return height - y(d.anzahl); })
+  .delay(function(d:any,i:any){return(i*100)})
+}
+function dataTabelle(data:any):HTMLTableElement{
+  var i =0;
+  var tabelle = document.createElement("table");
+  tabelle.style.textAlign="center";
+  let row = tabelle.insertRow(-1);
+  let cell = row.insertCell(0);
+  cell.innerHTML = "<b>Bundesland</b>"
+cell = row.insertCell(1);
+cell.innerHTML = "<b>Fälle</b>";
+ Array.from(data).forEach(d=>{
+    let row = tabelle.insertRow(-1);
+  let cell = row.insertCell(0);
+  cell.textContent = data[data.indexOf(d)].name;
+  cell = row.insertCell(1);
+  cell.textContent = data[data.indexOf(d)].anzahl;
+  if(i%2===0){row.style.backgroundColor="#dddddd";}
+   
+    
+   
+    i++;
 
- 
+  });
+return tabelle;
 
-        })();
-
-        (async _=>{
-        // Deutschlandkarte Covid-Fälle
-      var width = 300;
-      var height = 400;
-        var svg = d3.select("#mapdiv").append("svg").attr("width",width).attr("height",height);
-        const georesponse = await fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json");
-        const geo = await georesponse.json();
-        const dataresponse = await fetch("http://127.0.0.1:5500/covid-19.json");
-        const geodata = await dataresponse.json();
-        const geodatavalues = Object.values(geodata);
-       
-        
-        
-    var projection = d3.geoMercator()
+}
+function mapChart(breite:number,hoehe:any,divid:string,geodata:any,geojson:any){
+  var width = breite;
+  var height = hoehe;
+  const geodatavalues = Object.values(geodata);
+    var svg = d3.select(divid).append("svg").attr("width",width).attr("height",height);
+  var projection = d3.geoMercator()
     .center([10, 50])
                 
     .scale(1500)                       
@@ -1600,7 +1724,7 @@ var colorScale = d3.scaleThreshold()
       // Draw the map
       svg.append("g")
         .selectAll("path")
-        .data(geo.features)
+        .data(geojson .features)
         .enter()
         .append("path")
           // draw each country
@@ -1608,7 +1732,7 @@ var colorScale = d3.scaleThreshold()
             .projection(projection)
           )
           // set the color of each country
-          .attr("fill", function (d) {
+          .attr("fill", function (d:any) {
             // Für jedes Land holen wir uns die Fallzahlen aus der Map
             // Die Werte wurden in der Map mit dem Kürzel des jeweiligen Bundeslandes(hier id) gespeichert
             let dataforbl = data.get(d.properties.id);
@@ -1617,112 +1741,40 @@ var colorScale = d3.scaleThreshold()
            
             return colorScale(dataforbl);
           });
-        
-      })();
-      
 
+}         
+
+class SideNavigation{
+constructor(){
+  this.open=false;
 }
-
-
-
-
-
-
-
-
-
-
-
- 
-function benchmarkInnerHTML():number{
-
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = document.createElement("div");
-  
-  main.appendChild(div);
-  
-
-let text = '<h1>Eine Überschrift</h1>';
-
-
-let t0 = performance.now();
-
- for(let i=0;i<500;i++){
-div.innerHTML+=text;
- }
-
-let t1 = performance.now();
-main.removeChild(div);
-
-return t1-t0;
-
+private open:boolean;
+getOpen():boolean{
+  return this.open;
 }
-function benchmarkInnerText():number{
-
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = <HTMLDivElement>document.createElement("div");
-  div.setAttribute("id","testdiv");
-  main.appendChild(div);
-  let divref = <HTMLDivElement>document.getElementById("testdiv");
-
-let text = '<h1>Eine Überschrift</h1>';
-
-
-let t0 = performance.now();
-
- for(let i=0;i<1000;i++){
-divref.innerText=text;
- }
-
-let t1 = performance.now();
-main.removeChild(div);
-
-return t1-t0;
-
+swapOpen():void{
+  if(this.open==false){
+    this.open=true;
+  }
+else{this.open=false;}
 }
-function benchmarkTextContent():number{
-
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = <HTMLDivElement>document.createElement("div");
-  div.setAttribute("id","testdiv");
-  main.appendChild(div);
-  let divref = <HTMLDivElement>document.getElementById("testdiv");
-
-let text = '<h1>Eine Überschrift</h1>';
-
-
-let t0 = performance.now();
-
- for(let i=0;i<1000;i++){
-divref.textContent=text;
- }
-
-let t1 = performance.now();
-main.removeChild(div);
-
-return t1-t0;
-
 }
-
-
-
- 
-         var sidenavstatus = 0;
+var sidenav = new SideNavigation();
        
        
        function openCloseSideNav():void{
         
        
          
-         if(sidenavstatus === 0){
+         if(sidenav.getOpen() === false){
            openSidenav();
            
-           sidenavstatus = 1;
+           sidenav.swapOpen();
            return;
          }
-         if(sidenavstatus === 1){
+         if(sidenav.getOpen() === true){
            closeSidenav();
-           sidenavstatus = 0;
+           sidenav.swapOpen();
            return;
          }
        }
@@ -1751,13 +1803,14 @@ return t1-t0;
         
         
        }
-function vue_singlefile(){
-  const mainref = <HTMLDivElement>document.getElementById("main");
+     
+function vue_singlefile():void{
+  const mainref = document.getElementById("main")!;
   removeChildrenInDiv(mainref);
   setupMainBereich();
   BackgroundcolorWhite();
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
+  const main_header = document.getElementById("mainheader")!;
+  const main_main = document.getElementById("main_main")!;
   let headerdiv = document.createElement("div");
   let header = document.createElement("h1");
   header.appendChild(document.createTextNode("Vue Single Component")); 
@@ -1768,37 +1821,68 @@ function vue_singlefile(){
   let para1 = document.createElement("p");
   let para2 = document.createElement("p");
   let para3 = document.createElement("p");
+ 
   para1.textContent = "Buchstaben : {{buchstaben}}";
   para2.appendChild(document.createTextNode("Leerzeichen :{{leerzeichen}}"));
   para3.appendChild(document.createTextNode("Worte : {{worte}}"));
   div.appendChild(para1);
   div.appendChild(para2);
   div.appendChild(para3);
-   let input = document.createElement("input");
+  
+     let input = document.createElement("input");
+     input.setAttribute("type","text");
+     input.setAttribute("v-on:input","handler");
+     input.setAttribute("ref","inputfield");
+     div.appendChild(input);
   main_main.appendChild(div);
-new Vue({
+var vm = new Vue({
 el:'#vuediv',
 data:{
   buchstaben:0,
   leerzeichen:0,
-  worte:0
+  worte:0,
+  
 
+},
+methods : {
+  handler: function(event:any){
+  let text = (this as any).$refs.inputfield.value;
+  
+ (this as any).buchstaben = Array.from(text.replaceAll(" ","")).length;
+ (this as any).leerzeichen = Array.from(text).length-Array.from(text.replaceAll(" ","")).length;
+ let woerter:string[] = Array.from(text.split(" "));
+ let arr = woerter.filter(wort=>wort!="");
+
+
+ (this as any).worte = arr.length;
+
+
+ 
+
+  },
+ 
+ 
 }
 
 
 });
 
 }
+function profileCard(){
+  const mainref = <HTMLDivElement>document.getElementById("main");
+  mainref.replaceChildren();
+  var picdiv = document.createElement("div");
+  let i = document.createElement("i");
+  picdiv.style.borderRadius="100%";
+  i.setAttribute("class","fa fa-user-circle-o fa-5x");
+  picdiv.appendChild(i);
+  mainref.appendChild(picdiv);
 
-new Vue({
-el:"#vue",
-  data:{
-    
-    buchstaben:0,
-     leerzeichen:0,
-     woerter:0
-  }
-});
+
+  
+}
+
+profileCard();
       
     
      

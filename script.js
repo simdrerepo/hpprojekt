@@ -37,112 +37,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 function removeChildrenInDiv(div) {
     div.replaceChildren();
 }
-var loginbutton = document.getElementById("loginbutton");
-loginbutton.addEventListener("mouseover", function () { this.style.textDecoration = "underline"; this.style.textUnderlineOffset = "0.3em"; });
-loginbutton.addEventListener("mouseleave", function () { this.style.textDecoration = "none"; });
+(function AddClickListenerToButton() {
+    //Clicklistener für die Button im Sidenav
+    var sandwichbutton = document.getElementById("sandwichbutton");
+    sandwichbutton.addEventListener("click", openCloseSideNav);
+    console.log(sandwichbutton);
+    var loginbutton = document.getElementById("loginbutton");
+    loginbutton.addEventListener("click", function () { return setup_login(); });
+    var buttonarray = Array.from(document.getElementsByClassName("regularButton"));
+    var functionArray = [domBenchmarks, setupU_5_2, setupU_5_3, setupU_6_1, setupU_7, setupU_8_1, setupU_8_2, setup_tic_tac_toe, setup_covid19_barchart, vue_singlefile];
+    buttonarray.forEach(function (button) { button.addEventListener("click", functionArray[buttonarray.indexOf(button)]); });
+})();
+(function loginButtonStylingPlusHover() {
+    var loginbutton = document.getElementById("loginbutton");
+    loginbutton.addEventListener("mouseover", function () { this.style.textDecoration = "underline"; this.style.textUnderlineOffset = "0.3em"; });
+    loginbutton.addEventListener("mouseleave", function () { this.style.textDecoration = "none"; });
+})();
 var setup_login = function () {
     var mainref = document.getElementById("main");
     removeChildrenInDiv(mainref);
     var container = document.createElement("div");
-    var usernameInput = document.createElement("input");
-    var passwortInput = document.createElement("input");
-    var loginButton = document.createElement("button");
-    var cancelButton = document.createElement("button");
+    var form = document.createElement("form");
+    form.setAttribute("action", "action='<?php echo $_SERVER['PHP_SELF'] ?>'");
+    form.setAttribute("method", "POST");
+    form.innerHTML =
+        'E-mail: <input type="text" name="email"><br>' +
+            'Passwort: <input type="text" name="pw"><br>' +
+            '<input type="submit" id="submit">';
     container.style.backgroundColor = "white";
     container.style.marginTop = "30px";
     container.style.minHeight = "700px";
-    var tabelle = createTable(2, 2);
-    container.appendChild(tabelle);
     console.log(container);
     mainref.appendChild(container);
 };
-function mouseOver() {
-    this.style.backgroundColor = "#34568B";
-    this.style.color = "white";
-}
-function mouseOut() {
-    this.style.backgroundColor = "white";
-    this.style.color = "black";
-}
-(function hoverForSidenavBtn() {
-    // hovereffekt für sidenav button
-    var sidebuttondiv = document.getElementById("sidebutton");
-    var buttoncollection = sidebuttondiv.getElementsByTagName("button");
-    for (var i = 0; i < buttoncollection.length; i++) {
-        buttoncollection[i].style.cursor = "pointer";
-        buttoncollection[i].addEventListener("mouseover", mouseOver);
-        buttoncollection[i].addEventListener("mouseout", mouseOut);
-    }
-})();
-(function AddDropdownButtonListener() {
-    var sidebuttondiv = document.getElementById("sidebutton");
-    var sidenavoverlay = document.getElementById("sidenavoverlay");
-    sidenavoverlay.addEventListener("click", function () { openCloseSideNav(); });
-    //Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
-    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
-    for (var i = 0; i < dropdownbutton.length; i++) {
-        dropdownbutton[i].addEventListener("click", function () {
-            var dropdown = this.nextElementSibling;
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            }
-            else {
-                dropdown.style.display = "block";
-            }
-        });
-    }
-})();
-var buttonclicked = new Array();
-var dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
-dropdownbutton.forEach(function (button) { buttonclicked.push(false); });
-dropdownbutton.forEach(function (button) {
-    button.addEventListener("click", function () {
-        if (buttonclicked[dropdownbutton.indexOf(button)] === false) {
-            button.removeEventListener("mouseout", mouseOut);
-            buttonclicked[dropdownbutton.indexOf(button)] = true;
-        }
-        else {
-            button.addEventListener("mouseout", mouseOut);
-            buttonclicked[dropdownbutton.indexOf(button)] = false;
-        }
-    });
-});
-function setupMainBereich() {
-    // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
-    var mainref = document.getElementById("main");
-    var main_container = document.createElement("div");
-    main_container.setAttribute("id", "main_container");
-    var main_header = document.createElement("div");
-    main_header.setAttribute("id", "mainheader");
-    var main_main = document.createElement("div");
-    main_main.setAttribute("id", "main_main");
-    var main_footer = document.createElement("div");
-    main_footer.setAttribute("id", "main_footer");
-    mainref.appendChild(main_container);
-    main_container.appendChild(main_header);
-    main_container.appendChild(main_main);
-    main_container.appendChild(main_footer);
-}
-function BackgroundcolorWhite() {
-    // styling für den Bereich(header,main)
-    var mainref = document.getElementById("main");
-    var main_header = document.getElementById("mainheader");
-    var main_main = document.getElementById("main_main");
-    var main_container = document.getElementById("main_container");
-    main_header.style.backgroundColor = "white";
-    main_main.style.backgroundColor = "white";
-    main_main.style.marginTop = "40px";
-    main_main.style.marginLeft = "40px";
-    main_main.style.marginRight = "40px";
-    main_container.style.backgroundColor = 'white';
-    main_container.style.minHeight = "700px";
-    main_header.style.borderBottom = "1px solid lightgray";
-    main_container.style.borderLeft = "10px solid white";
-    main_container.style.borderRight = "10px solid white";
-    main_header.style.display = "flex";
-    main_header.style.justifyContent = "center";
-    mainref.style.marginTop = "30px";
-}
 var tic_tac_toe = /** @class */ (function () {
     function tic_tac_toe() {
         this.spieler = "o";
@@ -378,63 +305,6 @@ var tic_tac_toe = /** @class */ (function () {
     };
     return tic_tac_toe;
 }());
-var Graph = /** @class */ (function () {
-    function Graph() {
-        this.knotenArray = new Array();
-        this.adj = new Array();
-    }
-    Graph.prototype.addKnoten = function (knoten) {
-        this.knotenArray.push(knoten);
-        this.adj.push([]);
-    };
-    Graph.prototype.addKante = function (k1, k2) {
-        var indexfuerknoten = 0;
-        for (var i = 0; i < this.knotenArray.length; i++) {
-            if (this.knotenArray[i] === k1) {
-                indexfuerknoten = i;
-            }
-        }
-        this.adj[indexfuerknoten].push(k2);
-    };
-    Graph.prototype.print = function () {
-        for (var i = 0; i < this.knotenArray.length; i++) {
-            console.log(this.knotenArray[i] + " : ");
-            for (var j = 0; j < this.adj.length; j++) {
-                console.log(this.adj[i][j]);
-            }
-        }
-    };
-    Graph.prototype.topsorthelper = function (knoten, besucht, stack) {
-        besucht.push(knoten);
-        var indexfuerknoten = 0;
-        for (var i = 0; i < this.knotenArray.length; i++) {
-            if (this.knotenArray[i] === knoten) {
-                indexfuerknoten = i;
-            }
-        }
-        for (var i = 0; i < this.adj[indexfuerknoten].length; i++) {
-            if (!besucht.includes(this.adj[indexfuerknoten][i])) {
-                this.topsorthelper(this.adj[indexfuerknoten][i], besucht, stack);
-            }
-        }
-        stack.push(knoten);
-    };
-    Graph.prototype.topologischSortieren = function () {
-        var stack = new Array();
-        var besucht = new Array();
-        var returnArray = new Array();
-        for (var i = 0; i < this.knotenArray.length; i++) {
-            if (!besucht.includes(this.knotenArray[i])) {
-                this.topsorthelper(this.knotenArray[i], besucht, stack);
-            }
-        }
-        while (stack.length != 0) {
-            returnArray.push(stack.pop());
-        }
-        return returnArray;
-    };
-    return Graph;
-}());
 var Redner = /** @class */ (function () {
     function Redner(name) {
         this.name = name;
@@ -476,12 +346,336 @@ var Redner = /** @class */ (function () {
     };
     return Redner;
 }());
-var RednerArray = /** @class */ (function () {
-    function RednerArray() {
-        this.array = [];
+var Vorrang = /** @class */ (function () {
+    function Vorrang(array2d) {
+        var _this = this;
+        this.array2d = array2d;
+        this.adj = new Array();
+        this.stack = new Array();
+        this.besucht = new Array();
+        this.alleKnoten = new Array();
+        this.knotenSet = new Set();
+        this.anzahlVorrang = 0;
+        this.identifyKnoten();
+        this.setupAdj(this.knotenSet.size);
+        for (var i in this.array2d) {
+            this.addKante(array2d[i][0], array2d[i][1]);
+        }
+        this.knotenSet.forEach(function (item) { return _this.topologischSortieren(item); });
     }
-    return RednerArray;
+    Vorrang.prototype.returnSortierung = function () {
+        var _this = this;
+        var ergarray = new Array();
+        this.stack.forEach(function (k) { ergarray.push(_this.stack[_this.stack.length - 1 - _this.stack.indexOf(k)]); });
+        return ergarray;
+    };
+    Vorrang.prototype.printAdj = function () {
+        for (var i in this.adj) {
+            for (var j in this.adj[i]) {
+                console.log(this.adj[i][j]);
+            }
+        }
+    };
+    Vorrang.prototype.printStack = function () {
+        for (var i in this.stack) {
+            console.log(this.stack[i]);
+        }
+    };
+    Vorrang.prototype.printKnotenSet = function () {
+        this.knotenSet.forEach(function (item) { console.log(item); });
+    };
+    Vorrang.prototype.identifyKnoten = function () {
+        for (var i in this.array2d) {
+            for (var j in this.array2d[i]) {
+                this.alleKnoten.push(this.array2d[i][j]);
+                this.knotenSet.add(this.array2d[i][j]);
+            }
+        }
+    };
+    Vorrang.prototype.setupAdj = function (setSize) {
+        for (var i = 0; i < setSize; i++) {
+            this.adj.push([]);
+        }
+    };
+    Vorrang.prototype.addKante = function (k1, k2) {
+        var index = 0;
+        var knotenSetarray = Array.from(this.knotenSet);
+        for (var i = 0; i < knotenSetarray.length; i++) {
+            if (knotenSetarray[i] === k1) {
+                index = i;
+            }
+        }
+        this.adj[index].push(k2);
+    };
+    Vorrang.prototype.topsorthelper = function (knoten) {
+        this.besucht.push(knoten);
+        for (var i in this.array2d) {
+            this.array2d[i] = this.array2d[i].filter(function (item) { return item != knoten; });
+        }
+        var anzahl = 0;
+        for (var i in this.array2d) {
+            if (this.array2d[i].length != 0) {
+                anzahl++;
+            }
+        }
+        this.anzahlVorrang = anzahl;
+        var knotenArray = Array.from(this.knotenSet);
+        var indexfuerknoten = 0;
+        for (var i = 0; i < knotenArray.length; i++) {
+            if (knotenArray[i] === knoten) {
+                indexfuerknoten = i;
+            }
+        }
+        for (var i = 0; i < this.adj[indexfuerknoten].length; i++) {
+            if (!this.besucht.includes(this.adj[indexfuerknoten][i])) {
+                this.topsorthelper(this.adj[indexfuerknoten][i]);
+            }
+        }
+        this.stack.push(knoten);
+    };
+    Vorrang.prototype.topologischSortieren = function (knoten) {
+        if (!this.besucht.includes(knoten)) {
+            this.topsorthelper(knoten);
+        }
+    };
+    Vorrang.prototype[Symbol.iterator] = function () {
+        var i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < this.knotenSet.size)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, this.stack[this.knotenSet.size - 1 - i]];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 4: return [2 /*return*/];
+            }
+        });
+    };
+    return Vorrang;
 }());
+function mouseOver() {
+    this.style.backgroundColor = "#34568B";
+    this.style.color = "white";
+}
+function mouseOut() {
+    this.style.backgroundColor = "white";
+    this.style.color = "black";
+}
+(function hoverForSidenavBtn() {
+    // hovereffekt für sidenav button
+    var sidebuttondiv = document.getElementById("sidebutton");
+    var buttoncollection = sidebuttondiv.getElementsByTagName("button");
+    for (var i = 0; i < buttoncollection.length; i++) {
+        buttoncollection[i].style.cursor = "pointer";
+        buttoncollection[i].addEventListener("mouseover", mouseOver);
+        buttoncollection[i].addEventListener("mouseout", mouseOut);
+    }
+})();
+(function AddClickListenerToDropdownButton() {
+    var sidebuttondiv = document.getElementById("sidebutton");
+    var sidenavoverlay = document.getElementById("sidenavoverlay");
+    sidenavoverlay.addEventListener("click", function () { openCloseSideNav(); });
+    //Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
+    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
+    for (var i = 0; i < dropdownbutton.length; i++) {
+        dropdownbutton[i].addEventListener("click", function () {
+            var dropdown = this.nextElementSibling;
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            }
+            else {
+                dropdown.style.display = "block";
+            }
+        });
+    }
+})();
+(function addBackgroundEffectToDropdownButton() {
+    // Dropdownbutton haben einen festen Hintergrund wenn sie geklickt wurden
+    var buttonclicked = new Array();
+    var dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
+    dropdownbutton.forEach(function (button) { buttonclicked.push(false); });
+    dropdownbutton.forEach(function (button) {
+        button.addEventListener("click", function () {
+            if (buttonclicked[dropdownbutton.indexOf(button)] === false) {
+                button.removeEventListener("mouseout", mouseOut);
+                buttonclicked[dropdownbutton.indexOf(button)] = true;
+            }
+            else {
+                button.addEventListener("mouseout", mouseOut);
+                buttonclicked[dropdownbutton.indexOf(button)] = false;
+            }
+        });
+    });
+})();
+function setupMainBereich() {
+    // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
+    var mainref = document.getElementById("main");
+    var main_container = document.createElement("div");
+    main_container.setAttribute("id", "main_container");
+    var main_header = document.createElement("div");
+    main_header.setAttribute("id", "mainheader");
+    var main_main = document.createElement("div");
+    main_main.setAttribute("id", "main_main");
+    var main_footer = document.createElement("div");
+    main_footer.setAttribute("id", "main_footer");
+    mainref.appendChild(main_container);
+    main_container.appendChild(main_header);
+    main_container.appendChild(main_main);
+    main_container.appendChild(main_footer);
+}
+function BackgroundcolorWhite() {
+    // styling für den Bereich(header,main)
+    var mainref = document.getElementById("main");
+    var main_header = document.getElementById("mainheader");
+    var main_main = document.getElementById("main_main");
+    var main_container = document.getElementById("main_container");
+    main_header.style.backgroundColor = "white";
+    main_main.style.backgroundColor = "white";
+    main_main.style.marginTop = "40px";
+    main_container.style.backgroundColor = 'white';
+    main_container.style.minHeight = "700px";
+    main_header.style.borderBottom = "1px solid lightgray";
+    main_container.style.borderLeft = "10px solid white";
+    main_container.style.borderRight = "10px solid white";
+    main_header.style.display = "flex";
+    main_header.style.justifyContent = "center";
+    mainref.style.marginTop = "30px";
+}
+function domBenchmarks() {
+    var mainref = document.getElementById("main");
+    mainref.replaceChildren();
+    setupMainBereich();
+    BackgroundcolorWhite();
+    var main_header = document.getElementById("mainheader");
+    var main_main = document.getElementById("main_main");
+    var ueberschrift = document.createElement("h1");
+    ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
+    var tabelle = document.createElement("table");
+    tabelle.setAttribute("id", "benchmarktabelle");
+    tabelle.setAttribute("class", "tabelle");
+    var reihe0 = tabelle.insertRow(-1);
+    var zelle = reihe0.insertCell(0);
+    zelle.appendChild(document.createTextNode("Dom-Operation"));
+    zelle = reihe0.insertCell(1);
+    zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"));
+    var reihe = tabelle.insertRow(-1);
+    zelle = reihe.insertCell(0);
+    zelle.appendChild(document.createTextNode("innerHTML"));
+    zelle = reihe.insertCell(1);
+    zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
+    var reihe2 = tabelle.insertRow(-1);
+    zelle = reihe2.insertCell(0);
+    zelle.appendChild(document.createTextNode("innerText"));
+    zelle = reihe2.insertCell(1);
+    zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
+    var reihe3 = tabelle.insertRow(-1);
+    zelle = reihe3.insertCell(0);
+    zelle.appendChild(document.createTextNode("textContent"));
+    zelle = reihe3.insertCell(1);
+    zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
+    ueberschrift.setAttribute("id", "headline");
+    var tabellendiv = document.createElement("div");
+    tabellendiv.setAttribute("id", "tabellendiv");
+    tabellendiv.appendChild(tabelle);
+    tabellendiv.style.display = "flex";
+    tabellendiv.style.justifyContent = "center";
+    var mainueberschr = document.createElement("h2");
+    mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
+    main_header.appendChild(ueberschrift);
+    main_header.style.textAlign = "center";
+    var codeblock = document.createElement("code");
+    var codediv = document.createElement("div");
+    var div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.justifyContent = "center";
+    div.style.marginBottom = "40px";
+    codediv.style.border = "1px solid lightgrey";
+    codediv.style.padding = "10px";
+    codediv.style.width = "500px";
+    codediv.innerHTML = "<b>Codesample</b><br>..." + "<br>" +
+        "<code>let t0 = performance.now();</code>" + "<br>" +
+        "<code>for(i=0;i<500;i++){</code>" + "<br>" +
+        "<code>div.innerHTML+=text;}</code>" + "<br>" +
+        "<code>let t1 = performance.now();</code>" + "<br>" +
+        "<code>return t1-t0;</code><br>" +
+        "...";
+    codediv.style.backgroundColor = "#e7e9eb";
+    //let text = '<h1>Eine Überschrift</h1>';
+    //let t0 = performance.now();
+    //for(i=0;i<500;i++){
+    //div.innerHTML+=text;
+    // }
+    //let t1 = performance.now();
+    //main.removeChild(div);
+    div.appendChild(codediv);
+    main_main.appendChild(div);
+    main_main.appendChild(tabellendiv);
+    tabelle.style.border = "1px solid black";
+    var trs = tabelle.getElementsByTagName("td");
+    for (var i = 0; i < trs.length; i++) {
+        trs[i].style.border = "1px solid black";
+    }
+    var odd = tabelle.querySelectorAll("tr");
+    for (var i = 1; i < odd.length; i++) {
+        odd[0].style.backgroundColor = "lightyellow";
+        if (i % 2 === 1) {
+            odd[i].style.backgroundColor = "#f4f4f4";
+        }
+        else {
+            odd[i].style.backgroundColor = "white";
+        }
+    }
+}
+function benchmarkInnerHTML() {
+    var main = document.getElementById("main_main");
+    var div = document.createElement("div");
+    main.appendChild(div);
+    var text = '<h1>Eine Überschrift</h1>';
+    var t0 = performance.now();
+    for (var i = 0; i < 500; i++) {
+        div.innerHTML += text;
+    }
+    var t1 = performance.now();
+    main.removeChild(div);
+    return t1 - t0;
+}
+function benchmarkInnerText() {
+    var main = document.getElementById("main_main");
+    var div = document.createElement("div");
+    div.setAttribute("id", "testdiv");
+    main.appendChild(div);
+    var divref = document.getElementById("testdiv");
+    var text = '<h1>Eine Überschrift</h1>';
+    var t0 = performance.now();
+    for (var i = 0; i < 1000; i++) {
+        divref.innerText = text;
+    }
+    var t1 = performance.now();
+    main.removeChild(div);
+    return t1 - t0;
+}
+function benchmarkTextContent() {
+    var main = document.getElementById("main_main");
+    var div = document.createElement("div");
+    div.setAttribute("id", "testdiv");
+    main.appendChild(div);
+    var divref = document.getElementById("testdiv");
+    var text = '<h1>Eine Überschrift</h1>';
+    var t0 = performance.now();
+    for (var i = 0; i < 1000; i++) {
+        divref.textContent = text;
+    }
+    var t1 = performance.now();
+    main.removeChild(div);
+    return t1 - t0;
+}
 function setup_tic_tac_toe() {
     var mainref = document.getElementById("main");
     removeChildrenInDiv(mainref);
@@ -574,89 +768,6 @@ function createRedner(name, rednerarray) {
         return tabelle;
     }
 }
-function setupU_5_1() {
-    var mainref = document.getElementById("main");
-    removeChildrenInDiv(mainref);
-    setupMainBereich();
-    BackgroundcolorWhite();
-    var main_header = document.getElementById("mainheader");
-    var main_main = document.getElementById("main_main");
-    var ueberschrift = document.createElement("h1");
-    ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-    var tabelle = document.createElement("table");
-    tabelle.setAttribute("id", "benchmarktabelle");
-    tabelle.setAttribute("class", "tabelle");
-    var reihe0 = tabelle.insertRow(-1);
-    var zelle = reihe0.insertCell(0);
-    zelle.appendChild(document.createTextNode("JS Methoden"));
-    zelle = reihe0.insertCell(1);
-    zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"));
-    var reihe = tabelle.insertRow(-1);
-    zelle = reihe.insertCell(0);
-    zelle.appendChild(document.createTextNode("innerHTML"));
-    zelle = reihe.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
-    var reihe2 = tabelle.insertRow(-1);
-    zelle = reihe2.insertCell(0);
-    zelle.appendChild(document.createTextNode("innerText"));
-    zelle = reihe2.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
-    var reihe3 = tabelle.insertRow(-1);
-    zelle = reihe3.insertCell(0);
-    zelle.appendChild(document.createTextNode("textContent"));
-    zelle = reihe3.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
-    ueberschrift.setAttribute("id", "headline");
-    var tabellendiv = document.createElement("div");
-    tabellendiv.setAttribute("id", "tabellendiv");
-    tabellendiv.appendChild(tabelle);
-    tabellendiv.style.display = "flex";
-    tabellendiv.style.justifyContent = "center";
-    var mainueberschr = document.createElement("h2");
-    mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-    main_header.appendChild(ueberschrift);
-    main_header.style.textAlign = "center";
-    var codeblock = document.createElement("code");
-    var codediv = document.createElement("div");
-    var div = document.createElement("div");
-    div.style.display = "flex";
-    div.style.justifyContent = "center";
-    div.style.marginBottom = "40px";
-    codediv.style.border = "1px solid lightgrey";
-    codediv.style.padding = "10px";
-    codediv.style.width = "500px";
-    codediv.innerHTML = "..." + "<br>" +
-        "<code>let t0 = performance.now();</code>" + "<br>" +
-        "<code>for(i=0;i<500;i++){</code>" + "<br>" +
-        "<code>div.innerHTML+=text;}</code>" + "<br>" +
-        "<code>let t1 = performance.now();</code>" + "<br>" +
-        "...";
-    //let text = '<h1>Eine Überschrift</h1>';
-    //let t0 = performance.now();
-    //for(i=0;i<500;i++){
-    //div.innerHTML+=text;
-    // }
-    //let t1 = performance.now();
-    //main.removeChild(div);
-    div.appendChild(codediv);
-    main_main.appendChild(div);
-    main_main.appendChild(tabellendiv);
-    tabelle.style.border = "1px solid black";
-    var trs = tabelle.getElementsByTagName("td");
-    for (var i = 0; i < trs.length; i++) {
-        trs[i].style.border = "1px solid black";
-    }
-    var odd = tabelle.querySelectorAll("tr");
-    for (var i = 1; i < odd.length; i++) {
-        odd[0].style.backgroundColor = "lightyellow";
-        if (i % 2 === 1) {
-            odd[i].style.backgroundColor = "#f4f4f4";
-        }
-        else {
-            odd[i].style.backgroundColor = "white";
-        }
-    }
-}
 function setupU_5_2() {
     var main = document.getElementById("main");
     main.replaceChildren();
@@ -726,132 +837,90 @@ function setupU_5_3() {
     var main_header_ref = document.getElementById("mainheader");
     var main_main_ref = document.getElementById("main_main");
     var headline = document.createElement("h1");
-    headline.appendChild(document.createTextNode("Übung 5.3"));
+    headline.appendChild(document.createTextNode("TopSort als Web-App"));
     main_header_ref.appendChild(headline);
     var button = document.createElement("button");
+    button.setAttribute("id", "sortbutton");
     button.textContent = 'sortieren';
-    button.style.backgroundColor = "white";
-    button.style.color = "black";
     button.style.height = "1.5rem";
-    button.addEventListener("mouseover", function () { changeBackgroundColorAndColor(this); });
-    button.addEventListener("mouseleave", function () { changeBackgroundColorAndColor(this); });
-    var tablediv = document.createElement("div");
+    button.style.width = "5rem";
+    var div = document.createElement("div");
+    var inputdiv = document.createElement("div");
+    var buttondiv = document.createElement("div");
     var addbutton = document.createElement("button");
+    addbutton.setAttribute("id", "addbutton");
     addbutton.textContent = 'hinzufügen';
-    addbutton.style.backgroundColor = "white";
-    addbutton.style.color = "black";
     addbutton.style.height = "1.5rem";
-    addbutton.addEventListener("mouseover", function () { this.style.backgroundColor = "#73aca5"; });
-    addbutton.addEventListener("mouseleave", function () { this.style.backgroundColor = "#a9d7d1"; });
-    zelle.appendChild(input1);
-    zelle = reihe0.insertCell(1);
-    zelle.appendChild(input2);
-    zelle = reihe0.insertCell(2);
-    zelle.appendChild(addbutton);
-    zelle = reihe0.insertCell(3);
-    zelle.appendChild(button);
-    var h2 = document.createElement("h2");
-    h2.appendChild(document.createTextNode("5.3. TopSort als Web-App"));
-    h2.style.textAlign = "center";
-    var textdiv = document.createElement("div");
-    var p = document.createElement("p");
-    p.appendChild(document.createTextNode("Katze Hund Hund Esel Hahn Katze"));
-    p.style.height = "20px";
-    textdiv.appendChild(p);
-    textdiv.style.backgroundColor = "#e5e7ea";
-    textdiv.style.borderRadius = "15px";
+    addbutton.style.width = "5rem";
+    inputdiv.appendChild(input1);
+    inputdiv.appendChild(input2);
+    buttondiv.appendChild(addbutton);
+    buttondiv.appendChild(button);
+    div.appendChild(input1);
+    div.appendChild(input2);
+    div.appendChild(addbutton);
+    div.appendChild(button);
     var listdiv = document.createElement("div");
-    tablediv.style.display = "flex";
-    tablediv.style.justifyContent = "center";
-    tablediv.style.display = "flex";
-    tablediv.style.justifyContent = "center";
+    div.style.display = "flex";
+    div.style.flexWrap = "wrap";
+    div.style.justifyContent = "center";
     BackgroundcolorWhite();
-    main_main_ref.appendChild(h2);
-    tablediv.appendChild(table);
     listdiv.appendChild(liste);
-    main_main_ref.appendChild(tablediv);
+    main_main_ref.appendChild(div);
     main_main_ref.appendChild(listdiv);
     var sortiert = 0;
     button.addEventListener("click", function () {
         if (sortiert === 0) {
-            var col = liste.querySelectorAll("li");
-            var str = "";
-            for (var i = 0; i < col.length - 1; i++) {
-                str = str + col[i].textContent + " ";
-            }
-            str = str + col[col.length - 1].textContent;
-            while (str.includes("[") || str.includes("]")) {
-                if (str.includes("[")) {
-                    var ar = str.replaceAll("[", "");
-                    str = ar;
-                }
-                if (str.includes("]")) {
-                    var ar = str.replace("]", "");
-                    str = ar;
-                }
-            }
-            var strohnespace = str.split(" ");
-            var array = str.replaceAll(",", " ").split(" ");
-            var knotenAr = new Array();
-            var graph = new Graph();
-            for (var i = 0; i < array.length; i++) {
-                if (!knotenAr.includes(array[i])) {
-                    knotenAr.push(array[i]);
-                }
-            }
-            for (var i = 0; i < knotenAr.length; i++) {
-                graph.addKnoten(knotenAr[i]);
-            }
-            var adja = new Array();
-            for (var _i = 0, knotenAr_1 = knotenAr; _i < knotenAr_1.length; _i++) {
-                var i = knotenAr_1[_i];
-                adja[adja.indexOf(i)] = new Array();
-            }
-            for (var i in strohnespace) {
-                var tmp = strohnespace[i].split(",");
-                graph.addKante(tmp[0], tmp[1]);
-            }
-            var result = graph.topologischSortieren();
+            var vorrang2dArray = new Array();
+            var col = Array.from(liste.querySelectorAll("li"));
+            col.forEach(function (ele) {
+                var str = ele.textContent.replaceAll("[", "").replaceAll("]", "").replaceAll(",", " ").split(" ");
+                vorrang2dArray.push(str);
+            });
+            var graph = new Vorrang(vorrang2dArray);
             var li = document.createElement("li");
             li.style.padding = "5px";
             li.style.borderLeft = "1px solid lightgrey";
             li.style.borderRight = "1px solid lightgrey";
             li.style.borderBottom = "1px solid lightgrey";
             li.style.backgroundColor = "lightyellow";
+            var ergstack = graph.returnSortierung();
             var ergstr = "";
-            for (var i in result) {
-                ergstr = ergstr + result[i] + " ";
-            }
+            ergstack.forEach(function (ele) { ergstr += ele + " "; });
             li.appendChild(document.createTextNode("Sortierung (v.l.n.r) = " + ergstr));
             liste.appendChild(li);
             sortiert = 1;
         }
     });
     var ele_cntr = 0;
-    addbutton.addEventListener("click", function () {
-        if (sortiert === 0) {
-            var li = document.createElement("li");
-            li.style.padding = "5px";
-            if (ele_cntr === 0) {
-                li.style.border = "1px solid lightgrey";
+    addbutton.addEventListener("click", function (e) {
+        var input1 = document.getElementById("input1");
+        var input2 = document.getElementById("input2");
+        if (input1.value && input2.value) {
+            if (sortiert === 0) {
+                var li = document.createElement("li");
+                li.style.padding = "5px";
+                if (ele_cntr === 0) {
+                    li.style.border = "1px solid lightgrey";
+                }
+                if (ele_cntr % 2 === 0) {
+                    li.style.backgroundColor = "#f4f4f4";
+                }
+                if (ele_cntr % 2 === 1) {
+                    li.style.backgroundColor = "white";
+                }
+                if (ele_cntr != 0) {
+                    li.style.borderLeft = "1px solid lightgrey";
+                    li.style.borderRight = "1px solid lightgrey";
+                    li.style.borderBottom = "1px solid lightgrey";
+                }
+                ;
+                li.appendChild(document.createTextNode("[" + input1.value + "," + input2.value + "]"));
+                liste.appendChild(li);
+                ele_cntr++;
+                input1.value = "";
+                input2.value = "";
             }
-            if (ele_cntr % 2 === 0) {
-                li.style.backgroundColor = "#f4f4f4";
-            }
-            if (ele_cntr % 2 === 1) {
-                li.style.backgroundColor = "white";
-            }
-            if (ele_cntr != 0) {
-                li.style.borderLeft = "1px solid lightgrey";
-                li.style.borderRight = "1px solid lightgrey";
-                li.style.borderBottom = "1px solid lightgrey";
-            }
-            ;
-            var input1_1 = document.getElementById("input1");
-            var input2_1 = document.getElementById("input2");
-            li.appendChild(document.createTextNode("[" + input1_1.value + "," + input2_1.value + "]"));
-            liste.appendChild(li);
-            ele_cntr++;
         }
     });
 }
@@ -865,19 +934,17 @@ function setupU_6_1() {
     main_main.replaceChildren();
     main_header.replaceChildren();
     BackgroundcolorWhite();
-    var main_main_ref = document.getElementById("main_main");
-    var main_header_ref = document.getElementById("mainheader");
     var eingabedivu6 = document.createElement("div");
     var h1 = document.createElement("h1");
     h1.appendChild(document.createTextNode("Klammerpaare"));
-    main_header_ref.appendChild(h1);
+    main_header.appendChild(h1);
     var eingabeu6 = document.createElement("input");
     eingabeu6.setAttribute("type", "search");
     eingabedivu6.appendChild(eingabeu6);
     eingabedivu6.style.display = "flex";
     eingabedivu6.style.justifyContent = "center";
     eingabeu6.style.marginTop = "25px";
-    main_main_ref.appendChild(eingabedivu6);
+    main_main.appendChild(eingabedivu6);
     eingabeu6.style.width = "700px";
     eingabeu6.addEventListener("input", function () {
         var kp1_1 = '(';
@@ -961,7 +1028,7 @@ function sleep(ms) {
 function setupU_7() {
     var _this = this;
     var mainref = document.getElementById("main");
-    mainref.replaceChildren();
+    removeChildrenInDiv(mainref);
     setupMainBereich();
     var main_header = document.getElementById("mainheader");
     var main_main = document.getElementById("main_main");
@@ -969,8 +1036,6 @@ function setupU_7() {
     main_main.replaceChildren();
     main_header.replaceChildren();
     BackgroundcolorWhite();
-    var main_main_ref = document.getElementById("main_main");
-    var main_header_ref = document.getElementById("mainheader");
     var Plagiatsresolution = document.createElement("div");
     Plagiatsresolution.setAttribute("id", "plagiatresolution");
     var header = document.createElement("header");
@@ -991,9 +1056,9 @@ function setupU_7() {
     ueberschriftcontainer.appendChild(brschrft);
     Plagiatsresolution.appendChild(header);
     Plagiatsresolution.appendChild(content);
-    main_header_ref.appendChild(ueberschriftcontainer);
-    main_main_ref.appendChild(analysecontainer);
-    main_main_ref.appendChild(Plagiatsresolution);
+    main_header.appendChild(ueberschriftcontainer);
+    main_main.appendChild(analysecontainer);
+    main_main.appendChild(Plagiatsresolution);
     (function (_) { return __awaiter(_this, void 0, void 0, function () {
         var response, stopwörter, stops, stoparray2d, alltext, alltextsplitted, _loop_1, i, filtered, tabelle, row, column, Plagiatsresolutionref, all, fil, table, tagset, array2d, _loop_2, i, mostusedtag, i, reihe, zelle, i, reihe_1, zelle_1;
         return __generator(this, function (_a) {
@@ -1088,28 +1153,32 @@ function setupU_8_1() {
     var main_main_ref = document.getElementById("main_main");
     var main_header_ref = document.getElementById("mainheader");
     var promisediv = document.createElement("div");
-    promisediv.style.textAlign = "center";
+    promisediv.style.display = "flex";
+    promisediv.style.justifyContent = "center";
     var textAdiv = document.createElement("div");
     var textBdiv = document.createElement("div");
     main_main.appendChild(textAdiv);
     main_main.appendChild(textBdiv);
-    main_main.appendChild(promisediv);
     var h1 = document.createElement("h1");
-    h1.appendChild(document.createTextNode("Promises"));
+    h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit Promises"));
     main_header.appendChild(h1);
+    var p = document.createElement("p");
     fetch('http://127.0.0.1:5500/A.txt').then(function (response) { return response.text(); }).then(function (text) {
         var arrayA = text.split(/\r?\n/);
         fetch('http://127.0.0.1:5500/B.txt').then(function (response) { return response.text(); }).then(function (text) {
             var arrayB = text.split(/\r?\n/);
             var _loop_3 = function (i) {
-                setTimeout(function () { return promisediv.innerHTML += arrayA[i]; }, 10);
-                setTimeout(function () { return promisediv.innerHTML += arrayB[i] + '<br>'; }, 10);
+                setTimeout(function () { return p.innerHTML += arrayA[i]; }, 10);
+                setTimeout(function () { return p.innerHTML += arrayB[i] + '<br>'; }, 10);
             };
             for (var i = 0; i < arrayA.length; i++) {
                 _loop_3(i);
             }
         });
     });
+    console.log(promisediv);
+    promisediv.appendChild(p);
+    main_main.appendChild(promisediv);
 }
 function setupU_8_2() {
     var _this = this;
@@ -1124,14 +1193,13 @@ function setupU_8_2() {
     BackgroundcolorWhite();
     var promisediv = document.createElement("div");
     promisediv.style.textAlign = "center";
-    var textAdiv = document.createElement("div");
-    var textBdiv = document.createElement("div");
-    main_main.appendChild(textAdiv);
-    main_main.appendChild(textBdiv);
-    main_main.appendChild(promisediv);
     var h1 = document.createElement("h1");
-    h1.appendChild(document.createTextNode("async / await"));
+    var h3 = document.createElement("h3");
+    h3.appendChild(document.createTextNode("Konkateniert werden die Gedichte Erlenkönig von Goethe sowie ... von ..."));
+    h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit async / await"));
     main_header.appendChild(h1);
+    main_main.appendChild(h3);
+    main_main.appendChild(promisediv);
     (function (_) { return __awaiter(_this, void 0, void 0, function () {
         var responsea, responseb, texta, arrayA, textb, arrayB, i;
         return __generator(this, function (_a) {
@@ -1181,9 +1249,6 @@ function populateMain(input) {
     p.appendChild(document.createTextNode(input));
     contentdiv.appendChild(p);
     main_main.appendChild(contentdiv);
-}
-function addListenerToButton(button, maininput, headerinput) {
-    button.addEventListener("click", function () { BackgroundcolorWhite(); populateMain(maininput); populateHeader(headerinput); });
 }
 function changeBackgroundColorAndColor(buttonreferenz, backgroundColor, textcolor) {
     buttonreferenz.style.backgroundColor = backgroundColor;
@@ -1298,91 +1363,10 @@ function setup_covid19_barchart() {
     main_main.append(div);
     BackgroundcolorWhite();
     (function (_) { return __awaiter(_this, void 0, void 0, function () {
-        var response, json, data, datasorted, i, tabelle, row, cell, margin, width, height, svg, x, y;
+        var georesponse, geo, dataresponse, geodata, response, json, tabelle;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("http://127.0.0.1:5500/covid-19.json")];
-                case 1:
-                    response = _a.sent();
-                    return [4 /*yield*/, response.json()];
-                case 2:
-                    json = _a.sent();
-                    data = Object.values(json);
-                    datasorted = data.sort(function (a, b) { return d3.descending(a.anzahl, b.anzahl); });
-                    i = 0;
-                    tabelle = document.createElement("table");
-                    tabelle.style.textAlign = "center";
-                    row = tabelle.insertRow(-1);
-                    cell = row.insertCell(0);
-                    cell.innerHTML = "<b>Bundesland</b>";
-                    cell = row.insertCell(1);
-                    cell.innerHTML = "<b>Fälle</b>";
-                    data.forEach(function (d) {
-                        var row = tabelle.insertRow(-1);
-                        var cell = row.insertCell(0);
-                        cell.textContent = data[data.indexOf(d)].name;
-                        cell = row.insertCell(1);
-                        cell.textContent = data[data.indexOf(d)].anzahl;
-                        if (i % 2 === 0) {
-                            row.style.backgroundColor = "#dddddd";
-                        }
-                        i++;
-                    });
-                    listendiv.appendChild(tabelle);
-                    margin = { top: 10, right: 30, bottom: 90, left: 60 }, width = 500 - margin.left - margin.right, height = 400 - margin.top - margin.bottom;
-                    svg = d3.select("#barchartdiv")
-                        .append("svg")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom)
-                        .attr("viewBox", "0 0 ".concat(width + margin.left + margin.right, " ").concat(height + margin.top + margin.bottom))
-                        .append("g")
-                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-                    x = d3.scaleBand()
-                        .range([0, width])
-                        .domain(datasorted.map(function (d) { return d.name; }))
-                        .padding(0.2);
-                    svg.append("g")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x))
-                        .selectAll("text")
-                        .attr("transform", "translate(-10,0)rotate(-45)")
-                        .style("text-anchor", "end");
-                    y = d3.scaleLinear()
-                        .domain([0, d3.max(datasorted, function (d) { return d.anzahl; })])
-                        .range([height, 0]);
-                    svg.append("g")
-                        .call(d3.axisLeft(y));
-                    // Bars
-                    svg.selectAll("svg")
-                        .data(datasorted)
-                        .enter()
-                        .append("rect")
-                        .attr("x", function (d) { return x(d.name); })
-                        .attr("width", x.bandwidth())
-                        .attr("fill", "royalblue")
-                        // no bar at the beginning thus:
-                        .attr("height", function (d) { return height - y(0); }) // always equal to 0
-                        .attr("y", function (d) { return y(0); });
-                    // Animation
-                    svg.selectAll("rect")
-                        .transition()
-                        .duration(800)
-                        .attr("y", function (d) { return y(d.anzahl); })
-                        .attr("height", function (d) { return height - y(d.anzahl); })
-                        .delay(function (d, i) { return (i * 100); });
-                    return [2 /*return*/];
-            }
-        });
-    }); })();
-    (function (_) { return __awaiter(_this, void 0, void 0, function () {
-        var width, height, svg, georesponse, geo, dataresponse, geodata, geodatavalues, projection, data, colorScheme, colorScale;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    width = 300;
-                    height = 400;
-                    svg = d3.select("#mapdiv").append("svg").attr("width", width).attr("height", height);
-                    return [4 /*yield*/, fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json")];
+                case 0: return [4 /*yield*/, fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json")];
                 case 1:
                     georesponse = _a.sent();
                     return [4 /*yield*/, georesponse.json()];
@@ -1394,91 +1378,150 @@ function setup_covid19_barchart() {
                     return [4 /*yield*/, dataresponse.json()];
                 case 4:
                     geodata = _a.sent();
-                    geodatavalues = Object.values(geodata);
-                    projection = d3.geoMercator()
-                        .center([10, 50])
-                        .scale(1500)
-                        .translate([width / 2, height / 2]);
-                    data = d3.map();
-                    geodatavalues.forEach(function (d) { data.set(d.id, d.anzahl); }); // Daten der Bundesländer in einer map speichern
-                    colorScheme = d3.schemeReds[6];
-                    colorScale = d3.scaleThreshold()
-                        .domain([1000, 10000, 100000, 1000000, 3000000, 7000000])
-                        .range(colorScheme);
-                    // Draw the map
-                    svg.append("g")
-                        .selectAll("path")
-                        .data(geo.features)
-                        .enter()
-                        .append("path")
-                        // draw each country
-                        .attr("d", d3.geoPath()
-                        .projection(projection))
-                        // set the color of each country
-                        .attr("fill", function (d) {
-                        // Für jedes Land holen wir uns die Fallzahlen aus der Map
-                        // Die Werte wurden in der Map mit dem Kürzel des jeweiligen Bundeslandes(hier id) gespeichert
-                        var dataforbl = data.get(d.properties.id);
-                        return colorScale(dataforbl);
-                    });
+                    return [4 /*yield*/, fetch("http://127.0.0.1:5500/covid-19.json")];
+                case 5:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 6:
+                    json = _a.sent();
+                    tabelle = dataTabelle(json);
+                    listendiv.appendChild(tabelle);
+                    barChart(json, "#barchartdiv", 500, 400);
+                    mapChart(300, 400, "#mapdiv", geodata, geo);
                     return [2 /*return*/];
             }
         });
     }); })();
 }
-function benchmarkInnerHTML() {
-    var main = document.getElementById("main_main");
-    var div = document.createElement("div");
-    main.appendChild(div);
-    var text = '<h1>Eine Überschrift</h1>';
-    var t0 = performance.now();
-    for (var i = 0; i < 500; i++) {
-        div.innerHTML += text;
-    }
-    var t1 = performance.now();
-    main.removeChild(div);
-    return t1 - t0;
+function barChart(json, divid, breite, hoehe) {
+    var data = Object.values(json);
+    var datasorted = data.sort(function (a, b) { return d3.descending(a.anzahl, b.anzahl); });
+    var margin = { top: 10, right: 30, bottom: 90, left: 60 }, width = breite - margin.left - margin.right, height = hoehe - margin.top - margin.bottom;
+    // append the svg object to the body of the page
+    var svg = d3.select(divid)
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", "0 0 ".concat(width + margin.left + margin.right, " ").concat(height + margin.top + margin.bottom))
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // X axis
+    var x = d3.scaleBand()
+        .range([0, width])
+        .domain(datasorted.map(function (d) { return d.name; }))
+        .padding(0.2);
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+    // Add Y axis
+    var y = d3.scaleLinear()
+        .domain([0, d3.max(datasorted, function (d) { return d.anzahl; })])
+        .range([height, 0]);
+    svg.append("g")
+        .call(d3.axisLeft(y));
+    // Bars
+    svg.selectAll("svg")
+        .data(datasorted)
+        .enter()
+        .append("rect")
+        .attr("x", function (d) { return x(d.name); })
+        .attr("width", x.bandwidth())
+        .attr("fill", "royalblue")
+        // no bar at the beginning thus:
+        .attr("height", function (d) { return height - y(0); }) // always equal to 0
+        .attr("y", function (d) { return y(0); });
+    // Animation
+    svg.selectAll("rect")
+        .transition()
+        .duration(800)
+        .attr("y", function (d) { return y(d.anzahl); })
+        .attr("height", function (d) { return height - y(d.anzahl); })
+        .delay(function (d, i) { return (i * 100); });
 }
-function benchmarkInnerText() {
-    var main = document.getElementById("main_main");
-    var div = document.createElement("div");
-    div.setAttribute("id", "testdiv");
-    main.appendChild(div);
-    var divref = document.getElementById("testdiv");
-    var text = '<h1>Eine Überschrift</h1>';
-    var t0 = performance.now();
-    for (var i = 0; i < 1000; i++) {
-        divref.innerText = text;
-    }
-    var t1 = performance.now();
-    main.removeChild(div);
-    return t1 - t0;
+function dataTabelle(data) {
+    var i = 0;
+    var tabelle = document.createElement("table");
+    tabelle.style.textAlign = "center";
+    var row = tabelle.insertRow(-1);
+    var cell = row.insertCell(0);
+    cell.innerHTML = "<b>Bundesland</b>";
+    cell = row.insertCell(1);
+    cell.innerHTML = "<b>Fälle</b>";
+    Array.from(data).forEach(function (d) {
+        var row = tabelle.insertRow(-1);
+        var cell = row.insertCell(0);
+        cell.textContent = data[data.indexOf(d)].name;
+        cell = row.insertCell(1);
+        cell.textContent = data[data.indexOf(d)].anzahl;
+        if (i % 2 === 0) {
+            row.style.backgroundColor = "#dddddd";
+        }
+        i++;
+    });
+    return tabelle;
 }
-function benchmarkTextContent() {
-    var main = document.getElementById("main_main");
-    var div = document.createElement("div");
-    div.setAttribute("id", "testdiv");
-    main.appendChild(div);
-    var divref = document.getElementById("testdiv");
-    var text = '<h1>Eine Überschrift</h1>';
-    var t0 = performance.now();
-    for (var i = 0; i < 1000; i++) {
-        divref.textContent = text;
-    }
-    var t1 = performance.now();
-    main.removeChild(div);
-    return t1 - t0;
+function mapChart(breite, hoehe, divid, geodata, geojson) {
+    var width = breite;
+    var height = hoehe;
+    var geodatavalues = Object.values(geodata);
+    var svg = d3.select(divid).append("svg").attr("width", width).attr("height", height);
+    var projection = d3.geoMercator()
+        .center([10, 50])
+        .scale(1500)
+        .translate([width / 2, height / 2]);
+    var data = d3.map();
+    geodatavalues.forEach(function (d) { data.set(d.id, d.anzahl); }); // Daten der Bundesländer in einer map speichern
+    var colorScheme = d3.schemeReds[6];
+    var colorScale = d3.scaleThreshold()
+        .domain([1000, 10000, 100000, 1000000, 3000000, 7000000])
+        .range(colorScheme);
+    // Draw the map
+    svg.append("g")
+        .selectAll("path")
+        .data(geojson.features)
+        .enter()
+        .append("path")
+        // draw each country
+        .attr("d", d3.geoPath()
+        .projection(projection))
+        // set the color of each country
+        .attr("fill", function (d) {
+        // Für jedes Land holen wir uns die Fallzahlen aus der Map
+        // Die Werte wurden in der Map mit dem Kürzel des jeweiligen Bundeslandes(hier id) gespeichert
+        var dataforbl = data.get(d.properties.id);
+        return colorScale(dataforbl);
+    });
 }
-var sidenavstatus = 0;
+var SideNavigation = /** @class */ (function () {
+    function SideNavigation() {
+        this.open = false;
+    }
+    SideNavigation.prototype.getOpen = function () {
+        return this.open;
+    };
+    SideNavigation.prototype.swapOpen = function () {
+        if (this.open == false) {
+            this.open = true;
+        }
+        else {
+            this.open = false;
+        }
+    };
+    return SideNavigation;
+}());
+var sidenav = new SideNavigation();
 function openCloseSideNav() {
-    if (sidenavstatus === 0) {
+    if (sidenav.getOpen() === false) {
         openSidenav();
-        sidenavstatus = 1;
+        sidenav.swapOpen();
         return;
     }
-    if (sidenavstatus === 1) {
+    if (sidenav.getOpen() === true) {
         closeSidenav();
-        sidenavstatus = 0;
+        sidenav.swapOpen();
         return;
     }
 }
@@ -1522,21 +1565,38 @@ function vue_singlefile() {
     div.appendChild(para2);
     div.appendChild(para3);
     var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("v-on:input", "handler");
+    input.setAttribute("ref", "inputfield");
+    div.appendChild(input);
     main_main.appendChild(div);
-    new Vue({
+    var vm = new Vue({
         el: '#vuediv',
         data: {
             buchstaben: 0,
             leerzeichen: 0,
             worte: 0
+        },
+        methods: {
+            handler: function (event) {
+                var text = this.$refs.inputfield.value;
+                this.buchstaben = Array.from(text.replaceAll(" ", "")).length;
+                this.leerzeichen = Array.from(text).length - Array.from(text.replaceAll(" ", "")).length;
+                var woerter = Array.from(text.split(" "));
+                var arr = woerter.filter(function (wort) { return wort != ""; });
+                this.worte = arr.length;
+            }
         }
     });
 }
-new Vue({
-    el: "#vue",
-    data: {
-        buchstaben: 0,
-        leerzeichen: 0,
-        woerter: 0
-    }
-});
+function profileCard() {
+    var mainref = document.getElementById("main");
+    mainref.replaceChildren();
+    var picdiv = document.createElement("div");
+    var i = document.createElement("i");
+    picdiv.style.borderRadius = "100%";
+    i.setAttribute("class", "fa fa-user-circle-o fa-5x");
+    picdiv.appendChild(i);
+    mainref.appendChild(picdiv);
+}
+profileCard();
