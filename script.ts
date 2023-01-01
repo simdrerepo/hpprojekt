@@ -9,12 +9,10 @@ function removeChildrenInDiv(div:HTMLElement): void{
 
 (function AddClickListenerToButton(){
   //Clicklistener für die Button im Sidenav
-var sandwichbutton = document.getElementById("sandwichbutton")!;
+var sandwichbutton:HTMLElement = document.getElementById("sandwichbutton")!;
 
 sandwichbutton.addEventListener("click",openCloseSideNav);
-console.log(sandwichbutton);
-var loginbutton = document.getElementById("loginbutton")!;
-loginbutton.addEventListener("click",()=>setup_login());
+
 
 
 const buttonarray = Array.from(document.getElementsByClassName("regularButton"));
@@ -23,37 +21,8 @@ buttonarray.forEach(button=>{button.addEventListener("click",functionArray[butto
 
 })();
 
-(function loginButtonStylingPlusHover(){
-const loginbutton = document.getElementById("loginbutton")!;
-loginbutton.addEventListener("mouseover",function(){this.style.textDecoration="underline";this.style.textUnderlineOffset="0.3em";});
-loginbutton.addEventListener("mouseleave",function(){this.style.textDecoration="none";});
-})();
-const setup_login = ():void => {
-  const mainref = <HTMLDivElement>document.getElementById("main");
- removeChildrenInDiv(mainref);
-  
-  let container = document.createElement("div");
-  var form = document.createElement("form");
-form.setAttribute("action","action='<?php echo $_SERVER['PHP_SELF'] ?>'");
-form.setAttribute("method","POST");
-
- form.innerHTML =
-'E-mail: <input type="text" name="email"><br>'+
-'Passwort: <input type="text" name="pw"><br>'+
-'<input type="submit" id="submit">';
 
 
-  
-  container.style.backgroundColor ="white";
-  container.style.marginTop = "30px";
-  container.style.minHeight = "700px";
-  
- 
- console.log(container);
-  mainref.appendChild(container);
-  
-
-};
 class tic_tac_toe{
 
   constructor(){
@@ -511,8 +480,8 @@ function mouseOut(this: any):void{
 }
 (function hoverForSidenavBtn():void{
 // hovereffekt für sidenav button
-const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
-const buttoncollection = sidebuttondiv.getElementsByTagName("button");
+const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
+const buttoncollection:HTMLCollectionOf<HTMLButtonElement> = sidebuttondiv.getElementsByTagName("button");
 for(let i=0;i<buttoncollection.length;i++){
   buttoncollection[i].style.cursor = "pointer";
   buttoncollection[i].addEventListener("mouseover",mouseOver);
@@ -538,10 +507,10 @@ else{dropdown.style.display="block";}});
 
 }
 })();
-(function addBackgroundEffectToDropdownButton(){
-  // Dropdownbutton haben einen festen Hintergrund wenn sie geklickt wurden
-var buttonclicked = <boolean[]>new Array();
-let dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
+(function addBackgroundEffectToDropdownButton():void{
+  // Dropdownbutton haben eine feste Hintergrundfarbe wenn sie geklickt wurden
+var buttonclicked:boolean[] = <boolean[]>new Array();
+let dropdownbutton:Element[] = Array.from(document.getElementsByClassName("drpdwnbtn"));
 dropdownbutton.forEach((button)=>{buttonclicked.push(false)});
 
 dropdownbutton.forEach((button)=>{button.addEventListener("click",function(){
@@ -558,14 +527,14 @@ buttonclicked[dropdownbutton.indexOf(button)]=false;}
 
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
-  const mainref = <HTMLDivElement>document.getElementById("main"); 
- let main_container = <HTMLDivElement>document.createElement("div");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main"); 
+ let main_container:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   main_container.setAttribute("id","main_container");
- let main_header = <HTMLDivElement>document.createElement("div");
+ let main_header:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   main_header.setAttribute("id","mainheader");
- let main_main = <HTMLDivElement>document.createElement("div");
+ let main_main:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   main_main.setAttribute("id","main_main");
- let main_footer = <HTMLDivElement>document.createElement("div");
+ let main_footer:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   main_footer.setAttribute("id","main_footer");
 
 
@@ -576,12 +545,12 @@ main_container.appendChild(main_main);
 main_container.appendChild(main_footer);
 
 }
-function BackgroundcolorWhite():void{
+function MainBereichStyling():void{
   // styling für den Bereich(header,main)
-  const mainref = <HTMLDivElement>document.getElementById("main");
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
-  const main_container =< HTMLDivElement>document.getElementById("main_container");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
+  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
+  const main_container:HTMLDivElement =< HTMLDivElement>document.getElementById("main_container");
   main_header.style.backgroundColor="white";
 main_main.style.backgroundColor="white";
 main_main.style.marginTop = "40px";
@@ -597,59 +566,59 @@ mainref.style.marginTop = "30px";
 
 }
 function domBenchmarks():void{
-  const mainref = <HTMLDivElement>document.getElementById("main");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
   mainref.replaceChildren();
   setupMainBereich();
-  BackgroundcolorWhite();
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
+  MainBereichStyling();
+  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
  
  
  
  
 
-  let ueberschrift = <HTMLHeadElement> document.createElement("h1");
+  let ueberschrift:HTMLHeadElement = <HTMLHeadElement> document.createElement("h1");
   ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-  var tabelle = <HTMLTableElement>document.createElement("table");
+  var tabelle:HTMLTableElement = <HTMLTableElement>document.createElement("table");
   
   tabelle.setAttribute("id","benchmarktabelle");
   tabelle.setAttribute("class","tabelle");
-  let reihe0 = tabelle.insertRow(-1);
-  let zelle = reihe0.insertCell(0);
+  let reihe0:HTMLTableRowElement = tabelle.insertRow(-1);
+  let zelle:HTMLTableCellElement = reihe0.insertCell(0);
   zelle.appendChild(document.createTextNode("Dom-Operation"));
   zelle = reihe0.insertCell(1);
   zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"))
   
-let reihe = tabelle.insertRow(-1);
+let reihe:HTMLTableRowElement = tabelle.insertRow(-1);
 zelle = reihe.insertCell(0);
 
 zelle.appendChild(document.createTextNode("innerHTML"));
 
 zelle = reihe.insertCell(1);
 zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
-let reihe2 = tabelle.insertRow(-1);
+let reihe2:HTMLTableRowElement = tabelle.insertRow(-1);
 zelle = reihe2.insertCell(0);
 zelle.appendChild(document.createTextNode("innerText"));
 zelle = reihe2.insertCell(1);
 zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
-let reihe3 = tabelle.insertRow(-1);
+let reihe3:HTMLTableRowElement = tabelle.insertRow(-1);
 zelle = reihe3.insertCell(0);
 zelle.appendChild(document.createTextNode("textContent"));
 zelle = reihe3.insertCell(1);
 zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
 
   ueberschrift.setAttribute("id","headline");
-let tabellendiv = document.createElement("div");
+let tabellendiv:HTMLDivElement = document.createElement("div");
 tabellendiv.setAttribute("id","tabellendiv");
 tabellendiv.appendChild(tabelle);
 tabellendiv.style.display = "flex";
 tabellendiv.style.justifyContent = "center";
-let mainueberschr = document.createElement("h2");
+let mainueberschr:HTMLHeadElement = document.createElement("h2");
 mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
 main_header.appendChild(ueberschrift);
 main_header.style.textAlign="center";
 let codeblock = document.createElement("code");
-let codediv = document.createElement("div");
+let codediv:HTMLDivElement = document.createElement("div");
 let div = document.createElement("div");
 div.style.display ="flex";
 div.style.justifyContent="center";
@@ -666,34 +635,18 @@ codediv.innerHTML = "<b>Codesample</b><br>..."+"<br>"+
 "...";
 codediv.style.backgroundColor="#e7e9eb";
 
-
-
-
-
-  
- //let text = '<h1>Eine Überschrift</h1>';
-
-
-//let t0 = performance.now();
-
- //for(i=0;i<500;i++){
-//div.innerHTML+=text;
-// }
-
-//let t1 = performance.now();
-//main.removeChild(div);
 div.appendChild(codediv);
 main_main.appendChild(div);
 main_main.appendChild(tabellendiv);
 
 
 tabelle.style.border = "1px solid black";
-let trs = tabelle.getElementsByTagName("td");
+let trs:HTMLCollectionOf<HTMLTableCellElement> = tabelle.getElementsByTagName("td");
 for(let i=0;i<trs.length;i++){
   
 trs[i].style.border = "1px solid black";
 }
-var odd = tabelle.querySelectorAll("tr");
+var odd:NodeListOf<HTMLTableRowElement> = tabelle.querySelectorAll("tr");
 
 for(let i=1;i<odd.length;i++){
   odd[0].style.backgroundColor="lightyellow";
@@ -711,22 +664,22 @@ for(let i=1;i<odd.length;i++){
 }
 function benchmarkInnerHTML():number{
 
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = document.createElement("div");
+  let main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
+  let div:HTMLDivElement = document.createElement("div");
   
   main.appendChild(div);
   
 
-let text = '<h1>Eine Überschrift</h1>';
+let text:string = '<h1>Eine Überschrift</h1>';
 
 
-let t0 = performance.now();
+let t0:number = performance.now();
 
  for(let i=0;i<500;i++){
 div.innerHTML+=text;
  }
 
-let t1 = performance.now();
+let t1:number = performance.now();
 main.removeChild(div);
 
 return t1-t0;
@@ -734,22 +687,22 @@ return t1-t0;
 }
 function benchmarkInnerText():number{
 
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = <HTMLDivElement>document.createElement("div");
+  let main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
+  let div:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   div.setAttribute("id","testdiv");
   main.appendChild(div);
-  let divref = <HTMLDivElement>document.getElementById("testdiv");
+  
 
-let text = '<h1>Eine Überschrift</h1>';
+let text:string = '<h1>Eine Überschrift</h1>';
 
 
-let t0 = performance.now();
+let t0:number = performance.now();
 
  for(let i=0;i<1000;i++){
-divref.innerText=text;
+div.innerText=text;
  }
 
-let t1 = performance.now();
+let t1:number = performance.now();
 main.removeChild(div);
 
 return t1-t0;
@@ -757,22 +710,22 @@ return t1-t0;
 }
 function benchmarkTextContent():number{
 
-  let main = <HTMLDivElement>document.getElementById("main_main");
-  let div = <HTMLDivElement>document.createElement("div");
+  let main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
+  let div:HTMLDivElement = <HTMLDivElement>document.createElement("div");
   div.setAttribute("id","testdiv");
   main.appendChild(div);
-  let divref = <HTMLDivElement>document.getElementById("testdiv");
+ 
 
-let text = '<h1>Eine Überschrift</h1>';
+let text:string = '<h1>Eine Überschrift</h1>';
 
 
-let t0 = performance.now();
+let t0:number = performance.now();
 
  for(let i=0;i<1000;i++){
-divref.textContent=text;
+div.textContent=text;
  }
 
-let t1 = performance.now();
+let t1:number = performance.now();
 main.removeChild(div);
 
 return t1-t0;
@@ -780,20 +733,20 @@ return t1-t0;
 }
 
 function setup_tic_tac_toe(){
-  const mainref = <HTMLDivElement>document.getElementById("main");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
   removeChildrenInDiv(mainref);
  setupMainBereich(); 
-  BackgroundcolorWhite();
+  MainBereichStyling();
   
-  const main_header = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main = <HTMLDivElement>document.getElementById("main_main");
+  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
+  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
   
  
-let div = document.createElement("div");
-let header = document.createElement("h1");
+let div:HTMLDivElement = document.createElement("div");
+let header:HTMLHeadElement = document.createElement("h1");
 header.appendChild(document.createTextNode("Tic Tac Toe"));
 main_header.appendChild(header);
-let ttt = new tic_tac_toe();
+let ttt:tic_tac_toe = new tic_tac_toe();
 ttt.setupSpielfeld(div);
 ttt.addListener(div);
 ttt.werFaengtAn();
@@ -805,8 +758,8 @@ div.style.justifyContent="center";
 }
 
 function setAllButtonTextToStop():void{
-  var collection = document.querySelectorAll("button");
-  var start = 'Stop';
+  var collection:NodeListOf<HTMLButtonElement> = document.querySelectorAll("button");
+  var start:string = 'Stop';
   
   
   for (let i = 0; i < collection.length; i++) {
@@ -821,28 +774,16 @@ function stopAll(rednerArray:Redner[]):void{
  rednerArray.forEach((redner)=>{redner.clearAllIntervalIds();redner.counting=0;});
 
 }
-function createTable(reihen:number,zeilen:number):HTMLTableElement{
-  var table = document.createElement("table");
-  for(let i=0;i<zeilen;i++){
-   let reihe = table.insertRow(-1);
-    for(let j=0;j<reihen;j++){
-      reihe.insertCell(j);
-    }
 
-
-  }
-  return table;
-
-}
 
 function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElement,rednerArray:Redner[]):void{
   
-   var event = rednerobj.counting;
+   var event:number = rednerobj.counting;
   
   if(event === 0){
    stopAll(rednerArray);
     setAllButtonTextToStop();
-    let interval = setInterval(rednerobj.timer.bind(rednerobj),1000,htmlElement);
+    let interval:number = setInterval(rednerobj.timer.bind(rednerobj),1000,htmlElement);
     rednerobj.intervalids.push(interval);
     rednerobj.counting = 1;
     rednerobj.startstopsymbol = 'Stop';
@@ -864,7 +805,7 @@ function myEventHandler(rednerobj:Redner,htmlElement:HTMLElement,button:HTMLElem
 
 function addRednerInListe(liste:HTMLElement, rednerobjintabelle:any):void{
  
-  let li = document.createElement("li");
+  let li:HTMLLIElement = document.createElement("li");
   li.appendChild(rednerobjintabelle);
   liste.appendChild(li);
   
@@ -972,7 +913,7 @@ mainref.style.display = "block";
 listendiv.style.display = "flex";
 listendiv.style.justifyContent = "center";
 ues.style.textAlign = "Center";
-BackgroundcolorWhite();
+MainBereichStyling();
 var rednerarray:Redner[] = new Array();
 
  
@@ -1051,7 +992,7 @@ div.style.justifyContent="center";
 
 
 
-BackgroundcolorWhite();
+MainBereichStyling();
 
 
 listdiv.appendChild(liste);
@@ -1133,7 +1074,7 @@ function setupU_6_1():void{
   main_main.replaceChildren();
   main_header.replaceChildren();
   
-  BackgroundcolorWhite();
+  MainBereichStyling();
  
   
   let eingabedivu6 = document.createElement("div");
@@ -1234,7 +1175,7 @@ function setupU_7():void{
       main_main.replaceChildren();
   main_header.replaceChildren();
   
-  BackgroundcolorWhite();
+  MainBereichStyling();
  
  let Plagiatsresolution = document.createElement("div");
  Plagiatsresolution.setAttribute("id","plagiatresolution");
@@ -1349,7 +1290,7 @@ function setupU_8_1():void{
       main_main.replaceChildren();
   main_header.replaceChildren();
   
-  BackgroundcolorWhite();
+  MainBereichStyling();
   
   const main_main_ref = document.getElementById("main_main");
   const main_header_ref = document.getElementById("mainheader");
@@ -1406,7 +1347,7 @@ function setupU_8_2():void{
   main_main.replaceChildren();
   main_header.replaceChildren();
 
-  BackgroundcolorWhite();
+  MainBereichStyling();
 
   let promisediv = document.createElement("div");
   promisediv.style.textAlign ="center";
@@ -1444,9 +1385,7 @@ i++;
 
 
 
-const main_main_ref = <HTMLDivElement>document.getElementById("main_main");
-  const main_header_ref = <HTMLDivElement>document.getElementById("mainheader");
-const dropdwncntnr = Array.from(document.getElementsByClassName("dropdown-container"));
+
 
 function populateHeader(input:any){
   const main_header = <HTMLDivElement>document.getElementById("mainheader");
@@ -1554,7 +1493,7 @@ var i =0;
   const main_main = <HTMLDivElement>document.getElementById("main_main");
   main_header.replaceChildren();
   main_main.replaceChildren();
-          BackgroundcolorWhite();
+          MainBereichStyling();
           populateHeader(header);
           populateMain(inhalt);
 
@@ -1594,7 +1533,7 @@ function setup_covid19_barchart():void{
   mapdiv.style.display = "flex";
   mapdiv.style.justifyContent = "center";
   main_main.append(div);
- BackgroundcolorWhite();
+ MainBereichStyling();
   (async _=>{
     const georesponse = await fetch("http://127.0.0.1:5500/1_sehr_hoch.geo.json");
     const geo = await georesponse.json();
@@ -1808,7 +1747,7 @@ function vue_singlefile():void{
   const mainref = document.getElementById("main")!;
   removeChildrenInDiv(mainref);
   setupMainBereich();
-  BackgroundcolorWhite();
+  MainBereichStyling();
   const main_header = document.getElementById("mainheader")!;
   const main_main = document.getElementById("main_main")!;
   let headerdiv = document.createElement("div");
@@ -1869,6 +1808,7 @@ methods : {
 
 }
 function profileCard(){
+  //Under Construction ...
   const mainref = <HTMLDivElement>document.getElementById("main");
   mainref.replaceChildren();
   var picdiv = document.createElement("div");
@@ -1882,7 +1822,7 @@ function profileCard(){
   
 }
 
-profileCard();
+
       
     
      

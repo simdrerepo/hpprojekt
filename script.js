@@ -58,7 +58,7 @@ var setup_login = function () {
     removeChildrenInDiv(mainref);
     var container = document.createElement("div");
     var form = document.createElement("form");
-    form.setAttribute("action", "action='<?php echo $_SERVER['PHP_SELF'] ?>'");
+    form.setAttribute("action", "http://localhost:3000/index.php");
     form.setAttribute("method", "POST");
     form.innerHTML =
         'E-mail: <input type="text" name="email"><br>' +
@@ -67,7 +67,7 @@ var setup_login = function () {
     container.style.backgroundColor = "white";
     container.style.marginTop = "30px";
     container.style.minHeight = "700px";
-    console.log(container);
+    container.appendChild(form);
     mainref.appendChild(container);
 };
 var tic_tac_toe = /** @class */ (function () {
@@ -1590,6 +1590,7 @@ function vue_singlefile() {
     });
 }
 function profileCard() {
+    //Under Construction ...
     var mainref = document.getElementById("main");
     mainref.replaceChildren();
     var picdiv = document.createElement("div");
@@ -1599,4 +1600,3 @@ function profileCard() {
     picdiv.appendChild(i);
     mainref.appendChild(picdiv);
 }
-profileCard();
