@@ -45,6 +45,15 @@ for(let i in this.stack){
     printKnotenSet():void{
        this.knotenSet.forEach((item:any)=>{console.log(item)});
     }
+    returnSortierung():any[]{
+      let tmpar:any[] = this.stack;
+      let ar:any[] = new Array();
+      while(tmpar.length!=0){
+        ar.push(tmpar.pop());
+      }
+      return ar;
+
+    }
    
 
   
