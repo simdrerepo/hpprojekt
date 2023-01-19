@@ -4,17 +4,24 @@ class tic_tac_toe{
     constructor(div:HTMLElement){
         this.spieler="";
        this.controller = new AbortController();
-        this.spielfeld = [null,null,null,null,null,null,null,null,null];
+        this.spielfeld = [new Array(),new Array(),new Array(),new Array(),new Array(),new Array(),new Array(),new Array(),new Array()];
         this.spielfelddiv = div;
         this.werFaengtAn();
         this.setupSpielfeld();
         this.addListener();
         this.werFaengtAn();
+        this.kreuzId = 0;
+        this.kreisId = 0;
+        this.freiefelder=9;
     }
+    kreuzId:number;
+    kreisId:number;
     spieler:string;
     controller:AbortController;
-    spielfeld:string[]|null[];
+    spielfeld:any[];
     spielfelddiv:HTMLElement;
+    freiefelder:number;
+    
     werFaengtAn():void{
       //Beginnender Spieler wird zufällig ermittelt
         let oneOrZero = (Math.random()>=0.5)? 1 : 0;
@@ -26,6 +33,14 @@ class tic_tac_toe{
         }
     
     }
+    printSpielfeld(){
+      for(const ar of this.spielfeld){
+        console.log(ar);
+      }
+
+    }
+
+    
     setupSpielfeld():void{
         //Das Spielfeld wird in ein div nach Wahl geladen
         //Jedes Feld ist 10x10 Groß
@@ -34,20 +49,40 @@ class tic_tac_toe{
     '<line x1="21.5"y1="0"x2="21.5"y2="32"stroke="black"stroke-width="1"></line>'+
     '<line x1="0"y1="10.5"x2="32"y2="10.5"stroke="black"stroke-width="1"></line>'+
     '<line x1="0"y1="21.5"x2="32"y2="21.5"stroke="black"stroke-width="1"></line>'+
-    '<rect x="0"y="0"width="10"height="10"fill="white"></rect>'+
-    '<rect x="11"y="0"width="10"height="10"fill="white"></rect>'+
-    '<rect x="22"y="0"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld1" x="0"y="0"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld2" x="11"y="0"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld3" x="22"y="0"width="10"height="10"fill="white"></rect>'+
     
-    '<rect x="0"y="11"width="10"height="10"fill="white"></rect>'+
-    '<rect x="11"y="11"width="10"height="10"fill="white"></rect>'+
-    '<rect x="22"y="11"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld4" x="0"y="11"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld5" x="11"y="11"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld6" x="22"y="11"width="10"height="10"fill="white"></rect>'+
     
-    '<rect x="0"y="22"width="10"height="10"fill="white"></rect>'+
-    '<rect x="11"y="22"width="10"height="10"fill="white"></rect>'+
-    '<rect x="22"y="22"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld7" x="0"y="22"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld8" x="11"y="22"width="10"height="10"fill="white"></rect>'+
+    '<rect id="feld9" x="22"y="22"width="10"height="10"fill="white"></rect>'+
     '</svg>';
     }
-    
+    animiereKreuz(id:string){
+      const kreuz = document.getElementById(id)!;
+      kreuz.animate([
+        
+     
+        {transform:"rotate(0deg)",transformBox:"fill-box",transformOrigin:"center"},
+        {transform:"rotate(360deg",transformBox:"fill-box",transformOrigin:"center"}
+      
+      ],{duration: 2000, iterations: Infinity});
+
+
+    }
+    animiereKreis(id:string){
+      const kreis = document.getElementById(id)!;
+      kreis.animate({
+        r:[ 4, 1]
+      },{duration: 2000, iterations: Infinity});
+
+
+    }
+ 
     addListener():void{
       //Click-Listener für jedes Feld
         const rectcollection =Array.from(this.spielfelddiv.querySelectorAll("rect"));
@@ -62,18 +97,30 @@ class tic_tac_toe{
                 if(self.istFrei(listenerid,self)){
                 //Wenn ein Feld noch nicht bespielt wurde, dann...
                 if(self.spieler==="o"){
-                    
+                 
                    let coords = self.getKoordinaten(this);// Koordinaten des Feldes ermitteln               
                    let circle = self.drawCircle(coords);// Kreis erzeugen
                   self.drawOnSpielfeld(circle); // Aufs Spielfeld damit
-                  self.spielfeld[listenerid]="o";//Feld wird markiert mit aktuellem Spieler
+                  self.freiefelder--;
+                  let array = new Array();
+                  array.push("o");
+                  let id = self.getId(circle);
+                  array.push(id);
+                  
+                  self.spielfeld[listenerid]=array;//Feld wird markiert mit aktuellem Spieler
+                 
+                
                  setTimeout(()=>self.alertBannerAnzeigen(self.gibtEsEinenGewinner("o",self)),10);//Gewinn Bedingungen checken
                    self.changeSpieler(self);//Nächster Spieler ist jetzt dran
                 }
                else if(self.spieler==="x"){
+            
                 // Spieler mit Kreuz
                 // Koordinaten einholen
                     let coords = self.getKoordinaten(this);
+                   
+                   
+                    
                     //Linie erzeugen
                     let linie1 = self.drawLine(coords);
                     //Gedrehte Linie erzeugen
@@ -82,8 +129,14 @@ class tic_tac_toe{
                     let cross = self.drawCross(linie1,linie2);
                     //Kreuz auf Spielfeld anzeigen
                     self.drawOnSpielfeld(cross);
+                    let array = new Array();
+                  array.push("x");
+                  let id = self.getId(cross);
+                  array.push(id);
                     //Feld markieren
-                    self.spielfeld[listenerid]="x";
+                    self.spielfeld[listenerid]=array;
+                    self.freiefelder--;
+                   
                     //Gewonnen?
                    
                     setTimeout(()=>self.alertBannerAnzeigen(self.gibtEsEinenGewinner("x",self)),10);
@@ -100,6 +153,12 @@ class tic_tac_toe{
             },{signal: self.controller.signal});
         });
     
+    }
+    getId(ref:SVGElement){
+    let id = ref.getAttribute("id");
+    return id;
+
+
     }
     addResetButton(){
       let button = document.createElement("button");
@@ -120,20 +179,21 @@ class tic_tac_toe{
         else{self.spieler="o"};
     
     
-    }
+    } 
     
     istFrei(index:number,self:tic_tac_toe):boolean{
       //Check ob ein Feld schon belegt ist
-        if(self.spielfeld[index]===null){
+        if(self.spielfeld[index].length===0){
             return true;
         }
         else{return false;}
     
     }
+    
     getKoordinaten(rect:SVGRectElement):number[]{
-      // Gibt die (x,y) Koordinaten eines Felds(rect) zurück
+      // Gibt die (x,y) Koordinaten eines Felds(rect) zurück (Den Punkt links oben).
       let x = rect.getAttribute("x");
-      let y = rect.getAttribute("y")
+      let y = rect.getAttribute("y");
     return [Number(x),Number(y)];
     
     }
@@ -187,6 +247,10 @@ class tic_tac_toe{
     circle.setAttribute("cy",String(y));
     circle.setAttribute("r","4");
     circle.setAttribute("fill","royalblue");
+    circle.setAttribute("id","kreis"+String(this.kreisId));
+   
+    this.kreisId++;
+   
     
     return circle;
     
@@ -199,6 +263,10 @@ class tic_tac_toe{
     let gruppe = document.createElementNS("http://www.w3.org/2000/svg","g");
     gruppe.appendChild(linie1);
     gruppe.appendChild(linie2);
+    gruppe.setAttribute("id","kreuz"+String(this.kreuzId));
+    
+   
+    this.kreuzId++;
     return gruppe;
     
     
@@ -213,16 +281,21 @@ class tic_tac_toe{
     
     }
   
-    alertBannerAnzeigen(xOdero:string|null):void{
-      const gewinner = xOdero;
+    alertBannerAnzeigen(xOdero:any[]):void{
+     
    
-      if(gewinner === "x"){
-       alert("Kreuz hat gewonnen! Hurra...");
+      if(xOdero[0] === "x"){
+        setTimeout(()=>this.animiereKreuz(xOdero[1]),10);
+        setTimeout(()=>this.animiereKreuz(xOdero[2]),10);
+        setTimeout(()=>this.animiereKreuz(xOdero[3]),10);
+      
        this.addResetButton();
       
       }
-    if(gewinner === "o"){
-      alert("Kreis hat gewonnen! Hurra...");
+    if(xOdero[0] === "o"){
+      setTimeout(()=>this.animiereKreis(xOdero[1]),10);
+      setTimeout(()=>this.animiereKreis(xOdero[2]),10);
+      setTimeout(()=>this.animiereKreis(xOdero[3]),10);
       this.addResetButton();
   
     }
@@ -231,67 +304,73 @@ class tic_tac_toe{
   
     }
     
-    gibtEsEinenGewinner(zeichen:string,objthisref:tic_tac_toe):string|null{
+    gibtEsEinenGewinner(zeichen:string,objthisref:tic_tac_toe):any[]{
       //Hier wird gecheckt ob die Bedingungen für einen Sieg erfüllt sind
-    if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[1]===zeichen && objthisref.spielfeld[2]===zeichen){
+      
+    if(objthisref.spielfeld[0][0]===zeichen && objthisref.spielfeld[1][0]===zeichen && objthisref.spielfeld[2][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-       return "x";
+       return ["x",objthisref.spielfeld[0][1],objthisref.spielfeld[1][1],objthisref.spielfeld[2][1]];
         }
-       if(zeichen==="o"){return "o";}
+       if(zeichen==="o"){return ["o",objthisref.spielfeld[0][1],objthisref.spielfeld[1][0],objthisref.spielfeld[2][0]];}
     }
-    if(objthisref.spielfeld[3]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[5]===zeichen){
+    if(objthisref.spielfeld[3][0]===zeichen && objthisref.spielfeld[4][0]===zeichen && objthisref.spielfeld[5][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[3][1],objthisref.spielfeld[4][1],objthisref.spielfeld[5][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[3][1],objthisref.spielfeld[4][1],objthisref.spielfeld[5][1]];}
     }
-    if(objthisref.spielfeld[6]===zeichen && objthisref.spielfeld[7]===zeichen && objthisref.spielfeld[8]===zeichen){
+    if(objthisref.spielfeld[6][0]===zeichen && objthisref.spielfeld[7][0]===zeichen && objthisref.spielfeld[8][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[6][1],objthisref.spielfeld[7][1],objthisref.spielfeld[8][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[6][1],objthisref.spielfeld[7][1],objthisref.spielfeld[8][1]];}
     }
-    if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[3]===zeichen && objthisref.spielfeld[6]===zeichen){
+    if(objthisref.spielfeld[0][0]===zeichen && objthisref.spielfeld[3][0]===zeichen && objthisref.spielfeld[6][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[0][1],objthisref.spielfeld[3][1],objthisref.spielfeld[6][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[0][1],objthisref.spielfeld[3][1],objthisref.spielfeld[6][1]];}
     }
-    if(objthisref.spielfeld[1]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[7]===zeichen){
+    if(objthisref.spielfeld[1][0]===zeichen && objthisref.spielfeld[4][0]===zeichen && objthisref.spielfeld[7][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[1][1],objthisref.spielfeld[4][1],objthisref.spielfeld[7][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[1][1],objthisref.spielfeld[4][1],objthisref.spielfeld[7][1]];}
     }
-    if(objthisref.spielfeld[2]===zeichen && objthisref.spielfeld[5]===zeichen && objthisref.spielfeld[8]===zeichen){
+    if(objthisref.spielfeld[2][0]===zeichen && objthisref.spielfeld[5][0]===zeichen && objthisref.spielfeld[8][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[2][1],objthisref.spielfeld[5][1],objthisref.spielfeld[8][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[2][1],objthisref.spielfeld[5][1],objthisref.spielfeld[8][1]];}
     }
-    if(objthisref.spielfeld[0]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[8]===zeichen){
+    if(objthisref.spielfeld[0][0]===zeichen && objthisref.spielfeld[4][0]===zeichen && objthisref.spielfeld[8][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[0][1],objthisref.spielfeld[4][1],objthisref.spielfeld[8][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[0][1],objthisref.spielfeld[4][1],objthisref.spielfeld[8][1]];}
     }
-    if(objthisref.spielfeld[6]===zeichen && objthisref.spielfeld[4]===zeichen && objthisref.spielfeld[2]===zeichen){
+    if(objthisref.spielfeld[6][0]===zeichen && objthisref.spielfeld[4][0]===zeichen && objthisref.spielfeld[2][0]===zeichen){
         objthisref.controller.abort();
         if(zeichen==="x"){
-          return "x";
+          return ["x",objthisref.spielfeld[6][1],objthisref.spielfeld[4][1],objthisref.spielfeld[2][1]];
            }
-          if(zeichen==="o"){return "o";}
+          if(zeichen==="o"){return ["o",objthisref.spielfeld[6][1],objthisref.spielfeld[4][1],objthisref.spielfeld[2][1]];}
     }
-    return null;
+    if(this.freiefelder===0){
+      this.addResetButton();
+    }
+   return [];
     }
     
     
   }
+
+  
   export {tic_tac_toe};

@@ -1,0 +1,17 @@
+{"fragen":[
+"Mit welchen fachlichen Argumenten wurde das WWW-Proposal von TBL abgelehnt?",
+"Was sind die fachlichen Argumente, warum das WWW dennoch ein Erfolg wurde?",
+"Was wäre der Preis für die garantierte Verhinderung von “broken links?",
+"Sie bekommen im Browser den HTTP Status Code 200. Was bedeutet das?",
+"Sie bekommen im Browser den HTTP Status Code 301. Was hat das zu bedeuten?",
+"Sie bekommen im Browser den HTTP Status Code 400. Was hat das zu bedeuten? Was können Sie dagegen tun?",
+"Sie bekommen im Browser den HTTP Status Code 403. Was hat das zu bedeuten? Was können Sie dagegen tun?",
+"In einer Webanwendung benötigen Sie eine OPTIONS-Anfrage, die die Optionen des Servers vor dem eigentlichen Zugriff erfragen soll. Aus Performanzgründen soll die Abfrage jedoch cacheable sein. Wie könnten Sie dafür eine Lösung angehen?",
+"Was ist HTML?",
+"Wie kann man eine geschachtelte geordnete Liste der Schachtelungstiefe 3 erzeugen?",
+"Wie ist eine HTML-Tabelle aufgebaut?",
+"Welche Konventionen sollte man bei Pfaden und Dateinamen beachten?",
+"Wie baut man in HTML ein Menü?",
+"Welche Attribute sollte man bei Bildern wie verwenden"],
+"anworten":[""]
+}

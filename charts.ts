@@ -1,65 +1,6 @@
 
 
 
-function barChart(json:any,divid:string,breite:number,hoehe:number){
-    const data:any[] = Object.values(json);
-  
-    const datasorted:any[] = data.sort((a,b) => d3.descending(a.anzahl,b.anzahl));
-    var margin = {top: 10, right: 30, bottom: 90, left: 60},
-      width = breite - margin.left - margin.right,
-      height = hoehe - margin.top - margin.bottom;
-  
-  
-  var svg = d3.select(divid)
-    .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .attr("viewBox",`0 0 ${width+margin.left+margin.right} ${height+margin.top+margin.bottom}`)
-    .append("g")
-      .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-  
-  
-  
-  
-  var x = d3.scaleBand()
-    .range([ 0, width ])
-    .domain(datasorted.map(function(d:any) { return d.name; }))
-    .padding(0.2);
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-  
-  
-  var y = d3.scaleLinear()
-    .domain([0, d3.max(datasorted,(d:any)=>d.anzahl)])
-    .range([ height, 0]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
-  
-  
-  svg.selectAll("svg")
-    .data(datasorted)
-    .enter()
-    .append("rect")
-      .attr("x", (d:any):number => { return Number(x(d.name)); })
-      .attr("width", x.bandwidth())
-      .attr("fill", "royalblue")
-     
-      .attr("height", function(d:any) { return height - y(0); }) 
-      .attr("y", function(d:any) { return y(0); })
-  
-  
-  svg.selectAll("rect")
-    .transition()
-    .duration(800)
-    .attr("y", function(d:any) { return y(d.anzahl); })
-    .attr("height", function(d:any) { return height - y(d.anzahl); })
-    .delay(function(d:any,i:any){return(i*100)})
-  }
 function dataTabelle(data:any):HTMLTableElement{
     var i = 0;
     var tabelle = document.createElement("table");
@@ -89,12 +30,12 @@ function mapChart(breite:number,hoehe:any,divid:string,geodata:any,geojson:any){
     var width = breite;
     var height = hoehe;
     const geodatavalues = Object.values(geodata);
-      var svg = d3.select(divid).append("svg").attr("width",width).attr("height",height);
+      var svg = d3.select(divid).append("svg").attr("width",width).attr("height",height).attr("viewBox",`0 0 ${width} ${height}`);
     var projection = d3.geoMercator()
       .center([10, 50])
                   
       .scale(1500)                       
-      .translate([width / 2, height / 2]);
+      .translate([width / 2, 250]);
       var data = new Map();
 
       geodatavalues.forEach((d:any)=>{data.set(d.id,d.anzahl)}); // Daten der Bundesländer in einer map speichern
@@ -103,7 +44,7 @@ function mapChart(breite:number,hoehe:any,divid:string,geodata:any,geojson:any){
   
   
   var colorScale = d3.scaleThreshold()
-    .domain([1000,10000,100000,1000000,3000000,7000000])
+    .domain([10000,100000,1000000,3000000,7000000])
     .range(colorScheme);
       
         
@@ -126,9 +67,16 @@ function mapChart(breite:number,hoehe:any,divid:string,geodata:any,geojson:any){
              
               return colorScale(dataforbl);
             });
-  
+        
+            var labels = [">1.000<10.000",">10.000<100.000",">100.000<1.000.000",">1.000.000>3.000.000",">3.000.000<7.000.000",">7.000.000"];
+          svg.append("g").attr("class","legend").attr("transform", `translate(${100},${400})`);
+          var legend = d3.legendColor().labels(labels).title("Fälle").scale(colorScale);
+    
+    
+svg.select(".legend")
+    .call(legend);
   }    
   
-  export {barChart};
+  
   export {dataTabelle};
   export {mapChart};
