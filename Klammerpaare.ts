@@ -12,6 +12,7 @@ const setup_Klammerpaare=():void=>{
     var eingabeu6 = document.createElement("input");
     eingabeu6.setAttribute("type","search");
     let p = document.createElement("p");
+    p.style.textAlign="center";
    p.innerHTML = "Der eingegebene Text wird auf korrekte Klammerung geprüft.<br>"+
    "Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].";
     eingabedivu6.appendChild(eingabeu6);

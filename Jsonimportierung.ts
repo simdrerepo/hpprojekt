@@ -1,15 +1,16 @@
 
 import { resetMainbereich } from "./script.js";
 export {setup_JsonImportieren};
+import { fetchJsonData } from "./script.js";
 
-const setup_JsonImportieren=():void=>{
+const setup_JsonImportieren=async():Promise<void>=>{
   
-    (async _=>{
-      let response = await fetch('http://127.0.0.1:5500/content.json');
-      if (!response.ok) {
-        throw new Error(`${response.status}`);
-      }
-      let json = await response.json();
+    
+
+     
+    
+      const json = await fetchJsonData("http://127.0.0.1:5500/content.json");
+     
       const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
       const dropdwncntnr = Array.from(document.getElementsByClassName("dropdown-container"));
       
@@ -21,6 +22,7 @@ const setup_JsonImportieren=():void=>{
           button.style.backgroundColor = "#dddddd";
           button.setAttribute("class","dropdowncontainerbutton");
         button.textContent = ob;
+        button.style.fontSize="16px";
           button.style.cursor = "pointer";
            dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
         }
@@ -79,7 +81,6 @@ const setup_JsonImportieren=():void=>{
    }
       
   
-    })();
   }
   const populateMain=(input:any):void=>{
   

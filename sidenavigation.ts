@@ -1,14 +1,18 @@
-
+import { sidenavHandler } from "./script.js";
 const setup_side_navigation=():void=>{
         var sidenavmixin = addopensidenav(addclosesidenav(addswapopen(addgetopen(SideNavigation))));
         var sidenav = new sidenavmixin();
+        const handler = sidenavHandler();
+        var sidenavproxy= new Proxy(sidenav,handler);
+     
        
-        const sidenavoverlay = <HTMLDivElement>document.getElementById("sidenavoverlay");
+       
+        const sidenavoverlay:HTMLDivElement = <HTMLDivElement>document.getElementById("sidenavoverlay");
         const sandwichbutton:HTMLElement = document.getElementById("sandwichbutton")!;
  const closebutton:HTMLElement= document.getElementById("sidenavclosebutton")!;
- closebutton?.addEventListener("click",()=>openCloseSideNav(sidenav));
- sandwichbutton.addEventListener("click",()=>openCloseSideNav(sidenav));
-    sidenavoverlay.addEventListener("click",()=>{openCloseSideNav(sidenav)});
+ closebutton?.addEventListener("click",()=>openCloseSideNav(sidenavproxy));
+ sandwichbutton.addEventListener("click",()=>openCloseSideNav(sidenavproxy));
+    sidenavoverlay.addEventListener("click",()=>{openCloseSideNav(sidenavproxy)});
         
       }
 const openCloseSideNav=(ref:any):void=>{
@@ -52,8 +56,8 @@ class SideNavigation{
     const addopensidenav=(anyBaseClass:any):any=>{
       return class extends anyBaseClass{
         openSidenav():void{
-          let sidenav = <HTMLDivElement>document.getElementById("sidenav");
-          let sidenavoverlay =  <HTMLDivElement>document.getElementById("sidenavoverlay");
+          let sidenav:HTMLDivElement = <HTMLDivElement>document.getElementById("sidenav");
+          let sidenavoverlay:HTMLDivElement =  <HTMLDivElement>document.getElementById("sidenavoverlay");
           sidenav.style.display = "block";
            sidenav.style.width = "250px";
             sidenavoverlay.style.display="block";
@@ -66,8 +70,8 @@ class SideNavigation{
 
       return class extends anyBaseClass{
         closeSidenav():void{
-          let sidenav = <HTMLDivElement>document.getElementById("sidenav");
-         let sidenavoverlay =  <HTMLDivElement>document.getElementById("sidenavoverlay");
+          let sidenav:HTMLDivElement = <HTMLDivElement>document.getElementById("sidenav");
+         let sidenavoverlay:HTMLDivElement =  <HTMLDivElement>document.getElementById("sidenavoverlay");
            sidenav.style.display = "none";
            sidenav.style.display = "0px";
            sidenavoverlay.style.display="none";

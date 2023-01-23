@@ -1,5 +1,5 @@
-class Vorrang{
-    constructor(array2d:any[][]){
+class Vorrang<T>{
+    constructor(array2d:T[][]){
   this.array2d = array2d;
   
       this.adj = new Array();
@@ -8,48 +8,59 @@ class Vorrang{
      this.alleKnoten = new Array();
       this.knotenSet = new Set();
       this.anzahlVorrang = 0;
+      this.verbleibend=this.array2d;
       
       this.identifyKnoten();
-     this.setupAdj(this.knotenSet.size);
+     this.setupAdj();
     
-      for(let i in this.array2d){
+      for(let i=0;i<this.array2d.length;i++){
         
             this.addKante(array2d[i][0],array2d[i][1]);
         
       }
-      this.knotenSet.forEach((item:any)=>this.topologischSortieren(item));
+      
+      this.knotenSet.forEach((item:T)=>this.topologischSortieren(item));
     }
-    array2d:any[][];
-    adj:any[];
-    stack:any[];
-    besucht:any[];
-    alleKnoten:any[];
-    knotenSet:any;
+    verbleibend:Array<T>[];
+    array2d:Array<T>[];
+    adj:Array<T>[];
+    stack:Array<T>;
+    besucht:Array<T>;
+    alleKnoten:Array<T>;
+    knotenSet:Set<T>;
     anzahlVorrang:number;
 
+    setupAdj():void{
+   for(let i=0;i<this.knotenSet.size;i++){
+    this.adj.push([]);
+   }
+
+
+    }
+
     printAdj():void{
-        for(let i in this.adj){
+        for(let i=0;i<this.adj.length;i++){
            
-            for(let j in this.adj[i]){
+            for(let j=0;j<this.adj[i].length;j++){
                 console.log(this.adj[i][j]);
             }
         }
     }
 
     printStack():void{
-for(let i in this.stack){
+for(let i=0;i<this.stack.length;i++){
     console.log(this.stack[i]);
 }
 
     }
     printKnotenSet():void{
-       this.knotenSet.forEach((item:any)=>{console.log(item)});
+       this.knotenSet.forEach((item:T)=>{console.log(item)});
     }
-    returnSortierung():any[]{
-      let tmpar:any[] = this.stack;
-      let ar:any[] = new Array();
+    returnSortierung():T[]{
+      let tmpar:T[] = this.stack;
+      let ar:T[] = new Array();
       while(tmpar.length!=0){
-        ar.push(tmpar.pop());
+        ar.push(<T>tmpar.pop());
       }
       return ar;
 
@@ -59,9 +70,9 @@ for(let i in this.stack){
   
     identifyKnoten():void{
       
-      for(let i in this.array2d){
+      for(let i=0;i<this.array2d.length;i++){
         
-        for(let j in this.array2d[i]){
+        for(let j=0;j<this.array2d[i].length;j++){
           this.alleKnoten.push(this.array2d[i][j]);
          this.knotenSet.add(this.array2d[i][j]);
         }
@@ -69,15 +80,10 @@ for(let i in this.stack){
   
     }
   
-    setupAdj(setSize:number):void{
-      for(let i=0;i<setSize;i++){
-        this.adj.push([]);
-      }
-  
-    }
-    addKante(k1:any,k2:any):void{
+    
+    addKante(k1:T,k2:T):void{
         let index = 0;
-        let knotenSetarray = Array.from(this.knotenSet);
+        let knotenSetarray:T[] = Array.from(this.knotenSet);
         for(let i=0;i<knotenSetarray.length;i++){
             if(knotenSetarray[i]===k1){
                 index = i;
@@ -87,15 +93,15 @@ for(let i in this.stack){
         
         this.adj[index].push(k2);
       }
-      topsorthelper(knoten:any):void{
+      topsorthelper(knoten:T):void{
        
         this.besucht.push(knoten);
-        for(let i in this.array2d){
+        for(let i=0;i<this.array2d.length;i++){
          this.array2d[i] = this.array2d[i].filter(item => item!= knoten);
          
         }
        var anzahl = 0;
-        for(let i in this.array2d){
+        for(let i=0;i<this.array2d.length;i++){
       
         
         if(this.array2d[i].length!=0){
@@ -104,7 +110,7 @@ for(let i in this.stack){
         
         }
         this.anzahlVorrang = anzahl;
-        let knotenArray = Array.from(this.knotenSet);
+        let knotenArray:T[] = Array.from(this.knotenSet);
         let indexfuerknoten=0;
         for(let i=0;i<knotenArray.length;i++){
           if(knotenArray[i]===knoten){
@@ -121,8 +127,12 @@ for(let i in this.stack){
                       
                   }
       this.stack.push(knoten);
+     
+      
       }
-      topologischSortieren(knoten:any):void{
+    
+      topologischSortieren(knoten:T):void{
+        
   
         if (!this.besucht.includes(knoten)){
            

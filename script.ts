@@ -12,10 +12,13 @@ import { setup_Klammerpaare } from "./Klammerpaare.js";
 import { setup_TextAnalyse } from "./Textanalyse.js";
 import { setup_JsonImportieren } from "./Jsonimportierung.js";
 import { fragenAntworten } from "./fragen.js";
+import { codeUebung } from "./fragen.js";
 export { sleep };
 export {setupMainBereich};
 export {MainBereichStyling};
 export { resetMainbereich };
+export { fetchJsonData };
+export { sidenavHandler };
 
 
 
@@ -27,32 +30,59 @@ setup_JsonImportieren();
 
 
 
+
 (function AddClickListenerToSideNavButton(){
   //Clicklistener für die Button im Sidenav
  const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
- const functionArray = [domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_barchart,vue_singlefile];
+ const functionArray = [domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_barchart,vue_singlefile,fragenAntworten,codeUebung];
  buttonarray.forEach(button=>{button.addEventListener("click",functionArray[buttonarray.indexOf(button)])});
-
 })();
 
 const resetMainbereich = ():HTMLDivElement[]=>{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
   mainref.replaceChildren();
-  setupMainBereich();
+ setupMainBereich();
   MainBereichStyling();
  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
-
+ 
  return [mainref,main_header,main_main];
-
-
-
 }
+(function ListenerVergeben():void{
+  const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
+  const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
+ const buttoncollection = Array.from(sidebuttondiv.getElementsByTagName("button"));
+ var buttonclicked:boolean[] = <boolean[]>new Array();
+ dropdownbuttoncol.forEach(()=>{buttonclicked.push(false)});
+
+  for(const c of dropdownbuttoncol){
+  c.addEventListener("click",hideShowDropDownContainer.bind(c));
+ }
+  for(const b of buttoncollection){
+    b.style.cursor="pointer";
+    b.addEventListener("mouseover",mouseOver);
+    b.addEventListener("mouseout",mouseOut);
+  }
+ for(const c of dropdownbuttoncol){
+ 
+  c.addEventListener("click",function(){
+    
+    if(buttonclicked[dropdownbuttoncol.indexOf(c)]===false){
+     
+      c.removeEventListener("mouseout",mouseOut);
+      buttonclicked[dropdownbuttoncol.indexOf(c)]=true;
+     }
+     else{c.addEventListener("mouseout",mouseOut);
+     buttonclicked[dropdownbuttoncol.indexOf(c)]=false;}
+     
+    });
 
 
+ }
+ 
+  
 
-
-
+})();
 function mouseOver(this: any):void{
  
   this.style.backgroundColor= "#34568B";
@@ -67,52 +97,13 @@ function mouseOut(this: any):void{
    
 
 }
-(function hoverForSidenavBtn():void{
-// hovereffekt für sidenav button
- const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
- const buttoncollection:HTMLCollectionOf<HTMLButtonElement> = sidebuttondiv.getElementsByTagName("button");
-for(let i=0;i<buttoncollection.length;i++){
-  buttoncollection[i].style.cursor = "pointer";
-  buttoncollection[i].addEventListener("mouseover",mouseOver);
-  buttoncollection[i].addEventListener("mouseout",mouseOut);
-}})();
+function hideShowDropDownContainer(this:any):void{
 
-(function AddClickListenerToDropdownButton():void{
-  const sidebuttondiv = <HTMLDivElement>document.getElementById("sidebutton");
-
-
- //Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
-    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
-for(let i=0;i<dropdownbutton.length;i++){
-  
-  dropdownbutton[i].addEventListener("click",function(this:any){
- 
-    var dropdown = this.nextElementSibling;
- if(dropdown.style.display === "block"){dropdown.style.display = "none";}
- else{dropdown.style.display="block";}});
- 
- 
+  var dropdown = this.nextElementSibling;
+  if(dropdown.style.display === "block"){dropdown.style.display = "none";}
+  else{dropdown.style.display="block";}
 
 }
-})();
-(function addBackgroundEffectToDropdownButton():void{
-  // Dropdownbutton haben eine feste Hintergrundfarbe wenn sie geklickt wurden
- var buttonclicked:boolean[] = <boolean[]>new Array();
- let dropdownbutton:Element[] = Array.from(document.getElementsByClassName("drpdwnbtn"));
- dropdownbutton.forEach((button)=>{buttonclicked.push(false)});
-
-dropdownbutton.forEach((button)=>{button.addEventListener("click",function(){
- if(buttonclicked[dropdownbutton.indexOf(button)]===false){
-  button.removeEventListener("mouseout",mouseOut);
-  buttonclicked[dropdownbutton.indexOf(button)]=true;
- }
- else{button.addEventListener("mouseout",mouseOut);
- buttonclicked[dropdownbutton.indexOf(button)]=false;}
-  
-})});
-})();
-    
-
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main"); 
@@ -240,55 +231,42 @@ for(let i=1;i<odd.length;i++){
 }
 
 
-
-
-
 }
-
-
-
-fragenAntworten();
-
-
-
-
- 
-
-
-
-
-
-
-
 async function sleep(ms:number){
     return new Promise(resolve=>setTimeout(resolve,ms));
+}
+async function fetchJsonData(url:string):Promise<any>{
+  let response;
+  let data;
+  try{
+response = await fetch(url);
+if(!response.ok){
+  console.log(response.status);
+}
+data = await response.json();
+
+  }
+  catch(error){
+    console.log(error);
   }
 
+return data;
+}
+function sidenavHandler():Object{
+ //logging für den Seitennavigator
 
-     
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return {
+    set(target:any,key:any,value:any):boolean{
+      console.log(key+" wurde auf "+value+" gesetzt");
+      target[key] = value;
+      return true;
+    },
+    get(target:any,key:any):any{
+      console.log(key+" wurde gelesen");
+      return target[key];
+    }
+  };
+}
 function setup_covid19_barchart():void{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
 
@@ -330,6 +308,15 @@ function setup_covid19_barchart():void{
       
 
 }
+function Schleife({start=0,end=10,step=1,func=console.log}){
+  for(let i=start;i<end;i+=step){
+    func( i );
+  }
+
+
+}
+
+
 
 
   

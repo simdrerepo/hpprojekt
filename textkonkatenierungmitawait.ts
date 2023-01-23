@@ -1,17 +1,11 @@
 import { sleep } from "./script.js";
+import { fetchJsonData } from "./script.js";
 import { resetMainbereich } from "./script.js";
 export {setup_TextkonkatenierungMitAwait};
-const setup_TextkonkatenierungMitAwait = ():void=>{
+const setup_TextkonkatenierungMitAwait =async ():Promise<void>=>{
 
-  (async _=>{
-  
-  var [responsea, responseb] = await Promise.all([fetch('http://127.0.0.1:5500/A.txt'),fetch('http://127.0.0.1:5500/B.txt')]);
-  if(!responsea.ok){
-    throw new Error("Error : "+responsea.status);
-  }
-  if(!responseb.ok){
-    throw new Error("Error : "+responseb.status);
-  }
+  var [responsea, responseb] = await Promise.all([fetchJsonData('http://127.0.0.1:5500/A.txt'),fetchJsonData('http://127.0.0.1:5500/B.txt')]);
+
   const [main,main_header,main_main] = resetMainbereich();
 
   let promisediv = document.createElement("div");
@@ -55,6 +49,6 @@ const setup_TextkonkatenierungMitAwait = ():void=>{
   }
   
   
-  })();
+ 
   
   }

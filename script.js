@@ -12,16 +12,19 @@ import { setup_Klammerpaare } from "./Klammerpaare.js";
 import { setup_TextAnalyse } from "./Textanalyse.js";
 import { setup_JsonImportieren } from "./Jsonimportierung.js";
 import { fragenAntworten } from "./fragen.js";
+import { codeUebung } from "./fragen.js";
 export { sleep };
 export { setupMainBereich };
 export { MainBereichStyling };
 export { resetMainbereich };
+export { fetchJsonData };
+export { sidenavHandler };
 setup_side_navigation();
 setup_JsonImportieren();
 (function AddClickListenerToSideNavButton() {
     //Clicklistener für die Button im Sidenav
     const buttonarray = Array.from(document.getElementsByClassName("regularButton"));
-    const functionArray = [domBenchmarks, setup_RednerMitZeitmessung, setup_TopSortAlsWebApp, setup_Klammerpaare, setup_TextAnalyse, setup_TextkonkatenierungMitPromises, setup_TextkonkatenierungMitAwait, setup_tic_tac_toe, setup_covid19_barchart, vue_singlefile];
+    const functionArray = [domBenchmarks, setup_RednerMitZeitmessung, setup_TopSortAlsWebApp, setup_Klammerpaare, setup_TextAnalyse, setup_TextkonkatenierungMitPromises, setup_TextkonkatenierungMitAwait, setup_tic_tac_toe, setup_covid19_barchart, vue_singlefile, fragenAntworten, codeUebung];
     buttonarray.forEach(button => { button.addEventListener("click", functionArray[buttonarray.indexOf(button)]); });
 })();
 const resetMainbereich = () => {
@@ -33,6 +36,33 @@ const resetMainbereich = () => {
     const main_main = document.getElementById("main_main");
     return [mainref, main_header, main_main];
 };
+(function ListenerVergeben() {
+    const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
+    const sidebuttondiv = document.getElementById("sidebutton");
+    const buttoncollection = Array.from(sidebuttondiv.getElementsByTagName("button"));
+    var buttonclicked = new Array();
+    dropdownbuttoncol.forEach(() => { buttonclicked.push(false); });
+    for (const c of dropdownbuttoncol) {
+        c.addEventListener("click", hideShowDropDownContainer.bind(c));
+    }
+    for (const b of buttoncollection) {
+        b.style.cursor = "pointer";
+        b.addEventListener("mouseover", mouseOver);
+        b.addEventListener("mouseout", mouseOut);
+    }
+    for (const c of dropdownbuttoncol) {
+        c.addEventListener("click", function () {
+            if (buttonclicked[dropdownbuttoncol.indexOf(c)] === false) {
+                c.removeEventListener("mouseout", mouseOut);
+                buttonclicked[dropdownbuttoncol.indexOf(c)] = true;
+            }
+            else {
+                c.addEventListener("mouseout", mouseOut);
+                buttonclicked[dropdownbuttoncol.indexOf(c)] = false;
+            }
+        });
+    }
+})();
 function mouseOver() {
     this.style.backgroundColor = "#34568B";
     this.style.color = "white";
@@ -41,50 +71,15 @@ function mouseOut() {
     this.style.backgroundColor = "white";
     this.style.color = "black";
 }
-(function hoverForSidenavBtn() {
-    // hovereffekt für sidenav button
-    const sidebuttondiv = document.getElementById("sidebutton");
-    const buttoncollection = sidebuttondiv.getElementsByTagName("button");
-    for (let i = 0; i < buttoncollection.length; i++) {
-        buttoncollection[i].style.cursor = "pointer";
-        buttoncollection[i].addEventListener("mouseover", mouseOver);
-        buttoncollection[i].addEventListener("mouseout", mouseOut);
+function hideShowDropDownContainer() {
+    var dropdown = this.nextElementSibling;
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
     }
-})();
-(function AddClickListenerToDropdownButton() {
-    const sidebuttondiv = document.getElementById("sidebutton");
-    //Button, die Dropdownbutton sind, bekommen einen listener um den Dropdowncontainer ein- oder auszublenden
-    var dropdownbutton = Array.from(sidebuttondiv.getElementsByClassName("drpdwnbtn"));
-    for (let i = 0; i < dropdownbutton.length; i++) {
-        dropdownbutton[i].addEventListener("click", function () {
-            var dropdown = this.nextElementSibling;
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            }
-            else {
-                dropdown.style.display = "block";
-            }
-        });
+    else {
+        dropdown.style.display = "block";
     }
-})();
-(function addBackgroundEffectToDropdownButton() {
-    // Dropdownbutton haben eine feste Hintergrundfarbe wenn sie geklickt wurden
-    var buttonclicked = new Array();
-    let dropdownbutton = Array.from(document.getElementsByClassName("drpdwnbtn"));
-    dropdownbutton.forEach((button) => { buttonclicked.push(false); });
-    dropdownbutton.forEach((button) => {
-        button.addEventListener("click", function () {
-            if (buttonclicked[dropdownbutton.indexOf(button)] === false) {
-                button.removeEventListener("mouseout", mouseOut);
-                buttonclicked[dropdownbutton.indexOf(button)] = true;
-            }
-            else {
-                button.addEventListener("mouseout", mouseOut);
-                buttonclicked[dropdownbutton.indexOf(button)] = false;
-            }
-        });
-    });
-})();
+}
 function setupMainBereich() {
     // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
     const mainref = document.getElementById("main");
@@ -198,9 +193,37 @@ function domBenchmarks() {
         }
     }
 }
-fragenAntworten();
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function fetchJsonData(url) {
+    let response;
+    let data;
+    try {
+        response = await fetch(url);
+        if (!response.ok) {
+            console.log(response.status);
+        }
+        data = await response.json();
+    }
+    catch (error) {
+        console.log(error);
+    }
+    return data;
+}
+function sidenavHandler() {
+    //logging für den Seitennavigator
+    return {
+        set(target, key, value) {
+            console.log(key + " wurde auf " + value + " gesetzt");
+            target[key] = value;
+            return true;
+        },
+        get(target, key) {
+            console.log(key + " wurde gelesen");
+            return target[key];
+        }
+    };
 }
 function setup_covid19_barchart() {
     const mainref = document.getElementById("main");
@@ -229,6 +252,11 @@ function setup_covid19_barchart() {
         const geodata = await dataresponse.json();
         mapChart(400, 600, "#mapdiv", geodata, geo);
     })();
+}
+function Schleife({ start = 0, end = 10, step = 1, func = console.log }) {
+    for (let i = start; i < end; i += step) {
+        func(i);
+    }
 }
 function vue_singlefile() {
     const mainref = document.getElementById("main");

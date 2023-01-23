@@ -11,7 +11,7 @@ function applyf(bfunc){
 }
 
 //binär
-const mul = (x,y) => x*y;
+function mul(x,y) { return x*y } ;
 function add(x,y){
     return x+y;
 }
@@ -50,7 +50,31 @@ else{array[index]=para;}
 }
 }
 }
+function twice(func){return (x)=>{return func(x,x); }} 
 
+function composeu(funca,funcb){
+
+    return (x)=>{return funcb(funca(x)); }
+
+}
+
+function composeb(funca,funcb){
+    return (x,y,z)=>{return funcb(funca(x,y),z);}
+
+}
+function once (func){
+   var funktion = func;
+   var called = false;
+    var inner = function(x,y){
+        if(called!=true){
+            called = true;
+        return funktion(x,y);
+        }
+        else throw new Error("Error");
+    }
+       
+    return inner;
+}
 
 Number.prototype.add = methodize;
 
@@ -84,6 +108,17 @@ my_vector.store(1,8);
 console.log(my_vector.get(0));
 console.log(my_vector.get(1));
 console.log(my_vector.array);
+var double = twice(add);
+var square = twice(mul);
+console.log(double(11));
+console.log(square(11));
+
+console.log(composeu(double, square)(3))
+console.log(composeb(add,mul)(2,3,5));
+var add_once = once(add);
+console.log(add_once(3,4));
+
+
 
 
 

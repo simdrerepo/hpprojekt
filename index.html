@@ -17,7 +17,10 @@
     
     <style>
       
-    
+      body{
+      font-family: Verdana, sans-serif;
+      font-size: calc(10px + 0.390625vw);
+     }
     
      
 .container{
@@ -66,7 +69,11 @@ grid-row:2/3;}
   #34568B;
   
 }
+.sidebuttondiv>*{
+  
+  font-size: 16px;
 
+}
 
 .dropdown-container{
 display:none;
@@ -82,8 +89,8 @@ margin-left: 12px;
   width: 0;
   position: fixed;
   z-index: 1;
-top:0;
-left:0;
+ top:0;
+ left:0;
   background-color: white;
   overflow-x: hidden;
   
@@ -114,21 +121,21 @@ left:0;
 }
 .loginbar{
  display:block;
-grid-column: 3/4;
+ grid-column: 3/4;
 }
 
 #loginbutton{
   cursor:pointer;
   float:right;
-background-color: #34568B;
-color:white;
+ background-color: #34568B;
+ color:white;
   
  margin-top: 10px;
  margin-bottom: 10px;
  margin-right:10px;
  width:100px;
 
-border:none;
+ border:none;
 
 }
 
@@ -147,10 +154,10 @@ border:none;
   background-color: white;
   display:block;
   text-decoration:none;
-padding:12px;
-width:100%;
-color: black;
-font-size: calc(10px + 0.390625vw);
+ padding:12px;
+ width:100%;
+ color: black;
+
   text-align: left;
 }
 
@@ -198,21 +205,22 @@ grid-template-areas: "inputdiv"
 
 }
 #buttondiv{
-display:grid;
-justify-content: center;
-grid-template-rows: 1fr;
-grid-template-areas: "hinzufügen"
-                      "sortieren";
+ display:grid;
+ justify-content: center;
+ grid-template-rows: 1fr;
+ grid-template-areas: "hinzufügen"
+                      "sortieren"
+                      "reset";
 
 }
 #inputdiv{
-display:grid;
-grid-template-rows: 1fr;
-grid-template-areas: "input1" 
+ display:grid;
+ grid-template-rows: 1fr;
+ grid-template-areas: "input1" 
                      "input2";
 }
 #input1{
-width:10rem;
+ width:10rem;
 }
 #input2{
   width:10rem;
@@ -245,6 +253,12 @@ margin-right:20px;
 
 
 }
+.sidebuttondiv>*{
+  
+  font-size: 17px;
+
+}
+
 #topsortinputsdiv{
   display : grid;
   grid-template-rows: 1fr;
@@ -258,7 +272,7 @@ grid-template-areas: "inputdiv"
 display:grid;
 justify-content: center;
 grid-template-rows: 1fr;
-grid-template-areas: "hinzufügen sortieren";
+grid-template-areas: "hinzufügen sortieren reset";
 
 }
 #inputdiv{
@@ -276,7 +290,7 @@ width:10rem;
 }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
 .container{
 grid-template-columns: repeat(12,1fr);
  grid-template-rows: auto 1fr auto;
@@ -300,6 +314,19 @@ margin-right:40px;
 
 
 }
+.sidebuttondiv>*{
+  
+  font-size: 19px;
+
+}
+#rednerdiv{
+  display:grid;
+  grid-template-rows: 1fr;
+  grid-area: "label"
+              "eingabe"
+               "button";
+}
+
 #topsortinputsdiv{
   display : grid;
   grid-template-rows: 1fr;
@@ -312,7 +339,7 @@ grid-template-areas: "inputdiv buttondiv";
 display:grid;
 justify-content: start;
 grid-template-rows: 1fr;
-grid-template-areas: "hinzufügen sortieren";
+grid-template-areas: "hinzufügen sortieren reset";
 
 }
 #inputdiv{
@@ -327,10 +354,7 @@ width:10rem;
   width:10rem;
 
 }
-body{
-      font-family: Verdana, sans-serif;
-      font-size: calc(10px + 0.390625vw);
-     }
+
 }
     </style>
 </head>
@@ -385,6 +409,8 @@ body{
 <button class="regularButton">Tic Tac Toe</button>
 <button class="regularButton">Covid19 Fälle in Deutschland</button>
 <button class="regularButton">Vue single component</button>
+<button class="regularButton">Fragen / Anworten</button>
+<button class="regularButton">Funktionen in Javascript</button>
 
  </div>
   

@@ -4,9 +4,6 @@ export { setup_TopSortAlsWebApp };
 const setup_TopSortAlsWebApp = () => {
     const [main, main_header, main_main] = resetMainbereich();
     var liste = document.createElement("ul");
-    var table = document.createElement("table");
-    let reihe0 = table.insertRow(-1);
-    let zelle = reihe0.insertCell(0);
     var input1 = document.createElement("input");
     input1.setAttribute("type", "search");
     input1.setAttribute("id", "input1");
@@ -22,6 +19,13 @@ const setup_TopSortAlsWebApp = () => {
     headline.appendChild(document.createTextNode("TopSort als Web-App"));
     h1div.appendChild(headline);
     main_header_ref.appendChild(h1div);
+    var resetbutton = document.createElement("button");
+    resetbutton.setAttribute("id", "resetbutton");
+    resetbutton.textContent = "reset";
+    resetbutton.style.height = "1.5rem";
+    resetbutton.style.width = "5rem";
+    resetbutton.style.gridArea = "reset";
+    resetbutton.addEventListener("click", () => setup_TopSortAlsWebApp());
     let button = document.createElement("button");
     button.style.gridArea = "sortieren";
     button.setAttribute("id", "sortbutton");
@@ -46,6 +50,7 @@ const setup_TopSortAlsWebApp = () => {
     inputdiv.appendChild(input2);
     buttondiv.appendChild(addbutton);
     buttondiv.appendChild(button);
+    buttondiv.appendChild(resetbutton);
     div.appendChild(inputdiv);
     div.appendChild(buttondiv);
     let listdiv = document.createElement("div");
@@ -99,7 +104,7 @@ const setup_TopSortAlsWebApp = () => {
                     li.style.borderBottom = "1px solid lightgrey";
                 }
                 ;
-                li.appendChild(document.createTextNode("[" + input1.value + "," + input2.value + "]"));
+                li.appendChild(document.createTextNode("[" + input1.value.trim() + "," + input2.value.trim() + "]"));
                 liste.appendChild(li);
                 ele_cntr++;
                 input1.value = "";

@@ -1,21 +1,22 @@
-declare class Vorrang {
-    constructor(array2d: any[][]);
-    array2d: any[][];
-    adj: any[];
-    stack: any[];
-    besucht: any[];
-    alleKnoten: any[];
-    knotenSet: any;
+declare class Vorrang<T> {
+    constructor(array2d: T[][]);
+    verbleibend: Array<T>[];
+    array2d: Array<T>[];
+    adj: Array<T>[];
+    stack: Array<T>;
+    besucht: Array<T>;
+    alleKnoten: Array<T>;
+    knotenSet: Set<T>;
     anzahlVorrang: number;
+    setupAdj(): void;
     printAdj(): void;
     printStack(): void;
     printKnotenSet(): void;
-    returnSortierung(): any[];
+    returnSortierung(): T[];
     identifyKnoten(): void;
-    setupAdj(setSize: number): void;
-    addKante(k1: any, k2: any): void;
-    topsorthelper(knoten: any): void;
-    topologischSortieren(knoten: any): void;
-    [Symbol.iterator](): Generator<any, void, unknown>;
+    addKante(k1: T, k2: T): void;
+    topsorthelper(knoten: T): void;
+    topologischSortieren(knoten: T): void;
+    [Symbol.iterator](): Generator<T, void, unknown>;
 }
 export { Vorrang };

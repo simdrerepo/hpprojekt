@@ -1,13 +1,12 @@
 import { resetMainbereich } from "./script.js";
 export {setup_TextAnalyse};
+import { fetchJsonData } from "./script.js";
 
-const setup_TextAnalyse=():void=>{
+const setup_TextAnalyse=async():Promise<void>=>{
 
-    (async _=>{
-      let response = await fetch('./stopwords-de.txt');
-      if(!response.ok){
-        throw new Error("An Error has occured : "+response.status);
-      }
+    
+      let response = await fetchJsonData('./stopwords-de.txt');
+     
       const stopwörter:string = await response.text(); 
       const mainref:HTMLElement = document.getElementById("main")!;
       const [main,main_header,main_main] = resetMainbereich();
@@ -46,7 +45,7 @@ const setup_TextAnalyse=():void=>{
      let alltextsplitted= alltext.split(" ");
      
      for(let i=0;i<stops.length;i++){
-      stoparray2d.push([stops[i],alltextsplitted.reduce((count, num) => num === stops[i] ? count + 1 : count, 0)]);
+      stoparray2d.push([stops[i],alltextsplitted.reduce((count, num) =>  num === stops[i] ? count + 1 : count, 0)]);
      }
      let filtered = stoparray2d.filter(x=>x[1]>=10);
      let tabelle = document.createElement("table");
@@ -105,6 +104,5 @@ const setup_TextAnalyse=():void=>{
      } 
      setTimeout(()=>ergebnisdiv.appendChild(table),100);
       setTimeout(()=>analysecontainer.appendChild(ergebnisdiv),100);
-      }
-     )();
+     
     }

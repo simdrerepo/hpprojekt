@@ -1,5 +1,5 @@
 import { resetMainbereich } from "./script.js";
-import { Redner } from "./Redner.js";
+import { makeRedner } from "./Redner.js";
 export { setup_RednerMitZeitmessung };
 const setup_RednerMitZeitmessung = () => {
     const [main, main_header, main_main] = resetMainbereich();
@@ -9,17 +9,20 @@ const setup_RednerMitZeitmessung = () => {
     us.appendChild(h1);
     let eingabediv = document.createElement("div");
     let listendiv = document.createElement("div");
-    listendiv.setAttribute("id", "listendiv");
+    listendiv.setAttribute("id", "rednerdiv");
     var liste = document.createElement("ul");
     let eingabe = document.createElement("input");
     eingabe.setAttribute("type", "search");
     eingabe.setAttribute("id", "eingabe");
+    eingabe.style.gridArea = "eingabe";
     eingabe.appendChild(document.createTextNode(''));
     let eingabelabel = document.createElement("label");
     eingabelabel.textContent = 'Neuer Redner:';
     eingabelabel.setAttribute("for", "eingabe");
+    eingabelabel.style.gridArea = "label";
     var eingabebutton = document.createElement("button");
     eingabebutton.setAttribute("id", "btn");
+    eingabebutton.style.gridArea = "button";
     eingabebutton.textContent = 'hinzufügen';
     eingabediv.appendChild(eingabelabel);
     eingabediv.appendChild(eingabe);
@@ -36,7 +39,7 @@ const setup_RednerMitZeitmessung = () => {
     //addRednerInListe(liste,createRedner(eingabe.value,rednerarray);
     eingabebutton.addEventListener("click", () => {
         if (eingabe.value != "") {
-            let redner = new Redner(eingabe.value);
+            let redner = makeRedner(eingabe.value.trim());
             redner.addRednerInListe(liste, redner.createRedner(rednerarray));
             eingabe.value = "";
         }

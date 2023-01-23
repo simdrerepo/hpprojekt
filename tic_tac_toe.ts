@@ -1,4 +1,7 @@
 import { setup_tic_tac_toe } from "./script.js";
+
+
+
 class tic_tac_toe{
 
     constructor(div:HTMLElement){
@@ -371,6 +374,10 @@ class tic_tac_toe{
     
     
   }
+ 
+
+ 
+  
 
   
   export {tic_tac_toe};

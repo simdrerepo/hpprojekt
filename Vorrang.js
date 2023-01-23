@@ -7,13 +7,15 @@ class Vorrang {
         this.alleKnoten = new Array();
         this.knotenSet = new Set();
         this.anzahlVorrang = 0;
+        this.verbleibend = this.array2d;
         this.identifyKnoten();
-        this.setupAdj(this.knotenSet.size);
-        for (let i in this.array2d) {
+        this.setupAdj();
+        for (let i = 0; i < this.array2d.length; i++) {
             this.addKante(array2d[i][0], array2d[i][1]);
         }
         this.knotenSet.forEach((item) => this.topologischSortieren(item));
     }
+    verbleibend;
     array2d;
     adj;
     stack;
@@ -21,15 +23,20 @@ class Vorrang {
     alleKnoten;
     knotenSet;
     anzahlVorrang;
+    setupAdj() {
+        for (let i = 0; i < this.knotenSet.size; i++) {
+            this.adj.push([]);
+        }
+    }
     printAdj() {
-        for (let i in this.adj) {
-            for (let j in this.adj[i]) {
+        for (let i = 0; i < this.adj.length; i++) {
+            for (let j = 0; j < this.adj[i].length; j++) {
                 console.log(this.adj[i][j]);
             }
         }
     }
     printStack() {
-        for (let i in this.stack) {
+        for (let i = 0; i < this.stack.length; i++) {
             console.log(this.stack[i]);
         }
     }
@@ -45,16 +52,11 @@ class Vorrang {
         return ar;
     }
     identifyKnoten() {
-        for (let i in this.array2d) {
-            for (let j in this.array2d[i]) {
+        for (let i = 0; i < this.array2d.length; i++) {
+            for (let j = 0; j < this.array2d[i].length; j++) {
                 this.alleKnoten.push(this.array2d[i][j]);
                 this.knotenSet.add(this.array2d[i][j]);
             }
-        }
-    }
-    setupAdj(setSize) {
-        for (let i = 0; i < setSize; i++) {
-            this.adj.push([]);
         }
     }
     addKante(k1, k2) {
@@ -69,11 +71,11 @@ class Vorrang {
     }
     topsorthelper(knoten) {
         this.besucht.push(knoten);
-        for (let i in this.array2d) {
+        for (let i = 0; i < this.array2d.length; i++) {
             this.array2d[i] = this.array2d[i].filter(item => item != knoten);
         }
         var anzahl = 0;
-        for (let i in this.array2d) {
+        for (let i = 0; i < this.array2d.length; i++) {
             if (this.array2d[i].length != 0) {
                 anzahl++;
             }

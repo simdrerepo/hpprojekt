@@ -13,6 +13,7 @@ const setup_tic_tac_toe =():void => {
   
    header.appendChild(document.createTextNode("Tic Tac Toe"));
    main_header.appendChild(header);
+  
    let ttt:tic_tac_toe = new tic_tac_toe(div);
    main_main.appendChild(div);
    div.style.display="flex";

@@ -1,12 +1,15 @@
+import { sidenavHandler } from "./script.js";
 const setup_side_navigation = () => {
     var sidenavmixin = addopensidenav(addclosesidenav(addswapopen(addgetopen(SideNavigation))));
     var sidenav = new sidenavmixin();
+    const handler = sidenavHandler();
+    var sidenavproxy = new Proxy(sidenav, handler);
     const sidenavoverlay = document.getElementById("sidenavoverlay");
     const sandwichbutton = document.getElementById("sandwichbutton");
     const closebutton = document.getElementById("sidenavclosebutton");
-    closebutton?.addEventListener("click", () => openCloseSideNav(sidenav));
-    sandwichbutton.addEventListener("click", () => openCloseSideNav(sidenav));
-    sidenavoverlay.addEventListener("click", () => { openCloseSideNav(sidenav); });
+    closebutton?.addEventListener("click", () => openCloseSideNav(sidenavproxy));
+    sandwichbutton.addEventListener("click", () => openCloseSideNav(sidenavproxy));
+    sidenavoverlay.addEventListener("click", () => { openCloseSideNav(sidenavproxy); });
 };
 const openCloseSideNav = (ref) => {
     if (ref.open === false) {

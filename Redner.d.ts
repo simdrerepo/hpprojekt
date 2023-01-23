@@ -1,20 +1,19 @@
-declare class Redner {
-    constructor(name: string);
-    startstopsymbol: string;
+declare function makeRedner(name: string): {
     name: string;
-    counting: number;
     std: number;
     min: number;
     sek: number;
-    intervalids: any[];
-    setStartStopSymbol(string: string): void;
-    timer(htmlElement: HTMLElement): void;
-    swapSymbols(): void;
-    clearAllIntervalIds(): void;
-    stopAll(rednerArray: Redner[]): void;
-    setAllButtonTextToStop(): void;
-    myEventHandler(htmlElement: HTMLElement, button: HTMLElement, rednerArray: Redner[]): void;
-    addRednerInListe(liste: HTMLElement, rednerobjintabelle: any): void;
-    createRedner(rednerarray: Redner[]): HTMLTableElement;
-}
-export { Redner };
+    counting: number;
+    intervalids: number[];
+    startstopsymbol: string;
+    timer: (htmlElement: HTMLElement) => void;
+    swapSymbols: () => void;
+    setStartStopSymbol: (string: string) => void;
+    clearAllIntervalIds: () => void;
+    stopAll: (rednerArray: any[]) => void;
+    setAllButtonTextToStop: () => void;
+    myEventHandler: (htmlElement: HTMLElement, button: HTMLElement, rednerArray: any[]) => void;
+    addRednerInListe: (liste: HTMLElement, rednerobjintabelle: any) => void;
+    createRedner: (rednerarray: any[]) => HTMLTableElement;
+};
+export { makeRedner };
