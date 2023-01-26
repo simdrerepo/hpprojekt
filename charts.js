@@ -53,9 +53,7 @@ export async function setup_covid19_mapchart() {
     mapdiv.style.display = "flex";
     mapdiv.style.justifyContent = "center";
     main_main.append(mapdiv);
-    const [georesponse, dataresponse] = await Promise.all([fetchJsonData("http://127.0.0.1:5500/1_sehr_hoch.geo.json"), fetchJsonData("http://127.0.0.1:5500/covid-19.json")]);
-    const geo = await georesponse.json();
-    const geodata = await dataresponse.json();
+    const [geo, geodata] = await Promise.all([fetchJsonData("http://127.0.0.1:5500/1_sehr_hoch.geo.json"), fetchJsonData("http://127.0.0.1:5500/covid-19.json")]);
     mapChart(400, 600, "#mapdiv", geodata, geo);
 }
 export { dataTabelle };
