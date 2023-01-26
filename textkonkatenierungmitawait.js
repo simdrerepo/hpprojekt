@@ -1,9 +1,9 @@
 import { sleep } from "./script.js";
-import { fetchJsonData } from "./script.js";
+import { fetchTextData } from "./script.js";
 import { resetMainbereich } from "./script.js";
 export { setup_TextkonkatenierungMitAwait };
 const setup_TextkonkatenierungMitAwait = async () => {
-    var [responsea, responseb] = await Promise.all([fetchJsonData('http://127.0.0.1:5500/A.txt'), fetchJsonData('http://127.0.0.1:5500/B.txt')]);
+    var [texta, textb] = await Promise.all([fetchTextData('http://127.0.0.1:5500/A.txt'), fetchTextData('http://127.0.0.1:5500/B.txt')]);
     const [main, main_header, main_main] = resetMainbereich();
     let promisediv = document.createElement("div");
     let h1 = document.createElement("h1");
@@ -28,9 +28,7 @@ const setup_TextkonkatenierungMitAwait = async () => {
     div.appendChild(textdiv);
     main_main.appendChild(div);
     main_main.appendChild(promisediv);
-    let texta = await responsea.text();
     let arrayA = texta.split(/\r?\n/);
-    let textb = await responseb.text();
     let arrayB = textb.split(/\r?\n/);
     let i = 0;
     while (i < arrayA.length) {

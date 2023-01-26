@@ -11,21 +11,21 @@ const setup_RednerMitZeitmessung=():void=>{
   
     us.appendChild(h1);
 
-   let eingabediv = document.createElement("div");
+   let eingabediv:HTMLDivElement = document.createElement("div");
    
-   let listendiv = document.createElement("div");
+   let listendiv:HTMLDivElement = document.createElement("div");
    listendiv.setAttribute("id","rednerdiv");
-   var liste = document.createElement("ul");
-   let eingabe = document.createElement("input");
+   var liste:HTMLUListElement = document.createElement("ul");
+   let eingabe:HTMLInputElement = document.createElement("input");
    eingabe.setAttribute("type","search");
    eingabe.setAttribute("id","eingabe");
    eingabe.style.gridArea="eingabe";
    eingabe.appendChild(document.createTextNode(''));
-   let eingabelabel = document.createElement("label");
+   let eingabelabel:HTMLLabelElement = document.createElement("label");
    eingabelabel.textContent='Neuer Redner:';
    eingabelabel.setAttribute("for","eingabe");
    eingabelabel.style.gridArea="label";
-   var eingabebutton = document.createElement("button");
+   var eingabebutton:HTMLButtonElement = document.createElement("button");
    eingabebutton.setAttribute("id","btn");
    eingabebutton.style.gridArea="button";
    eingabebutton.textContent = 'hinzufügen';

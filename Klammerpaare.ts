@@ -4,14 +4,14 @@ const setup_Klammerpaare=():void=>{
   
    const [main,main_header,main_main] = resetMainbereich();
     
-    let eingabedivu6 = document.createElement("div");
-    let h1 = document.createElement("h1");
+    let eingabedivu6:HTMLDivElement = document.createElement("div");
+    let h1:HTMLHeadElement = document.createElement("h1");
     h1.appendChild(document.createTextNode("Klammerpaare"));
     main_header.appendChild(h1);
    
-    var eingabeu6 = document.createElement("input");
+    var eingabeu6:HTMLInputElement = document.createElement("input");
     eingabeu6.setAttribute("type","search");
-    let p = document.createElement("p");
+    let p:HTMLParagraphElement = document.createElement("p");
     p.style.textAlign="center";
    p.innerHTML = "Der eingegebene Text wird auf korrekte Klammerung geprüft.<br>"+
    "Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].";
@@ -31,7 +31,7 @@ const setup_Klammerpaare=():void=>{
       const kp2_2 = '}';
       const kp3_1 = '[';
       const kp3_2 = ']';
-      const str = eingabeu6.value;
+      const str:string = eingabeu6.value;
       var klammerarray = new Array();
       for(let i=0;i<str.length;i++){
         if(str[i]===kp1_1||str[i]===kp2_1||str[i]===kp3_1||str[i]===kp1_2||str[i]===kp2_2||str[i]===kp3_2){

@@ -2,7 +2,7 @@ import { resetMainbereich } from "./script.js";
 
 var frage = {
    frage:"",
-   setFrage:function(string:string){
+   setFrage:function(string:string):void{
       this.frage=string;
 
    }
@@ -11,7 +11,7 @@ var frage = {
 var antwort = {
     __proto__:frage,
     antwort:"",
-    setAntwort:function(string:string){
+    setAntwort:function(string:string):void{
       this.antwort=string;
 
     }
@@ -38,17 +38,18 @@ const antworten = [
    "Unterschiedliche Vorstellung der Jury über das Thema Hypertext (Wissenschaft sei schon weiter fortgeschritten).Es gäbe Hyperlinks die ins Leere zeigen (broken links).Berner-Lee`s Vorschlag sei ein Rückschritt.",
    "Stetige arbeit am Web bis heute. Lebendigkeit des Webs gibt Berner-Lee`s  Idee recht.",
    "Zentrale Kontrolle und damit einhergehende Geschlossenheit.",
-   "Success.",
+   "Erfolgreiche Anfrage.",
    "Eine ehemalige URL wird auf eine neue URL weitergeleitet.",
-   "Fehlerhafte Anfrage.Fehler melden mit Statuscode.",
-   "Fehlende Zugriffsberechtigung. Fehler melden mit Stauscode.",
-   "to be answered",
-   "to be answered",
-   "to be answered",
-   "to be answered",
-   "to be answered",
-   "to be answered",
-   "to be answered"
+   "Fehlerhaft aufgebaute Anfrage.",
+   "Fehlende Zugriffsberechtigung.",
+   "Man könnte den Server einmalig anfragen und sich die Options merken.",
+   "HTML ist eine textbasierte kontextfreie Auszeichnungssprache(<...>) zur Strukturierung von Dokumenten.",
+   "eine geordnete Liste legt man mit dem html-tag <ol>an. Eine geschachtelte List der tiefe 3 sieht folgendermassen aus "+
+   "<ul><li></li><ul><li></li><ul></ul></ul></ul> um zu schachteln, verwenden man einfach einen weiterem <ul> tag anstatt einen <li>.",
+   "Eine Tabelle wird mit dem <table> tag angelegt. Reihen werden mit <tr> (tablerow) hinzugefügt. Spalten lassen sich mit <td> erzeugen.",
+   "Bei Pfaden sollte man relative anstatt absolute nutzen.",
+   "Man könnte z.B. ein Div element anlegen und darin seine Menuelemente wrappen.Um auf verschiedene Seiten zu verlinken könnte man <a> tags oder <button> tags verwenden. Diese könnte man noch in einer unsortierten Liste oder einer Tabelle anordnen.",
+   "Width and Height sollten immer defininiert sein. Außerdem wird empfohlen, letztere Attribute in Kombination mit dem style attribut zu nutzen. Also <img src='...' style='width:...; height:...;'"
 ];
 
 const codeaufgaben = [
@@ -68,15 +69,15 @@ const codeaufgaben = [
    "Schreiben Sie ein 'Array Wrapper'-Objekt mit den Methoden get, store und append, sodass ein Angreifer keinen Zugriff auf das innere, private Array hat. Also z.B.:my_vector = vector();my_vector.append(7);my_vector.store(1, 8); my_vector.get(0); // 7my_vector.get(1); // 8"
 ];
 const codeloesungen = [
-   "<code>function identity_function(para){<br>"+
+   "<code>function identity_function( para ){<br>"+
    "&nbsp return () => para; <br>"+
    "}",
-   "<code>function addf(x){<br>"+
-      "&nbsp return (y) => x+y; <br>"+
+   "<code>function addf( x ){<br>"+
+      "&nbsp return ( y ) => x+y; <br>"+
       "}<br><br>"+
       "console.log(addf(3)(10)); // -> 13</code>",
-   "<code>function applyf(bfunc){<br>"+
-      "&nbsp return (x) => { return (y) => { return bfunc(x,y); } };<br>"+
+   "<code>function applyf( bfunc ){<br>"+
+      "&nbsp return (x) => { return ( y ) => { return bfunc(x,y); } };<br>"+
   "}<br><br>"+
   "console.log(applyf(add)(5)(6)); // -> 30</code>",
   "<code> function add(x,y){ return x+y; } <br><br> function mul(x,y){ return x*y; }<br><br>function curry(func,para){<br>"+
@@ -106,9 +107,9 @@ const codeloesungen = [
 
 ];
 
-export const codeUebung=()=>{
+export const codeUebung=():void=>{
    const [main,main_header,main_main] = resetMainbereich();
-   let h1 = document.createElement("h1");
+   let h1:HTMLDivElement = document.createElement("h1");
    
    h1.textContent="Funktionen in Javascript";
    main_header.appendChild(h1);
@@ -150,37 +151,21 @@ export const fragenAntworten = ():void=>{
 const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
   
    for(const s of array){
-   
-   
-  
-      let fragediv = document.createElement("div");
-      let p = document.createElement("p");
+      let fragediv:HTMLDivElement = document.createElement("div");
+      let p:HTMLParagraphElement = document.createElement("p");
       p.textContent=s.frage;
-      let antwortdiv;
-      let pa;
-   
-
-     
+      let antwortdiv:HTMLDivElement;
+      let pa:HTMLParagraphElement;
       antwortdiv = document.createElement("div");
       antwortdiv.style.marginTop="10px";
       antwortdiv.style.marginBottom="10px";
       antwortdiv.style.backgroundColor="#edf5f6";
-
-   
       antwortdiv.style.padding = "10px";
       pa = document.createElement("p");
-      pa.style.color="#455f93";
-     
-      
-      
-      pa.textContent=s.antwort;
-   
-
-     
-      
+      pa.style.color="#455f93";  
+      pa.textContent=s.antwort;   
       fragediv.appendChild(p);
       antwortdiv.appendChild(pa);
-   
       fragediv.style.padding = "10px";
       fragediv.style.backgroundColor="#e7e9eb";
       mainref.appendChild(fragediv);
@@ -194,14 +179,16 @@ const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
 
 const addCodeFragen=(mainref:HTMLDivElement,array:any[])=>{
    for(const c of array){
-      let fragediv = document.createElement("div");
-      let p = document.createElement("p");
+      let fragediv:HTMLDivElement = document.createElement("div");
+      fragediv.style.display = "flex";
+      let p:HTMLParagraphElement = document.createElement("p");
       p.textContent=c.frage;
       fragediv.style.padding = "10px";
       fragediv.style.backgroundColor="#e7e9eb";
       fragediv.appendChild(p);
      
-      let antwortdiv = document.createElement("div");
+      let antwortdiv:HTMLDivElement = document.createElement("div");
+      antwortdiv.style.display = "flex";
       antwortdiv.style.marginTop="10px";
       antwortdiv.style.marginBottom="10px";
       antwortdiv.style.padding = "10px";

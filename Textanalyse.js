@@ -1,9 +1,8 @@
 import { resetMainbereich } from "./script.js";
 export { setup_TextAnalyse };
-import { fetchJsonData } from "./script.js";
+import { fetchTextData } from "./script.js";
 const setup_TextAnalyse = async () => {
-    let response = await fetchJsonData('./stopwords-de.txt');
-    const stopwörter = await response.text();
+    const stopwörter = await fetchTextData('./stopwords-de.txt');
     const mainref = document.getElementById("main");
     const [main, main_header, main_main] = resetMainbereich();
     let Plagiatsresolution = document.createElement("div");

@@ -5,18 +5,37 @@ const setup_JsonImportieren = async () => {
     const json = await fetchJsonData("http://127.0.0.1:5500/content.json");
     const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
     const dropdwncntnr = Array.from(document.getElementsByClassName("dropdown-container"));
+    var array = new Array();
     for (let o of Object.keys(json)) {
         for (let ob of Object.keys(json[o])) {
             let button = document.createElement("button");
             button.style.backgroundColor = "#dddddd";
             button.setAttribute("class", "dropdowncontainerbutton");
-            button.textContent = ob;
+            array.push(ob);
             button.style.fontSize = "16px";
             button.style.cursor = "pointer";
             dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
         }
     }
     const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
+    const jsonkeys = Object.keys(json); // Highestlevel
+    setNameForButton(dropdownbuttoncollection, jsonkeys[0], jsonkeys[1], jsonkeys[2]);
+    setNameForButton(dropdowncontainerbuttoncollection, array[0], array[1], array[2], array[3], array[4], array[5]);
+    var i = 0;
+    for (const [title, inhalte] of Object.entries(json)) {
+        //dropdownbuttoncollection[Object.keys(json).indexOf(title)].textContent = title;
+        let itag = document.createElement("i");
+        itag.setAttribute("class", "fa fa-caret-down");
+        dropdownbuttoncollection[Object.keys(json).indexOf(title)].appendChild(itag);
+        for (const [a, b] of Object.entries(json[title])) {
+            dropdowncontainerbuttoncollection[i].addEventListener("click", () => {
+                resetMainbereich();
+                populateHeader(a);
+                populateMain(Object(b).content);
+            });
+            i++;
+        }
+    }
     //hover effekt für die button im dropdowncontainer
     for (let dcb of dropdowncontainerbuttoncollection) {
         dcb.addEventListener("mouseover", function () { changeBackgroundColorAndColor(this, "#34568B", "white"); });
@@ -39,21 +58,6 @@ const setup_JsonImportieren = async () => {
             }
         });
     }
-    var i = 0;
-    for (const [title, inhalte] of Object.entries(json)) {
-        dropdownbuttoncollection[Object.keys(json).indexOf(title)].textContent = title;
-        let itag = document.createElement("i");
-        itag.setAttribute("class", "fa fa-caret-down");
-        dropdownbuttoncollection[Object.keys(json).indexOf(title)].appendChild(itag);
-        for (const [a, b] of Object.entries(json[title])) {
-            dropdowncontainerbuttoncollection[i].addEventListener("click", () => {
-                resetMainbereich();
-                populateHeader(a);
-                populateMain(Object(b).content);
-            });
-            i++;
-        }
-    }
 };
 const populateMain = (input) => {
     const main_main = document.getElementById("main_main");
@@ -75,3 +79,8 @@ const changeBackgroundColorAndColor = (buttonreferenz, backgroundColor, textcolo
     buttonreferenz.style.backgroundColor = backgroundColor;
     buttonreferenz.style.color = textcolor;
 };
+function setNameForButton(button, ...args) {
+    for (const c of args) {
+        button[args.indexOf(c)].textContent = c;
+    }
+}
