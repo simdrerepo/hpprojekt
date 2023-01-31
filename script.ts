@@ -28,34 +28,16 @@ export { fetchTextData };
 setup_side_navigation();
 setup_JsonImportieren();
 
-
-
-
-
-
-(function AddClickListenerToSideNavButton(){
-  //Clicklistener für die Button im Sidenav
- const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
- const functionArray = [setup_webInventors, domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_mapchart,vue_singlefile,fragenAntworten,codeUebung];
- buttonarray.forEach(button=>{button.addEventListener("click",functionArray[buttonarray.indexOf(button)])});
-})();
-
-const resetMainbereich = ():HTMLDivElement[]=>{
-  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
-  mainref.replaceChildren();
- setupMainBereich();
-  MainBereichStyling();
- const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
- const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
- 
- return [mainref,main_header,main_main];
-}
 (function ListenerVergeben():void{
+  const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
+ const functionArray = [setup_webInventors, domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_mapchart,vue_singlefile,fragenAntworten,codeUebung];
   const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
   const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
  const buttoncollection = Array.from(sidebuttondiv.getElementsByTagName("button"));
  var buttonclicked:boolean[] = <boolean[]>new Array();
  dropdownbuttoncol.forEach(()=>{buttonclicked.push(false)});
+
+ buttonarray.forEach(button=>{button.addEventListener("click",functionArray[buttonarray.indexOf(button)])});
 
   for(const c of dropdownbuttoncol){
   c.addEventListener("click",hideShowDropDownContainer.bind(c));
@@ -105,6 +87,16 @@ function hideShowDropDownContainer(this:any):void{
   if(dropdown.style.display === "block"){dropdown.style.display = "none";}
   else{dropdown.style.display="block";}
 
+}
+const resetMainbereich = ():HTMLDivElement[]=>{
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  mainref.replaceChildren();
+ setupMainBereich();
+  MainBereichStyling();
+ const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
+ const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
+ 
+ return [mainref,main_header,main_main];
 }
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen

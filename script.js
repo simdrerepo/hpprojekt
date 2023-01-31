@@ -22,27 +22,15 @@ export { sidenavHandler };
 export { fetchTextData };
 setup_side_navigation();
 setup_JsonImportieren();
-(function AddClickListenerToSideNavButton() {
-    //Clicklistener für die Button im Sidenav
+(function ListenerVergeben() {
     const buttonarray = Array.from(document.getElementsByClassName("regularButton"));
     const functionArray = [setup_webInventors, domBenchmarks, setup_RednerMitZeitmessung, setup_TopSortAlsWebApp, setup_Klammerpaare, setup_TextAnalyse, setup_TextkonkatenierungMitPromises, setup_TextkonkatenierungMitAwait, setup_tic_tac_toe, setup_covid19_mapchart, vue_singlefile, fragenAntworten, codeUebung];
-    buttonarray.forEach(button => { button.addEventListener("click", functionArray[buttonarray.indexOf(button)]); });
-})();
-const resetMainbereich = () => {
-    const mainref = document.getElementById("main");
-    mainref.replaceChildren();
-    setupMainBereich();
-    MainBereichStyling();
-    const main_header = document.getElementById("mainheader");
-    const main_main = document.getElementById("main_main");
-    return [mainref, main_header, main_main];
-};
-(function ListenerVergeben() {
     const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
     const sidebuttondiv = document.getElementById("sidebutton");
     const buttoncollection = Array.from(sidebuttondiv.getElementsByTagName("button"));
     var buttonclicked = new Array();
     dropdownbuttoncol.forEach(() => { buttonclicked.push(false); });
+    buttonarray.forEach(button => { button.addEventListener("click", functionArray[buttonarray.indexOf(button)]); });
     for (const c of dropdownbuttoncol) {
         c.addEventListener("click", hideShowDropDownContainer.bind(c));
     }
@@ -81,6 +69,15 @@ function hideShowDropDownContainer() {
         dropdown.style.display = "block";
     }
 }
+const resetMainbereich = () => {
+    const mainref = document.getElementById("main");
+    mainref.replaceChildren();
+    setupMainBereich();
+    MainBereichStyling();
+    const main_header = document.getElementById("mainheader");
+    const main_main = document.getElementById("main_main");
+    return [mainref, main_header, main_main];
+};
 function setupMainBereich() {
     // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
     const mainref = document.getElementById("main");
