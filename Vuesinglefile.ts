@@ -1,7 +1,7 @@
 import { resetMainbereich } from "./script.js";
+export {vue_singlefile};
 
-
-export function vue_singlefile():void{
+ function vue_singlefile():void{
     const [mainref,main_header,main_main] = resetMainbereich();
      
       let headerdiv:HTMLDivElement = document.createElement("div");

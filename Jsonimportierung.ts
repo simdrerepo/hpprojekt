@@ -78,20 +78,20 @@ const setup_JsonImportieren=async():Promise<void>=>{
   }
   const populateMain=(input:any):void=>{
   
-    const main_main = <HTMLDivElement>document.getElementById("main_main");
+    const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
     main_main.replaceChildren();
-    let contentdiv = document.createElement("div");
-    let p = document.createElement("p");
+    let contentdiv:HTMLDivElement = document.createElement("div");
+    let p:HTMLParagraphElement = document.createElement("p");
     p.appendChild(document.createTextNode(input));
     contentdiv.appendChild(p);
     
     main_main.appendChild(contentdiv);
   }
   const populateHeader=(input:any):void=>{
-    const main_header = <HTMLDivElement>document.getElementById("mainheader");
+    const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
    
     main_header.replaceChildren();
-    let h1 = document.createElement("h1");
+    let h1:HTMLHeadElement = document.createElement("h1");
     
     h1.appendChild(document.createTextNode(input));
     main_header.appendChild(h1);

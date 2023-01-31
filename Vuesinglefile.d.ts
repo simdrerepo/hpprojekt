@@ -1,1 +1,2 @@
-export declare function vue_singlefile(): void;
+export { vue_singlefile };
+declare function vue_singlefile(): void;

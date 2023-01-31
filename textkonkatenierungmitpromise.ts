@@ -6,11 +6,11 @@ const setup_TextkonkatenierungMitPromises=():void=>{
   const [main,main_header,main_main] = resetMainbereich();
 
 
-var promisediv = document.createElement("div");
+var promisediv:HTMLDivElement = document.createElement("div");
 promisediv.style.display ="flex";
 promisediv.style.justifyContent="center";
-let div = document.createElement("div");
-let textdiv = document.createElement("div");
+let div:HTMLDivElement = document.createElement("div");
+let textdiv:HTMLDivElement = document.createElement("div");
 div.style.display ="flex";
 div.style.justifyContent="center";
 div.style.marginBottom = "40px";
@@ -24,13 +24,13 @@ textdiv.innerHTML ="Konkateniert werden die Gedichte <b>Erlkönig</b> von <i>Joh
 div.appendChild(textdiv);
 main_main.appendChild(div);
 
-let h1 = document.createElement("h1");
+let h1:HTMLHeadElement = document.createElement("h1");
 h1.style.textAlign="center";
 
 h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit Promises"));
 
 main_header.appendChild(h1);
-var p = document.createElement("p");
+var p:HTMLParagraphElement = document.createElement("p");
 
 
 

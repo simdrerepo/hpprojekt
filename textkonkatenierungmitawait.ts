@@ -8,19 +8,19 @@ const setup_TextkonkatenierungMitAwait =async ():Promise<void>=>{
 
   const [main,main_header,main_main] = resetMainbereich();
 
-  let promisediv = document.createElement("div");
+  let promisediv:HTMLDivElement = document.createElement("div");
  
  
  
-  let h1 = document.createElement("h1");
-  let headerdiv = document.createElement("div");
+  let h1:HTMLHeadElement = document.createElement("h1");
+  let headerdiv:HTMLDivElement = document.createElement("div");
   headerdiv.appendChild(h1);
   headerdiv.style.display="flex";
   headerdiv.style.justifyContent="center";
   headerdiv.style.textAlign="center";
  
-  let div = document.createElement("div");
-  let textdiv = document.createElement("div");
+  let div:HTMLDivElement = document.createElement("div");
+  let textdiv:HTMLDivElement = document.createElement("div");
   div.style.display ="flex";
  div.style.justifyContent="center";
  div.style.marginBottom = "40px";

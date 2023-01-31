@@ -7,7 +7,7 @@
 
 <script src="https://unpkg.com/vue@2.7"></script>
 <script scr="charts.js"></script>
-<script src="Vuesinglefile.js"></script>
+
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,20 +30,18 @@
     grid-template-rows: auto 1fr auto;
     background-color: #e7e9eb;
     z-index: 0;
-    top:0;
+    
 
 }
 #sidenavoverlay{
 display:none;
-top:0;
-left:0;
-position:fixed;
 z-index: 1;
 background-color: black;
 height:100%;
-
 margin-left:250px;
 opacity:0.5;
+position:fixed;
+top:0;
 }
 
 
@@ -64,9 +62,7 @@ grid-row:2/3;}
 }
 #footer{
   grid-column: 1/5;grid-row: 3/4;
-  
   background-color: 
-  
   #34568B;
   
 }
@@ -76,11 +72,11 @@ grid-row:2/3;}
 
 }
 
+
+
 .dropdown-container{
 display:none;
 width:250px;
-
-
 margin-left: 12px;
 
 }
@@ -88,66 +84,47 @@ margin-left: 12px;
   display:none;
   height: 100%;
   width: 0;
-  position: fixed;
   z-index: 1;
- top:0;
- left:0;
   background-color: white;
   overflow-x: hidden;
-  
- 
+  position:fixed;
   transition: 0.5s;
+  top:0;
 }
 
 
-.iconbar{
 
-    grid-column: 1/2;
-    grid-row: 1/2;
-}
 .iconbar a:hover{
+
 
   transform: scale(1.5);
    
 }
 
+.iconbar{
+   display:flex;
+   justify-content: center;
+align-items: center;
+
+}
 .iconbar>*{
-    float: left;
-  width: 50px;
-  text-align: center;
- padding: 12px 0;
-  transition: all 0.3s ease;
   color:white;
   font-size: 1.5rem;
+  padding:10px;
+
 }
 .loginbar{
  display:block;
  grid-column: 3/4;
 }
 
-#loginbutton{
-  cursor:pointer;
-  float:right;
- background-color: #34568B;
- color:white;
-  
- margin-top: 10px;
- margin-bottom: 10px;
- margin-right:10px;
- width:100px;
 
- border:none;
 
-}
-
-#sidebar{
-  display:none;
-}
 
 #exitbutton{
   padding:12px;
   display:grid;
-  justify-content: right;
+  justify-content: left;
 }
 
 #sidebutton button{
@@ -162,9 +139,7 @@ margin-left: 12px;
   text-align: left;
 }
 
-#idiv{
-  float:right;
-}
+
 
 .drpdwnbtn>*{
   float:right;
@@ -175,13 +150,14 @@ margin-left: 12px;
 .footerbar{
   display:flex;
   justify-content: center;
+  align-items: center;
 }
 .footerbar>*{
   
   color: white;
   font-size: 1.5rem;
   padding:12px;
-  width:50px;
+  
 }
 #loginbuttondiv{
   display:flex;
@@ -189,9 +165,7 @@ margin-left: 12px;
   
   height:50px;
 }
-#idiv{
-  display:inline;
-}
+
 #u1button:hover{
   background-color: #e7e9eb;
 }
@@ -288,9 +262,9 @@ width:10rem;
 #input2{
   width:10rem;
 
-}
-}
 
+}
+}
 @media screen and (min-width: 1200px) {
 .container{
 grid-template-columns: repeat(12,1fr);
@@ -320,13 +294,7 @@ margin-right:40px;
   font-size: 19px;
 
 }
-#rednerdiv{
-  display:grid;
-  grid-template-rows: 1fr;
-  grid-area: "label"
-              "eingabe"
-               "button";
-}
+
 
 #topsortinputsdiv{
   display : grid;
@@ -355,6 +323,7 @@ width:10rem;
   width:10rem;
 
 }
+
 
 }
     </style>
