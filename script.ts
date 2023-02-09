@@ -16,7 +16,7 @@ import { vue_singlefile } from "./Vuesinglefile.js";
 
 export { sleep };
 export { setupMainBereich };
-export { MainBereichStyling };
+
 export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
@@ -27,6 +27,7 @@ export { fetchTextData };
 
 setup_side_navigation();
 setup_JsonImportieren();
+
 
 (function ListenerVergeben():void{
   const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
@@ -92,7 +93,7 @@ const resetMainbereich = ():HTMLDivElement[]=>{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
   mainref.replaceChildren();
  setupMainBereich();
-  MainBereichStyling();
+
  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
  
@@ -101,14 +102,13 @@ const resetMainbereich = ():HTMLDivElement[]=>{
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main"); 
- let main_container:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_container.setAttribute("id","main_container");
- let main_header:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_header.setAttribute("id","mainheader");
- let main_main:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_main.setAttribute("id","main_main");
- let main_footer:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_footer.setAttribute("id","main_footer");
+ 
+ let main_container:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_container"},"background-color:white; min-height:700px; padding-left:10px;padding-right:10px;");
+ let main_header:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"mainheader"},"background-color:white; border-bottom:1px solid lightgray; display:flex; justify-content:center;");
+
+ let main_main:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_main"},"background-color:white; display:block;margin-top:20px;");
+ 
+ let main_footer:HTMLDivElement = <HTMLDivElement>elementFactory("id",{id:"main_footer"},"");
  mainref.appendChild(main_container);
  main_container.appendChild(main_header);
 
@@ -116,28 +116,7 @@ function setupMainBereich():void{
  main_container.appendChild(main_footer);
 
 }
-function MainBereichStyling():void{
-  // styling für den Bereich(header,main)
-  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
-  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
-  const main_container:HTMLDivElement =< HTMLDivElement>document.getElementById("main_container");
-  main_header.style.backgroundColor="white";
- 
- main_main.style.backgroundColor="white";
- main_main.style.marginTop = "40px";
- main_main.style.display ="block";
 
- main_container.style.backgroundColor='white';
- main_container.style.minHeight="700px";
- main_header.style.borderBottom = "1px solid lightgray"
- main_container.style.borderLeft = "10px solid white";
- main_container.style.borderRight = "10px solid white";
- main_header.style.display = "flex";
- main_header.style.justifyContent = "center";
- mainref.style.marginTop = "30px";
-
-}
 
 async function sleep(ms:number){
     return new Promise(resolve=>setTimeout(resolve,ms));
@@ -201,15 +180,53 @@ function Schleife({start=0,end=10,step=1,func=console.log}){
 
 }
 
-
-
-
-
-
+export function elementFactory(typ:string, attributes:any,style:string,...children:any[]):HTMLElement{
+  const el = document.createElement(typ);
+  for(const [key, value] of Object.entries(attributes)){
+    el.setAttribute(key, String(value));
+  }
   
-       
-       
-     
+
+  el.style.cssText=style;
+
+  for(const c of children){
+   
+    if(isHTML(c)===false){
+      
+      el.appendChild(document.createTextNode(c));
+    }
+    else if(isHTML(c)){
+      el.innerHTML = c;
+    }
+    else{
+      el.appendChild(c);
+    }
+  }
+
+  return el;
+}
+
+export function setCssProperties(htmlElement:HTMLElement,props:string):void{
+
+  htmlElement.style.cssText = props;
+
+}
+
+function isHTML(string:string):boolean{
+  var ret:boolean = false;
+  const div:HTMLDivElement = document.createElement("div");
+  div.innerHTML = string;
+  const childnodes:Element[] = Array.from(div.getElementsByTagName("*"));
+  childnodes.forEach(node=>{if(node.nodeType===1){ret=true;}});
+  return ret;
+}
+
+(function home():void{
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  const homebutton:HTMLButtonElement = <HTMLButtonElement>document.getElementById("homebutton")!;
+  homebutton.addEventListener("click",()=>mainref.replaceChildren());
+ 
+})();
 
 function profileCard(){
   // Under Construction ...
@@ -225,6 +242,69 @@ function profileCard(){
 
   
 }
+
+export function addToTable(table:HTMLTableElement,cellContent:any[][],headlinecontent:string[],colorHeadline:string="white",colorRows:string="#dddddd"){
+  // For headline
+  if(headlinecontent.length>0){
+  var firstrow = table.insertRow(-1);
+  setCssProperties(firstrow,`background-color:${colorHeadline};`);
+
+  for(const c of headlinecontent){
+    let firstcells = firstrow.insertCell(headlinecontent.indexOf(c));
+    firstcells.innerHTML = c;
+  }
+ }
+ // actual content
+
+ for(let i=0;i<cellContent.length;i++){
+  let row = table.insertRow(-1);
+  if(i%2===0){
+  setCssProperties(row,`background-color:${colorRows};`);
+  }
+  for(let j=0;j<cellContent[i].length;j++){
+   let cell = row.insertCell(j);
+   cell.textContent = cellContent[i][j];
+
+  }
+}  
+
+
+}
+
+export function addToList(liste:HTMLElement,content:any[],color_notodd:string="#dddddd"):HTMLElement{
+ 
+ content.forEach(c=>{
+  const li = document.createElement("li");
+ content.indexOf(c) === 0 ? li.style.backgroundColor=color_notodd : li.style.backgroundColor="white";
+  if(isHTML(c)){
+  li.innerHTML = c;
+  }
+  else{
+    li.textContent = c;
+  }
+  liste.appendChild(li);
+  
+
+ });
+ return liste;
+}
+
+function createSidenav(){
+
+  const sidenav = elementFactory("div",{id:"1200pxsidenav"},"grid-row:2/3; grid-column:1/3; background-color:white;margin-left:20px; ");
+  const container = document.getElementById("containerid");
+  let button = elementFactory("button",{},"border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;","Platzhalter");
+  let button2 = elementFactory("button",{},"border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;","Platzhalter")
+button.addEventListener("mouseover",function(){this.style.color="#dddddd";});
+button.addEventListener("mouseleave",function(){this.style.color="black";});
+ console.log(sidenav);
+  sidenav.appendChild(button);
+  sidenav.appendChild(button2);
+  container?.appendChild(sidenav);
+  container!.style.gap="20px 20px";
+  
+}
+
 
 
 export {setup_tic_tac_toe}; 
