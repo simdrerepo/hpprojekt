@@ -2,6 +2,7 @@
 import { resetMainbereich } from "./script.js";
 export {setup_JsonImportieren};
 import { fetchJsonData } from "./script.js";
+import { elementFactory } from "./script.js";
 
 const setup_JsonImportieren=async():Promise<void>=>{
     
@@ -13,12 +14,10 @@ const setup_JsonImportieren=async():Promise<void>=>{
 
       for(let o of Object.keys(json)){
         for(let ob of Object.keys(json[o])){
-          let button:HTMLButtonElement = document.createElement("button");
-          button.style.backgroundColor = "#dddddd";
-          button.setAttribute("class","dropdowncontainerbutton");
+          let button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{class:"dropdowncontainerbutton"},"background-color:#dddddd; fontsize:16px; cursor:pointer;");
+        
         array.push(ob);
-        button.style.fontSize="16px";
-          button.style.cursor = "pointer";
+      
            dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
         }
       }
@@ -30,8 +29,7 @@ const setup_JsonImportieren=async():Promise<void>=>{
       var i = 0;
       for(const [title, inhalte] of Object.entries(json)){
        //dropdownbuttoncollection[Object.keys(json).indexOf(title)].textContent = title;
-           let itag:HTMLElement = document.createElement("i");
-           itag.setAttribute("class","fa fa-caret-down");
+           let itag:HTMLElement = elementFactory("i",{class:"fa fa-caret-down"},"");
            dropdownbuttoncollection[Object.keys(json).indexOf(title)].appendChild(itag);
            
          

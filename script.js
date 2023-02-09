@@ -15,7 +15,6 @@ import { domBenchmarks } from "./dombenchmarks.js";
 import { vue_singlefile } from "./Vuesinglefile.js";
 export { sleep };
 export { setupMainBereich };
-export { MainBereichStyling };
 export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
@@ -73,7 +72,6 @@ const resetMainbereich = () => {
     const mainref = document.getElementById("main");
     mainref.replaceChildren();
     setupMainBereich();
-    MainBereichStyling();
     const main_header = document.getElementById("mainheader");
     const main_main = document.getElementById("main_main");
     return [mainref, main_header, main_main];
@@ -81,37 +79,14 @@ const resetMainbereich = () => {
 function setupMainBereich() {
     // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
     const mainref = document.getElementById("main");
-    let main_container = document.createElement("div");
-    main_container.setAttribute("id", "main_container");
-    let main_header = document.createElement("div");
-    main_header.setAttribute("id", "mainheader");
-    let main_main = document.createElement("div");
-    main_main.setAttribute("id", "main_main");
-    let main_footer = document.createElement("div");
-    main_footer.setAttribute("id", "main_footer");
+    let main_container = elementFactory("div", { id: "main_container" }, "background-color:white; min-height:700px; padding-left:10px;padding-right:10px;");
+    let main_header = elementFactory("div", { id: "mainheader" }, "background-color:white; border-bottom:1px solid lightgray; display:flex; justify-content:center;");
+    let main_main = elementFactory("div", { id: "main_main" }, "background-color:white; display:block;margin-top:20px;");
+    let main_footer = elementFactory("id", { id: "main_footer" }, "");
     mainref.appendChild(main_container);
     main_container.appendChild(main_header);
     main_container.appendChild(main_main);
     main_container.appendChild(main_footer);
-}
-function MainBereichStyling() {
-    // styling für den Bereich(header,main)
-    const mainref = document.getElementById("main");
-    const main_header = document.getElementById("mainheader");
-    const main_main = document.getElementById("main_main");
-    const main_container = document.getElementById("main_container");
-    main_header.style.backgroundColor = "white";
-    main_main.style.backgroundColor = "white";
-    main_main.style.marginTop = "40px";
-    main_main.style.display = "block";
-    main_container.style.backgroundColor = 'white';
-    main_container.style.minHeight = "700px";
-    main_header.style.borderBottom = "1px solid lightgray";
-    main_container.style.borderLeft = "10px solid white";
-    main_container.style.borderRight = "10px solid white";
-    main_header.style.display = "flex";
-    main_header.style.justifyContent = "center";
-    mainref.style.marginTop = "30px";
 }
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -165,6 +140,43 @@ function Schleife({ start = 0, end = 10, step = 1, func = console.log }) {
         func(i);
     }
 }
+export function elementFactory(typ, attributes, style, ...children) {
+    const el = document.createElement(typ);
+    for (const [key, value] of Object.entries(attributes)) {
+        el.setAttribute(key, String(value));
+    }
+    el.style.cssText = style;
+    for (const c of children) {
+        if (isHTML(c) === false) {
+            el.appendChild(document.createTextNode(c));
+        }
+        else if (isHTML(c)) {
+            el.innerHTML = c;
+        }
+        else {
+            el.appendChild(c);
+        }
+    }
+    return el;
+}
+export function setCssProperties(htmlElement, props) {
+    htmlElement.style.cssText = props;
+}
+function isHTML(string) {
+    var ret = false;
+    const div = document.createElement("div");
+    div.innerHTML = string;
+    const childnodes = Array.from(div.getElementsByTagName("*"));
+    childnodes.forEach(node => { if (node.nodeType === 1) {
+        ret = true;
+    } });
+    return ret;
+}
+(function home() {
+    const mainref = document.getElementById("main");
+    const homebutton = document.getElementById("homebutton");
+    homebutton.addEventListener("click", () => mainref.replaceChildren());
+})();
 function profileCard() {
     // Under Construction ...
     const mainref = document.getElementById("main");
@@ -176,4 +188,40 @@ function profileCard() {
     picdiv.appendChild(i);
     mainref.appendChild(picdiv);
 }
+export function addToTable(table, cellContent, headlinecontent, colorHeadline = "white", colorRows = "#dddddd") {
+    // For headline
+    if (headlinecontent.length > 0) {
+        var firstrow = table.insertRow(-1);
+        setCssProperties(firstrow, `background-color:${colorHeadline};`);
+        for (const c of headlinecontent) {
+            let firstcells = firstrow.insertCell(headlinecontent.indexOf(c));
+            firstcells.innerHTML = c;
+        }
+    }
+    // actual content
+    for (let i = 0; i < cellContent.length; i++) {
+        let row = table.insertRow(-1);
+        if (i % 2 === 0) {
+            setCssProperties(row, `background-color:${colorRows};`);
+        }
+        for (let j = 0; j < cellContent[i].length; j++) {
+            let cell = row.insertCell(j);
+            cell.textContent = cellContent[i][j];
+        }
+    }
+}
+function createSidenav() {
+    const sidenav = elementFactory("div", { id: "1200pxsidenav" }, "grid-row:2/3; grid-column:1/3; background-color:white;margin-left:20px; ");
+    const container = document.getElementById("containerid");
+    let button = elementFactory("button", {}, "border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;", "Platzhalter");
+    let button2 = elementFactory("button", {}, "border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;", "Platzhalter");
+    button.addEventListener("mouseover", function () { this.style.color = "#dddddd"; });
+    button.addEventListener("mouseleave", function () { this.style.color = "black"; });
+    console.log(sidenav);
+    sidenav.appendChild(button);
+    sidenav.appendChild(button2);
+    container?.appendChild(sidenav);
+    container.style.gap = "20px 20px";
+}
+createSidenav();
 export { setup_tic_tac_toe };

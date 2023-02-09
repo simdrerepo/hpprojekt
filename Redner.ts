@@ -1,3 +1,5 @@
+import { elementFactory } from "./script.js";
+
 
 function makeRedner(name:string){
   var new_Redner = {name,std:0,min:0,sek:0,counting:0,intervalids:[0],startstopsymbol:"Stop",
@@ -112,19 +114,18 @@ function makeRedner(name:string){
  },
 createRedner:function(rednerarray:any[]):HTMLTableElement{
  
-  const tabelle:HTMLTableElement = document.createElement("table");
+  const tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{},"");
  let reihe:HTMLTableRowElement = tabelle.insertRow(-1);
- var button:HTMLButtonElement = document.createElement("button");
- button.appendChild(document.createTextNode('Start'));
+ var button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{},"","Start");
+ 
 
  reihe.insertCell(0);
  reihe.appendChild(document.createTextNode(this.name));
  reihe.insertCell(1);
  reihe.appendChild(button);
- let timer:HTMLParagraphElement = document.createElement("p");
+ let timer:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"","00:00:00");
  reihe.insertCell(2);
- var display:Text = document.createTextNode("00:00:00");
- timer.appendChild(display);
+
  var interval:number = setInterval(this.timer.bind(this),1000,timer);
     button.textContent = this.startstopsymbol;
     this.counting = 1;

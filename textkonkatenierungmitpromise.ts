@@ -1,36 +1,25 @@
 import { resetMainbereich } from "./script.js";
 export { setup_TextkonkatenierungMitPromises};
+import { elementFactory } from "./script.js";
 
 
 const setup_TextkonkatenierungMitPromises=():void=>{
   const [main,main_header,main_main] = resetMainbereich();
 
 
-var promisediv:HTMLDivElement = document.createElement("div");
-promisediv.style.display ="flex";
-promisediv.style.justifyContent="center";
-let div:HTMLDivElement = document.createElement("div");
-let textdiv:HTMLDivElement = document.createElement("div");
-div.style.display ="flex";
-div.style.justifyContent="center";
-div.style.marginBottom = "40px";
-textdiv.style.border ="1px solid lightgrey";
-textdiv.style.padding = "10px";
+var promisediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:center; justify-content:center;");
 
+let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center; margin-bottom:40px;");
+let textdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; padding:10px; background-color:#e7e9eb;","Konkateniert werden die Gedichte <b>Erlkönig</b> von <i>Johann Wolfgang von Goethe</i> sowie <b>Eine Frage</b> von <i>Kurt Tucholsky</i>");
 
-textdiv.style.backgroundColor="#e7e9eb";
-
-textdiv.innerHTML ="Konkateniert werden die Gedichte <b>Erlkönig</b> von <i>Johann Wolfgang von Goethe</i> sowie <b>Eine Frage</b> von <i>Kurt Tucholsky</i>";
 div.appendChild(textdiv);
 main_main.appendChild(div);
 
-let h1:HTMLHeadElement = document.createElement("h1");
-h1.style.textAlign="center";
+let h1:HTMLHeadElement = elementFactory("h1",{},"text-align:center;","Zeilenweise Textkonkatenierung mit Promises");
 
-h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit Promises"));
 
 main_header.appendChild(h1);
-var p:HTMLParagraphElement = document.createElement("p");
+var p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"");
 
 
 

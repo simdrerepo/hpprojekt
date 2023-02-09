@@ -1,7 +1,7 @@
 declare function deepClone(obj: any): any;
 declare const obj: {
     name: string;
-    adrresse: {
+    adresse: {
         plz: string;
         strasse: string;
         a: {

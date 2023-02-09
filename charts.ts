@@ -1,16 +1,14 @@
 
 import { resetMainbereich } from "./script.js";
 import { fetchJsonData } from "./script.js";
+import { elementFactory } from "./script.js";
 
 function dataTabelle(data:any):HTMLTableElement{
     var i = 0;
-    var tabelle = document.createElement("table");
-    tabelle.style.textAlign="center";
+    var tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{},"test-align:center;")
     let row:HTMLTableRowElement = tabelle.insertRow(-1);
     let cell:HTMLTableCellElement = row.insertCell(0);
-    cell.innerHTML = "<b>Bundesland</b>"
-  cell = row.insertCell(1);
-  cell.innerHTML = "<b>Fälle</b>";
+    cell.innerHTML = "<b>Bundesland</b>";cell = row.insertCell(1);cell.innerHTML = "<b>Fälle</b>";
    Array.from(data).forEach(d=>{
       let row:HTMLTableRowElement = tabelle.insertRow(-1);
     let cell:HTMLTableCellElement = row.insertCell(0);
@@ -51,30 +49,12 @@ function dataTabelle(data:any):HTMLTableElement{
   }    
   export async function setup_covid19_mapchart():Promise<void>{
   const [mainref,main_header,main_main] = resetMainbereich();
-    let h1:HTMLHeadElement = document.createElement("h1");
-    h1.appendChild(document.createTextNode("Covid-19 Fälle"));
+    let h1:HTMLHeadElement = elementFactory("h1",{},"","Covid-19 Fälle")
+    const mapdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"mapdiv"},"display:flex; justify-content:center;")
     main_header.appendChild(h1);
-    const mapdiv:HTMLDivElement = document.createElement("div");
-   mapdiv.setAttribute("id","mapdiv");
-    mapdiv.style.display = "flex";
-    mapdiv.style.justifyContent = "center";
     main_main.append(mapdiv);
-      const [geo, geodata] = await Promise.all([fetchJsonData("http://127.0.0.1:5500/1_sehr_hoch.geo.json"),fetchJsonData("http://127.0.0.1:5500/covid-19.json")]);
-    
-      
-    
-      
-    
-   
-              mapChart(400,600,"#mapdiv",geodata,geo);
-   
-  
-   
-  
-        
-  
-        
-  
+    const [geo, geodata] = await Promise.all([fetchJsonData("http://127.0.0.1:5500/1_sehr_hoch.geo.json"),fetchJsonData("http://127.0.0.1:5500/covid-19.json")]);
+    mapChart(400,600,"#mapdiv",geodata,geo);
   }
   
   

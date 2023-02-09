@@ -22,6 +22,25 @@
       font-family: Verdana, sans-serif;
       font-size: calc(10px + 0.390625vw);
      }
+
+     .dropdown-div{
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      
+     }
+
+     .dropdown{
+      color:white;
+      background-color:#34568B;
+      border:none;
+      padding: 5px;
+      
+     }
+     .dropdown:hover{
+      
+      
+     }
     
      
 .container{
@@ -266,10 +285,12 @@ width:10rem;
 }
 }
 @media screen and (min-width: 1200px) {
+ 
 .container{
 grid-template-columns: repeat(12,1fr);
  grid-template-rows: auto 1fr auto;
 }
+
 #header{grid-column:1/13;
 grid-row:1/2;}
 
@@ -334,9 +355,10 @@ width:10rem;
     
     <div class="iconbar">
   <a href="#" id="sandwichbutton"><i class="fa fa-bars"></i></a> 
-  <a href="index.html"><i class="fa fa-home"></i></a> 
+  <a href="#" id="homebutton"><i class="fa fa-home"></i></a> 
 
    </div>
+
    <div class="loginbar">
 
    </div>
@@ -351,6 +373,7 @@ width:10rem;
   <a href="#"><i class="fa fa-twitter"></i></a>
 </div>
 </div>
+
 
  <div class="sidenavigation" id="sidenav">
  <div id="exitbutton">
