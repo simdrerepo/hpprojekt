@@ -1,7 +1,6 @@
 import { setup_TopSortAlsWebApp } from "./Topsortalswebapp.js";
 import { setup_tic_tac_toe } from "./Tictactoespiel.js";
 import { setup_covid19_mapchart } from "./charts.js";
-import { setup_side_navigation } from "./sidenavigation.js";
 import { setup_TextkonkatenierungMitAwait } from "./textkonkatenierungmitawait.js";
 import { setup_TextkonkatenierungMitPromises } from "./textkonkatenierungmitpromise.js";
 import { setup_RednerMitZeitmessung } from "./Rednermitzeitmessung.js";
@@ -19,10 +18,46 @@ export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
 export { fetchTextData };
-setup_side_navigation();
 setup_JsonImportieren();
+export function filterObject(obj, string) {
+    return Object.fromEntries(Object.entries(obj).filter(([a, b]) => { return a === string; }));
+}
+export function objectFabric() {
+    const obj = {
+        webinventors: { textcontent: "Web Inventors", funktion: setup_webInventors },
+        dombenchmarks: { textcontent: "Dom Benchmarks", funktion: domBenchmarks },
+        rednermitzeitmessung: { textcontent: "Redner mit Zeitmessung", funktion: setup_RednerMitZeitmessung },
+        topsort: { textcontent: "Topsort als Webapp", funktion: setup_TopSortAlsWebApp },
+        klammerpaare: { textcontent: "Klammerpaare", funktion: setup_Klammerpaare },
+        textanalyse: { textcontent: "Textanalyse", funktion: setup_TextAnalyse },
+        asyncawait: { textcontent: "Textkonkatenierung mit async/await", funktion: setup_TextkonkatenierungMitAwait },
+        promises: { textcontent: "Textkonkatenierung mit Promises", funktion: setup_TextkonkatenierungMitPromises },
+        tictactoe: { textcontent: "Tic Tac Toe", funktion: setup_tic_tac_toe },
+        mapchart: { textcontent: "Covid-19 mapchart", funktion: setup_covid19_mapchart },
+        vuesinglefile: { textcontent: "Vue Single Component", funktion: vue_singlefile },
+        fragen: { textcontent: "Fragen und Antworten", funktion: fragenAntworten },
+        code: { textcontent: "Funktionen in Javascript", funktion: codeUebung }
+    };
+    return obj;
+}
 (function ListenerVergeben() {
     const buttonarray = Array.from(document.getElementsByClassName("regularButton"));
+    const obj = {
+        webinventors: { textcontent: "Web Inventors", funktion: setup_webInventors },
+        dombenchmarks: { textcontent: "Dom Benchmarks", funktion: domBenchmarks },
+        rednermitzeitmessung: { textcontent: "Redner mit Zeitmessung", funktion: setup_RednerMitZeitmessung },
+        topsort: { textcontent: "Topsort als Webapp", funktion: setup_TopSortAlsWebApp },
+        klammerpaare: { textcontent: "Klammerpaare", funktion: setup_Klammerpaare },
+        textanalyse: { textcontent: "Textanalyse", funktion: setup_TextAnalyse },
+        asyncawait: { textcontent: "Textkonkatenierung mit async/await", funktion: setup_TextkonkatenierungMitAwait },
+        promises: { textcontent: "Textkonkatenierung mit Promises", funktion: setup_TextkonkatenierungMitPromises },
+        tictactoe: { textcontent: "Tic Tac Toe", funktion: setup_tic_tac_toe },
+        mapchart: { textcontent: "Covid-19 mapchart", funktion: setup_covid19_mapchart },
+        vuesinglefile: { textcontent: "Vue Single Component", funktion: vue_singlefile },
+        fragen: { textcontent: "Fragen und Antworten", funktion: fragenAntworten },
+        code: { textcontent: "Funktionen in Javascript", funktion: codeUebung }
+    };
+    setup_headernav(obj);
     const functionArray = [setup_webInventors, domBenchmarks, setup_RednerMitZeitmessung, setup_TopSortAlsWebApp, setup_Klammerpaare, setup_TextAnalyse, setup_TextkonkatenierungMitPromises, setup_TextkonkatenierungMitAwait, setup_tic_tac_toe, setup_covid19_mapchart, vue_singlefile, fragenAntworten, codeUebung];
     const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
     const sidebuttondiv = document.getElementById("sidebutton");
@@ -35,7 +70,7 @@ setup_JsonImportieren();
     }
     for (const b of buttoncollection) {
         b.style.cursor = "pointer";
-        b.addEventListener("mouseover", mouseOver);
+        b.addEventListener("mouseover", function () { this.style.backgroundColor = this.style.backgroundColor = "#cfe8fd"; });
         b.addEventListener("mouseout", mouseOut);
     }
     for (const c of dropdownbuttoncol) {
@@ -51,8 +86,8 @@ setup_JsonImportieren();
         });
     }
 })();
-function mouseOver() {
-    this.style.backgroundColor = "#34568B";
+function mouseOver(farbe = "#34568B") {
+    this.style.backgroundColor = farbe;
     this.style.color = "white";
 }
 function mouseOut() {
@@ -140,17 +175,17 @@ function Schleife({ start = 0, end = 10, step = 1, func = console.log }) {
         func(i);
     }
 }
-export function elementFactory(typ, attributes, style, ...children) {
+export function elementFactory(typ, attributes, style, ishtml = false, ...children) {
     const el = document.createElement(typ);
     for (const [key, value] of Object.entries(attributes)) {
         el.setAttribute(key, String(value));
     }
     el.style.cssText = style;
     for (const c of children) {
-        if (isHTML(c) === false) {
+        if (ishtml === false && typeof c === "string") {
             el.appendChild(document.createTextNode(c));
         }
-        else if (isHTML(c)) {
+        else if (ishtml === true) {
             el.innerHTML = c;
         }
         else {
@@ -175,7 +210,7 @@ function isHTML(string) {
 (function home() {
     const mainref = document.getElementById("main");
     const homebutton = document.getElementById("homebutton");
-    homebutton.addEventListener("click", () => mainref.replaceChildren());
+    homebutton.addEventListener("click", () => { mainref.replaceChildren(); addBrotkrümel("Startseite"); });
 })();
 function profileCard() {
     // Under Construction ...
@@ -205,23 +240,82 @@ export function addToTable(table, cellContent, headlinecontent, colorHeadline = 
             setCssProperties(row, `background-color:${colorRows};`);
         }
         for (let j = 0; j < cellContent[i].length; j++) {
-            let cell = row.insertCell(j);
-            cell.textContent = cellContent[i][j];
+            if (isHTML(cellContent[i][j])) {
+                let cell = row.insertCell(j);
+                cell.innerHTML = cellContent[i][j];
+            }
+            else if (typeof cellContent[i][j] === "string") {
+                let cell = row.insertCell(j);
+                cell.textContent = cellContent[i][j];
+            }
+            else {
+                let cell = row.insertCell(j);
+                cell.appendChild(cellContent[i][j]);
+            }
         }
     }
 }
-function createSidenav() {
-    const sidenav = elementFactory("div", { id: "1200pxsidenav" }, "grid-row:2/3; grid-column:1/3; background-color:white;margin-left:20px; ");
-    const container = document.getElementById("containerid");
-    let button = elementFactory("button", {}, "border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;", "Platzhalter");
-    let button2 = elementFactory("button", {}, "border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;", "Platzhalter");
-    button.addEventListener("mouseover", function () { this.style.color = "#dddddd"; });
-    button.addEventListener("mouseleave", function () { this.style.color = "black"; });
-    console.log(sidenav);
-    sidenav.appendChild(button);
-    sidenav.appendChild(button2);
-    container?.appendChild(sidenav);
-    container.style.gap = "20px 20px";
+export function addToList(liste, content, color_notodd = "#dddddd") {
+    content.forEach(c => {
+        const li = document.createElement("li");
+        content.indexOf(c) === 0 ? li.style.backgroundColor = color_notodd : li.style.backgroundColor = "white";
+        if (isHTML(c)) {
+            li.innerHTML = c;
+        }
+        else {
+            li.textContent = c;
+        }
+        liste.appendChild(li);
+    });
+    return liste;
 }
-createSidenav();
+function setup_headernav(object) {
+    const navdropdown = document.getElementById("navbardropdown");
+    for (const key of Object.values(object)) {
+        const button = elementFactory("button", {}, "border:none; color:white; padding:7px; background-color:#34568B; align:left; cursor:pointer;width100%;");
+        button.textContent = Object(key).textcontent;
+        button.addEventListener("click", Object(key).funktion);
+        navdropdown?.appendChild(button);
+    }
+}
+function setup_headerbar_withjsonimports(functionArray) {
+    functionArray.forEach(f => {
+        const button = elementFactory("button", {}, "");
+        const div = elementFactory("div", {}, "");
+    });
+}
+export function addBrotkrümel(...brotkrümel) {
+    const bkdiv = document.getElementById("brotkrümel");
+    bkdiv?.replaceChildren();
+    const href = elementFactory("a", { href: "#" }, "", false, "Link");
+    href.addEventListener("click", () => setup_webInventors());
+    for (const c of brotkrümel) {
+        const arrow = elementFactory("i", { class: "fa fa-angle-right" }, "margin-left:10px; margin-right:10px;");
+        bkdiv?.appendChild(document.createTextNode(c));
+        bkdiv?.appendChild(arrow);
+    }
+    const lastchild = bkdiv?.lastChild;
+    bkdiv?.removeChild(lastchild);
+}
+export function addBrotkrümelv2(obj, icon) {
+    const bkdiv = document.getElementById("brotkrümel");
+    const mainref = document.getElementById("main");
+    bkdiv?.replaceChildren();
+    const href = elementFactory("a", { href: "#" }, "");
+    const arrow = elementFactory("i", { class: icon }, "margin-left:10px; margin-right:10px;");
+    href.textContent = "Startseite";
+    bkdiv?.appendChild(href);
+    bkdiv?.appendChild(arrow);
+    href.addEventListener("click", () => { mainref.replaceChildren(); addBrotkrümelv2({}, "fa fa-angle-right"); });
+    for (const key of Object.values(obj)) {
+        const href = elementFactory("a", { href: "#" }, "");
+        href.textContent = Object(key).textcontent;
+        href.addEventListener("click", () => Object(key).funktion);
+        const arrow = elementFactory("i", { class: icon }, "margin-left:10px; margin-right:10px;");
+        bkdiv?.appendChild(href);
+        bkdiv?.appendChild(arrow);
+    }
+    const lastchild = bkdiv?.lastChild;
+    bkdiv?.removeChild(lastchild);
+}
 export { setup_tic_tac_toe };

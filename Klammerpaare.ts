@@ -1,16 +1,18 @@
 import { resetMainbereich } from "./script.js";
 export {setup_Klammerpaare};
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
 const setup_Klammerpaare=():void=>{
   
    const [main,main_header,main_main] = resetMainbereich();
     
     let eingabedivu6:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},`display:flex; justify-content:center;margin-top:10px;`);
-    let h1:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{},"","Klammerpaare");
+    let h1:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{},"",false,"Klammerpaare");
+    addBrotkrümel("Startseite","Klammerpaare");
     var eingabeu6:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"text"},"");
-    let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},`text-align:center;`,"Der eingegebene Text wird auf korrekte Klammerung geprüft. Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].");
-    const textdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; padding:10px; background-color:#e7e9eb;");
+    let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},`text-align:center;`,false,"Der eingegebene Text wird auf korrekte Klammerung geprüft. Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].");
+    const textdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; border-left:5px solid grey; padding:10px; background-color:#e7e9eb;");
     textdiv.appendChild(p);
     main_header.appendChild(h1);
     eingabedivu6.appendChild(eingabeu6);

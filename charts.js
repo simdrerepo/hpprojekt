@@ -1,6 +1,7 @@
 import { resetMainbereich } from "./script.js";
 import { fetchJsonData } from "./script.js";
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 function dataTabelle(data) {
     var i = 0;
     var tabelle = elementFactory("table", {}, "test-align:center;");
@@ -45,7 +46,8 @@ function mapChart(breite, hoehe, divid, geodata, geojson) {
 }
 export async function setup_covid19_mapchart() {
     const [mainref, main_header, main_main] = resetMainbereich();
-    let h1 = elementFactory("h1", {}, "", "Covid-19 Fälle");
+    let h1 = elementFactory("h1", {}, "", false, "Covid-19 Fälle");
+    addBrotkrümel("Startseite", "Covid-19 mapchart");
     const mapdiv = elementFactory("div", { id: "mapdiv" }, "display:flex; justify-content:center;");
     main_header.appendChild(h1);
     main_main.append(mapdiv);

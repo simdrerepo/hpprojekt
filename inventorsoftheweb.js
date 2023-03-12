@@ -1,9 +1,11 @@
 import { resetMainbereich } from "./script.js";
 import { elementFactory } from "./script.js";
 import { setCssProperties } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 export const setup_webInventors = () => {
     const [main, main_header, main_main] = resetMainbereich();
-    const h1 = elementFactory("h1", {}, "", "Inventors of the web");
+    const h1 = elementFactory("h1", {}, "", false, "Inventors of the web");
+    addBrotkrümel("Startseite", "Inventors of the web");
     main_header.appendChild(h1);
     main_main.innerHTML = "<ul><li><b><u><mark>Tim Berners-Lee</mark>:</u></b> WWW,HTTP,HTML,URI</li><li><b>Hakom Lie and Bert Bos:</b> CSS</li><li><b>Brendan Eich:</b> Java Script</li></ul><hr><br>" +
         "<h2> Inventors of the WWW</h2><div style='overflow-x:auto;'><table border='10'><tr><th colspan = '4'>Inventors of the WWW</th></tr><tr><th>WWW</th><th>HTML</th><th>CSS</th><th>JavaScript</th></tr><tr><td><mark>Tim Berners-Lee</mark></td><td><mark>Tim Berners-Lee</mark></td><td>Hakom Lie and Bert Bos</td><td>Brendan Eich</td></t></table></div><br><hr>" +

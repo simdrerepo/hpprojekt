@@ -1,5 +1,6 @@
 import { elementFactory, resetMainbereich } from "./script.js";
 import { tic_tac_toe } from "./tic_tac_toe.js";
+import { addBrotkrümel } from "./script.js";
 export { setup_tic_tac_toe };
 
 const setup_tic_tac_toe =():void => {
@@ -9,7 +10,8 @@ const setup_tic_tac_toe =():void => {
     
    
    let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center;");
-   let header:HTMLHeadElement = elementFactory("h1",{},"","Tic Tac Toe");
+   let header:HTMLHeadElement = elementFactory("h1",{},"",false,"Tic Tac Toe");
+   addBrotkrümel("Startseite","Tic Tac Toe");
    main_header.appendChild(header);
   
    let ttt:tic_tac_toe = new tic_tac_toe(div);

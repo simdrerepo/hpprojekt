@@ -1,21 +1,23 @@
 import { resetMainbereich } from "./script.js";
 export {vue_singlefile};
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
  function vue_singlefile():void{
     const [mainref,main_header,main_main] = resetMainbereich();
      
       
-      let header:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"","Vue Single Component");
+      let header:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Vue Single Component");
+      addBrotkrümel("Startseite","Vue Single Component");
       let headerdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"");  
       headerdiv.appendChild(header);
       main_header.appendChild(headerdiv);
       let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"vuediv"},"");
       let vuedivcontainer:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center;");
       vuedivcontainer.appendChild(div);
-      let para1:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"","Buchstaben : {{buchstaben}}");
-      let para2:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"","Leerzeichen :{{leerzeichen}}");
-      let para3:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"","Worte : {{worte}}");
+      let para1:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Buchstaben : {{buchstaben}}");
+      let para2:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Leerzeichen :{{leerzeichen}}");
+      let para3:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Worte : {{worte}}");
     
      
       div.appendChild(para1);

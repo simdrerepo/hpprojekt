@@ -1,4 +1,5 @@
 import { elementFactory } from "./script.js";
+import { addToTable } from "./script.js";
 function makeRedner(name) {
     var new_Redner = { name, std: 0, min: 0, sek: 0, counting: 0, intervalids: [0], startstopsymbol: "Stop",
         timer: function (htmlElement) {
@@ -85,20 +86,15 @@ function makeRedner(name) {
         },
         createRedner: function (rednerarray) {
             const tabelle = elementFactory("table", {}, "");
-            let reihe = tabelle.insertRow(-1);
-            var button = elementFactory("button", {}, "", "Start");
-            reihe.insertCell(0);
-            reihe.appendChild(document.createTextNode(this.name));
-            reihe.insertCell(1);
-            reihe.appendChild(button);
-            let timer = elementFactory("p", {}, "", "00:00:00");
-            reihe.insertCell(2);
+            var button = elementFactory("button", {}, "font-size: clamp(0.6em, 4vw, 1.2em);", false, "Start");
+            let timer = elementFactory("p", {}, "", false, "00:00:00");
+            let p = elementFactory("p", {}, "", false, this.name);
+            addToTable(tabelle, [[p, button, timer]], [], "white", "white");
             var interval = setInterval(this.timer.bind(this), 1000, timer);
             button.textContent = this.startstopsymbol;
             this.counting = 1;
             this.intervalids.push(interval);
             button.addEventListener("click", () => this.myEventHandler(timer, button, rednerarray));
-            reihe.appendChild(timer);
             if (rednerarray.length != 0) {
                 rednerarray.forEach((redner) => { redner.clearAllIntervalIds(); redner.counting = 0; });
             }

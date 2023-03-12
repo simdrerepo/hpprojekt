@@ -1,6 +1,7 @@
 import { resetMainbereich } from "./script.js";
 import { Vorrang } from "./Vorrang.js";
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 export {setup_TopSortAlsWebApp};
 
 const setup_TopSortAlsWebApp = ():void => {
@@ -8,21 +9,22 @@ const setup_TopSortAlsWebApp = ():void => {
     
    var liste:HTMLUListElement = document.createElement("ul");
     
-   var input1:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"search",id:"input1"},"grid-area:input1;");
-   var input2:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"search",id:"input2"},"grid-area:input2;");
-    let headline:HTMLHeadElement = elementFactory("h1",{},"","TopSort als Web-App");
+   var input1:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"search",id:"input1"},"grid-area:input1;font-size: clamp(0.6em, 4vw, 1.2em);");
+   var input2:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"search",id:"input2"},"grid-area:input2;font-size: clamp(0.6em, 4vw, 1.2em);");
+    let headline:HTMLHeadElement = elementFactory("h1",{},"",false,"TopSort als Web-App");
+    addBrotkrümel("Startseite","TopSort als Web-App");
     let h1div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"");
    h1div.appendChild(headline);
 
     main_header.appendChild(h1div);
-    var resetbutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"resetbutton"},"height:1.5rem; width:5rem; grid-area:reset;","reset");
+    var resetbutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"resetbutton"},"height:1.5rem; width:5rem; grid-area:reset; font-size: clamp(0.6em, 4vw, 1.2em);",false,"reset");
    
    resetbutton.addEventListener("click",()=>setup_TopSortAlsWebApp());
-    let button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"sortbutton"},"height:1.5rem; width:5rem; grid-area:sortieren;","sortieren");
+    let button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"sortbutton"},"height:1.5rem; width:5rem; grid-area:sortieren;font-size: clamp(0.6em, 4vw, 1.2em);",false,"sortieren");
     let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"topsortinputsdiv"},"");
    let inputdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"inputdiv"},"grid-area:inputdiv;");
     let buttondiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"buttondiv"},"grid-area:buttondiv;");
-    let addbutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"addbutton"},"grid-area:hinzufügen; height:1.5rem; width:5rem;","hinzufügen");
+    let addbutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"addbutton"},"grid-area:hinzufügen; height:1.5rem; width:5rem;font-size: clamp(0.6em, 4vw, 1.2em);",false,"hinzufügen");
     
     inputdiv.appendChild(input1);
     inputdiv.appendChild(input2);

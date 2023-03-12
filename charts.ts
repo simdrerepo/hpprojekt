@@ -2,6 +2,7 @@
 import { resetMainbereich } from "./script.js";
 import { fetchJsonData } from "./script.js";
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
 function dataTabelle(data:any):HTMLTableElement{
     var i = 0;
@@ -49,7 +50,8 @@ function dataTabelle(data:any):HTMLTableElement{
   }    
   export async function setup_covid19_mapchart():Promise<void>{
   const [mainref,main_header,main_main] = resetMainbereich();
-    let h1:HTMLHeadElement = elementFactory("h1",{},"","Covid-19 Fälle")
+    let h1:HTMLHeadElement = elementFactory("h1",{},"",false,"Covid-19 Fälle")
+    addBrotkrümel("Startseite","Covid-19 mapchart")
     const mapdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"mapdiv"},"display:flex; justify-content:center;")
     main_header.appendChild(h1);
     main_main.append(mapdiv);

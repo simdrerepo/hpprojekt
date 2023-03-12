@@ -13,10 +13,8 @@ import { codeUebung } from "./fragen.js";
 import { setup_webInventors } from "./inventorsoftheweb.js";
 import { domBenchmarks } from "./dombenchmarks.js";
 import { vue_singlefile } from "./Vuesinglefile.js";
-
 export { sleep };
 export { setupMainBereich };
-
 export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
@@ -25,12 +23,55 @@ export { fetchTextData };
 
 
 
-setup_side_navigation();
 setup_JsonImportieren();
+export function filterObject(obj:any,string:string){
+ 
 
+  return Object.fromEntries(Object.entries(obj).filter(([a,b])=>{return a===string;}));
+
+}
+export function objectFabric(){
+  const obj = { 
+    webinventors:{textcontent:"Web Inventors",funktion:setup_webInventors},
+    dombenchmarks:{textcontent:"Dom Benchmarks",funktion:domBenchmarks},
+    rednermitzeitmessung:{textcontent:"Redner mit Zeitmessung",funktion:setup_RednerMitZeitmessung},
+    topsort:{textcontent:"Topsort als Webapp",funktion:setup_TopSortAlsWebApp},
+    klammerpaare:{textcontent:"Klammerpaare",funktion:setup_Klammerpaare},
+    textanalyse:{textcontent:"Textanalyse",funktion:setup_TextAnalyse},
+    asyncawait:{textcontent:"Textkonkatenierung mit async/await",funktion:setup_TextkonkatenierungMitAwait},
+    promises:{textcontent:"Textkonkatenierung mit Promises",funktion:setup_TextkonkatenierungMitPromises},
+    tictactoe:{textcontent:"Tic Tac Toe",funktion:setup_tic_tac_toe},
+    mapchart:{textcontent:"Covid-19 mapchart",funktion:setup_covid19_mapchart},
+    vuesinglefile:{textcontent:"Vue Single Component",funktion:vue_singlefile},
+    fragen:{textcontent:"Fragen und Antworten",funktion:fragenAntworten},
+    code:{textcontent:"Funktionen in Javascript",funktion:codeUebung}
+  
+  }
+  return obj;
+}
 
 (function ListenerVergeben():void{
   const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
+  const obj = { 
+    webinventors:{textcontent:"Web Inventors",funktion:setup_webInventors},
+    dombenchmarks:{textcontent:"Dom Benchmarks",funktion:domBenchmarks},
+    rednermitzeitmessung:{textcontent:"Redner mit Zeitmessung",funktion:setup_RednerMitZeitmessung},
+    topsort:{textcontent:"Topsort als Webapp",funktion:setup_TopSortAlsWebApp},
+    klammerpaare:{textcontent:"Klammerpaare",funktion:setup_Klammerpaare},
+    textanalyse:{textcontent:"Textanalyse",funktion:setup_TextAnalyse},
+    asyncawait:{textcontent:"Textkonkatenierung mit async/await",funktion:setup_TextkonkatenierungMitAwait},
+    promises:{textcontent:"Textkonkatenierung mit Promises",funktion:setup_TextkonkatenierungMitPromises},
+    tictactoe:{textcontent:"Tic Tac Toe",funktion:setup_tic_tac_toe},
+    mapchart:{textcontent:"Covid-19 mapchart",funktion:setup_covid19_mapchart},
+    vuesinglefile:{textcontent:"Vue Single Component",funktion:vue_singlefile},
+    fragen:{textcontent:"Fragen und Antworten",funktion:fragenAntworten},
+    code:{textcontent:"Funktionen in Javascript",funktion:codeUebung}
+  
+  }
+
+  setup_headernav(obj);
+  
+
  const functionArray = [setup_webInventors, domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_mapchart,vue_singlefile,fragenAntworten,codeUebung];
   const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
   const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
@@ -45,7 +86,7 @@ setup_JsonImportieren();
  }
   for(const b of buttoncollection){
     b.style.cursor="pointer";
-    b.addEventListener("mouseover",mouseOver);
+    b.addEventListener("mouseover",function(){ this.style.backgroundColor= this.style.backgroundColor="#cfe8fd";});
     b.addEventListener("mouseout",mouseOut);
   }
  for(const c of dropdownbuttoncol){
@@ -68,9 +109,9 @@ setup_JsonImportieren();
   
 
 })();
-function mouseOver(this: any):void{
+function mouseOver(this:any,farbe:string="#34568B"):void{
  
-  this.style.backgroundColor= "#34568B";
+  this.style.backgroundColor=farbe;
   this.style.color="white";
   
     
@@ -116,7 +157,6 @@ function setupMainBereich():void{
  main_container.appendChild(main_footer);
 
 }
-
 
 async function sleep(ms:number){
     return new Promise(resolve=>setTimeout(resolve,ms));
@@ -171,7 +211,6 @@ function sidenavHandler():Object{
     }
   };
 }
-
 function Schleife({start=0,end=10,step=1,func=console.log}){
   for(let i=start;i<end;i+=step){
     func( i );
@@ -179,8 +218,7 @@ function Schleife({start=0,end=10,step=1,func=console.log}){
 
 
 }
-
-export function elementFactory(typ:string, attributes:any,style:string,...children:any[]):HTMLElement{
+export function elementFactory(typ:string, attributes:any,style:string,ishtml=false,...children:any[]):HTMLElement{
   const el = document.createElement(typ);
   for(const [key, value] of Object.entries(attributes)){
     el.setAttribute(key, String(value));
@@ -191,11 +229,11 @@ export function elementFactory(typ:string, attributes:any,style:string,...childr
 
   for(const c of children){
    
-    if(isHTML(c)===false){
+    if(ishtml===false&&typeof c==="string"){
       
       el.appendChild(document.createTextNode(c));
     }
-    else if(isHTML(c)){
+    else if(ishtml===true){
       el.innerHTML = c;
     }
     else{
@@ -205,13 +243,11 @@ export function elementFactory(typ:string, attributes:any,style:string,...childr
 
   return el;
 }
-
 export function setCssProperties(htmlElement:HTMLElement,props:string):void{
 
   htmlElement.style.cssText = props;
 
 }
-
 function isHTML(string:string):boolean{
   var ret:boolean = false;
   const div:HTMLDivElement = document.createElement("div");
@@ -220,14 +256,13 @@ function isHTML(string:string):boolean{
   childnodes.forEach(node=>{if(node.nodeType===1){ret=true;}});
   return ret;
 }
-
 (function home():void{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
   const homebutton:HTMLButtonElement = <HTMLButtonElement>document.getElementById("homebutton")!;
-  homebutton.addEventListener("click",()=>mainref.replaceChildren());
+  homebutton.addEventListener("click",()=>{mainref.replaceChildren(); addBrotkrümel("Startseite");});
+  
  
 })();
-
 function profileCard(){
   // Under Construction ...
   const mainref = <HTMLDivElement>document.getElementById("main");
@@ -242,7 +277,6 @@ function profileCard(){
 
   
 }
-
 export function addToTable(table:HTMLTableElement,cellContent:any[][],headlinecontent:string[],colorHeadline:string="white",colorRows:string="#dddddd"){
   // For headline
   if(headlinecontent.length>0){
@@ -262,15 +296,24 @@ export function addToTable(table:HTMLTableElement,cellContent:any[][],headlineco
   setCssProperties(row,`background-color:${colorRows};`);
   }
   for(let j=0;j<cellContent[i].length;j++){
-   let cell = row.insertCell(j);
-   cell.textContent = cellContent[i][j];
+    if(isHTML(cellContent[i][j])){
+      let cell = row.insertCell(j);
+    cell.innerHTML = cellContent[i][j];
+    }
+    else if(typeof cellContent[i][j] === "string"){
+      let cell = row.insertCell(j);
+      cell.textContent = cellContent[i][j];
 
+    }
+    else{
+    let cell = row.insertCell(j);
+    cell.appendChild(cellContent[i][j]);
+    }
   }
 }  
 
 
 }
-
 export function addToList(liste:HTMLElement,content:any[],color_notodd:string="#dddddd"):HTMLElement{
  
  content.forEach(c=>{
@@ -289,23 +332,83 @@ export function addToList(liste:HTMLElement,content:any[],color_notodd:string="#
  return liste;
 }
 
-function createSidenav(){
+function setup_headernav(object:any){
+  const navdropdown = document.getElementById("navbardropdown");
 
-  const sidenav = elementFactory("div",{id:"1200pxsidenav"},"grid-row:2/3; grid-column:1/3; background-color:white;margin-left:20px; ");
-  const container = document.getElementById("containerid");
-  let button = elementFactory("button",{},"border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;","Platzhalter");
-  let button2 = elementFactory("button",{},"border:none;background-color:white;width:100%;font-size:1.3rem;text-align:left;padding:10px;","Platzhalter")
-button.addEventListener("mouseover",function(){this.style.color="#dddddd";});
-button.addEventListener("mouseleave",function(){this.style.color="black";});
- console.log(sidenav);
-  sidenav.appendChild(button);
-  sidenav.appendChild(button2);
-  container?.appendChild(sidenav);
-  container!.style.gap="20px 20px";
+  for(const key of Object.values(object)){
+    
+
+  const button = elementFactory("button",{},"border:none; color:white; padding:7px; background-color:#34568B; align:left; cursor:pointer;width100%;");
+    
+    button.textContent = Object(key).textcontent;
+    button.addEventListener("click",Object(key).funktion);
+   
+    navdropdown?.appendChild(button);
+     
+
+  }
+ 
+    
+   
+    
+
   
 }
+function setup_headerbar_withjsonimports(functionArray:any[]){
+  functionArray.forEach(f=>{
+    const button = elementFactory("button",{},"");
+    const div = elementFactory("div",{},"");
+    
+  });
 
 
+}
+export function addBrotkrümel(...brotkrümel:any[]){
+  const bkdiv = document.getElementById("brotkrümel");
+  
+  bkdiv?.replaceChildren();
+  const href = elementFactory("a",{href:"#"},"",false,"Link");
+  href.addEventListener("click",()=>setup_webInventors());
+  
+ 
+    for(const c of brotkrümel){
+      const arrow = elementFactory("i",{class:"fa fa-angle-right"},"margin-left:10px; margin-right:10px;");
+      bkdiv?.appendChild(document.createTextNode(c));
+      bkdiv?.appendChild(arrow);
+    }
+    const lastchild:ChildNode = <ChildNode>bkdiv?.lastChild;
+    bkdiv?.removeChild(lastchild);
+   
+
+
+
+}
+export function addBrotkrümelv2(obj:any,icon:string){
+  const bkdiv = document.getElementById("brotkrümel");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  bkdiv?.replaceChildren();
+  const href = elementFactory("a",{href:"#"},"");
+  const arrow = elementFactory("i",{class:icon},"margin-left:10px; margin-right:10px;");
+  href.textContent = "Startseite";
+  bkdiv?.appendChild(href);
+  bkdiv?.appendChild(arrow);
+  href.addEventListener("click",()=>{mainref.replaceChildren();addBrotkrümelv2({},"fa fa-angle-right")});
+
+  for(const key of Object.values(obj)){
+    const href = elementFactory("a",{href:"#"},"");
+    href.textContent = Object(key).textcontent;
+    href.addEventListener("click",()=>Object(key).funktion);
+    const arrow = elementFactory("i",{class:icon},"margin-left:10px; margin-right:10px;");
+    bkdiv?.appendChild(href);
+    bkdiv?.appendChild(arrow);
+
+  }
+  const lastchild:ChildNode = <ChildNode>bkdiv?.lastChild;
+  bkdiv?.removeChild(lastchild);
+  
+
+
+}
 
 export {setup_tic_tac_toe}; 
     

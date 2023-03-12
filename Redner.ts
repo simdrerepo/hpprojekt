@@ -1,4 +1,5 @@
 import { elementFactory } from "./script.js";
+import { addToTable } from "./script.js";
 
 
 function makeRedner(name:string){
@@ -115,16 +116,15 @@ function makeRedner(name:string){
 createRedner:function(rednerarray:any[]):HTMLTableElement{
  
   const tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{},"");
- let reihe:HTMLTableRowElement = tabelle.insertRow(-1);
- var button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{},"","Start");
+
+ var button:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{},"font-size: clamp(0.6em, 4vw, 1.2em);",false,"Start");
  
 
- reihe.insertCell(0);
- reihe.appendChild(document.createTextNode(this.name));
- reihe.insertCell(1);
- reihe.appendChild(button);
- let timer:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"","00:00:00");
- reihe.insertCell(2);
+
+ 
+ let timer:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"00:00:00");
+ let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,this.name);
+ addToTable(tabelle,[[p,button,timer]],[],"white","white");
 
  var interval:number = setInterval(this.timer.bind(this),1000,timer);
     button.textContent = this.startstopsymbol;
@@ -134,7 +134,7 @@ this.intervalids.push(interval);
  button.addEventListener("click",()=>this.myEventHandler(timer,button,rednerarray));
 
 
- reihe.appendChild(timer);
+ 
  if(rednerarray.length!=0){
  rednerarray.forEach((redner)=>{redner.clearAllIntervalIds();redner.counting = 0;}); 
 

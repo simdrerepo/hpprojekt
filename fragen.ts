@@ -1,5 +1,6 @@
 import { resetMainbereich } from "./script.js";
 import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
 var frage = {
    frage:"",
@@ -107,7 +108,8 @@ const codeloesungen = [
 ];
 export const codeUebung=():void=>{
    const [main,main_header,main_main] = resetMainbereich();
-   let h1:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"","Funktionen in Javascript");
+   let h1:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Funktionen in Javascript");
+   addBrotkrümel("Startseite","Funktionen in Javascript");
    
   
    main_header.appendChild(h1);
@@ -127,6 +129,9 @@ export const codeUebung=():void=>{
 }
 export const fragenAntworten = ():void=>{
    const [main,main_header,main_main] = resetMainbereich();
+   const h1 = elementFactory("h1",{},"",false,"Fragen / Antworten");
+   main_header.appendChild(h1);
+   addBrotkrümel("Startseite","Fragen und Antworten");
    var array = new Array();
    for(let i=0;i<fragen.length;i++){
       let Antwort = Object.create(antwort);
@@ -143,10 +148,10 @@ export const fragenAntworten = ():void=>{
 const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
   
    for(const s of array){
-      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"padding:10px; background-color:#e7e9eb;")
-      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",s.frage);
-      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"margin-top:10px; margin-bottom:10px; background-color:#edf5f6; padding:10px;")
-      let pa:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"color:#455f93;",s.antwort);
+      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"padding:10px; background-color:#e7e9eb; border-left:5px solid grey;");
+      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,s.frage);
+      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"margin-top:10px; margin-bottom:10px; border-left:4px solid #455f93; background-color:#edf5f6; padding:10px;")
+      let pa:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"color:#455f93;",false,s.antwort);
       fragediv.appendChild(p);
       antwortdiv.appendChild(pa);
       mainref.appendChild(fragediv);
@@ -157,9 +162,9 @@ const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
    }
 const addCodeFragen=(mainref:HTMLDivElement,array:any[]):void=>{
    for(const c of array){
-      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; padding:10px; background-color:#e7e9eb;"); 
-      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",c.frage);
-      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; margin-top:10px; margin-bottom:10px; padding:10px; background-color:lightyellow;",c.antwort);
+      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; padding:10px; border-left:5px solid grey; background-color:#e7e9eb;"); 
+      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,c.frage);
+      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; margin-top:10px; margin-bottom:10px; padding:10px; border-left:5px solid yellow; background-color:lightyellow;",true,c.antwort);
       fragediv.appendChild(p);
       mainref.appendChild(fragediv);
       mainref.appendChild(antwortdiv);

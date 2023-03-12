@@ -1,6 +1,10 @@
 import { resetMainbereich } from "./script.js";
 import { elementFactory } from "./script.js";
 import { addToTable } from "./script.js";
+import { addBrotkrümel } from "./script.js";
+import { addBrotkrümelv2 } from "./script.js";
+import { objectFabric } from "./script.js";
+import { filterObject } from "./script.js";
 
 function benchmarkInnerHTML():number{
 
@@ -73,9 +77,13 @@ function benchmarkTextContent():number{
   }
   export function domBenchmarks():void{
   const [main_ref,main_header,main_main] = resetMainbereich();
-    let ueberschrift:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{id:"headline"},"","Performanz-Messungen von DOM-Operationen")
+    let ueberschrift:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{id:"headline"},"",false,"Performanz-Messungen von DOM-Operationen")
+    const object = objectFabric();
    
-    var tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{id:"benchmarktabelle",class:"tabelle"},"border:1px solid black;");
+   
+    
+    addBrotkrümelv2(filterObject(object,"dombenchmarks"),"fa fa-angle-right");
+    var tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{id:"benchmarktabelle",class:"tabelle"},"border:1px solid black;font-size: clamp(0.6em, 4vw, 1.2em);");
    
     const content =  [["innerHTML",String(benchmarkInnerHTML())],["innerText",String(benchmarkInnerText())],["textContent",String(benchmarkTextContent())]];
     addToTable(tabelle,content,["Dom-Operation","Performance in Millisekunden für 500 Iterationen"],"lighyellow","#dddddd");   
@@ -92,7 +100,7 @@ function benchmarkTextContent():number{
    main_header.appendChild(ueberschrift);
    main_header.style.textAlign="center";
   
-   let codediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; padding:10px; width:500px; background-color:#e7e9eb;","<b>Codesample</b><br>...<br><code>let t0 = performance.now();</code><br><code>for(i=0;i<500;i++){</code>"+"<br><code>div.innerHTML+=text;}</code><br><code>let t1 = performance.now();</code>"+"<br><code>return t1-t0;</code><br>...");
+   let codediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; padding:10px; width:500px; background-color:#e7e9eb; border-left:5px solid grey;",true,"<b>Codesample</b><br>...<br><code>let t0 = performance.now();</code><br><code>for(i=0;i<500;i++){</code>"+"<br><code>div.innerHTML+=text;}</code><br><code>let t1 = performance.now();</code>"+"<br><code>return t1-t0;</code><br>...");
    let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center; margin-Bottom:40px");
 
  
