@@ -1,9 +1,10 @@
 import { resetMainbereich } from "./script.js";
 import { fetchJsonData } from "./script.js";
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 function dataTabelle(data) {
     var i = 0;
-    var tabelle = document.createElement("table");
-    tabelle.style.textAlign = "center";
+    var tabelle = elementFactory("table", {}, "test-align:center;");
     let row = tabelle.insertRow(-1);
     let cell = row.insertCell(0);
     cell.innerHTML = "<b>Bundesland</b>";
@@ -45,13 +46,10 @@ function mapChart(breite, hoehe, divid, geodata, geojson) {
 }
 export async function setup_covid19_mapchart() {
     const [mainref, main_header, main_main] = resetMainbereich();
-    let h1 = document.createElement("h1");
-    h1.appendChild(document.createTextNode("Covid-19 Fälle"));
+    let h1 = elementFactory("h1", {}, "", false, "Covid-19 Fälle");
+    addBrotkrümel("Startseite", "Covid-19 mapchart");
+    const mapdiv = elementFactory("div", { id: "mapdiv" }, "display:flex; justify-content:center;");
     main_header.appendChild(h1);
-    const mapdiv = document.createElement("div");
-    mapdiv.setAttribute("id", "mapdiv");
-    mapdiv.style.display = "flex";
-    mapdiv.style.justifyContent = "center";
     main_main.append(mapdiv);
     const [geo, geodata] = await Promise.all([fetchJsonData("http://127.0.0.1:5500/1_sehr_hoch.geo.json"), fetchJsonData("http://127.0.0.1:5500/covid-19.json")]);
     mapChart(400, 600, "#mapdiv", geodata, geo);

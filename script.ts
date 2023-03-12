@@ -13,10 +13,8 @@ import { codeUebung } from "./fragen.js";
 import { setup_webInventors } from "./inventorsoftheweb.js";
 import { domBenchmarks } from "./dombenchmarks.js";
 import { vue_singlefile } from "./Vuesinglefile.js";
-
 export { sleep };
 export { setupMainBereich };
-export { MainBereichStyling };
 export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
@@ -25,11 +23,55 @@ export { fetchTextData };
 
 
 
-setup_side_navigation();
 setup_JsonImportieren();
+export function filterObject(obj:any,string:string){
+ 
+
+  return Object.fromEntries(Object.entries(obj).filter(([a,b])=>{return a===string;}));
+
+}
+export function objectFabric(){
+  const obj = { 
+    webinventors:{textcontent:"Web Inventors",funktion:setup_webInventors},
+    dombenchmarks:{textcontent:"Dom Benchmarks",funktion:domBenchmarks},
+    rednermitzeitmessung:{textcontent:"Redner mit Zeitmessung",funktion:setup_RednerMitZeitmessung},
+    topsort:{textcontent:"Topsort als Webapp",funktion:setup_TopSortAlsWebApp},
+    klammerpaare:{textcontent:"Klammerpaare",funktion:setup_Klammerpaare},
+    textanalyse:{textcontent:"Textanalyse",funktion:setup_TextAnalyse},
+    asyncawait:{textcontent:"Textkonkatenierung mit async/await",funktion:setup_TextkonkatenierungMitAwait},
+    promises:{textcontent:"Textkonkatenierung mit Promises",funktion:setup_TextkonkatenierungMitPromises},
+    tictactoe:{textcontent:"Tic Tac Toe",funktion:setup_tic_tac_toe},
+    mapchart:{textcontent:"Covid-19 mapchart",funktion:setup_covid19_mapchart},
+    vuesinglefile:{textcontent:"Vue Single Component",funktion:vue_singlefile},
+    fragen:{textcontent:"Fragen und Antworten",funktion:fragenAntworten},
+    code:{textcontent:"Funktionen in Javascript",funktion:codeUebung}
+  
+  }
+  return obj;
+}
 
 (function ListenerVergeben():void{
   const buttonarray:Element[] = Array.from(document.getElementsByClassName("regularButton"));
+  const obj = { 
+    webinventors:{textcontent:"Web Inventors",funktion:setup_webInventors},
+    dombenchmarks:{textcontent:"Dom Benchmarks",funktion:domBenchmarks},
+    rednermitzeitmessung:{textcontent:"Redner mit Zeitmessung",funktion:setup_RednerMitZeitmessung},
+    topsort:{textcontent:"Topsort als Webapp",funktion:setup_TopSortAlsWebApp},
+    klammerpaare:{textcontent:"Klammerpaare",funktion:setup_Klammerpaare},
+    textanalyse:{textcontent:"Textanalyse",funktion:setup_TextAnalyse},
+    asyncawait:{textcontent:"Textkonkatenierung mit async/await",funktion:setup_TextkonkatenierungMitAwait},
+    promises:{textcontent:"Textkonkatenierung mit Promises",funktion:setup_TextkonkatenierungMitPromises},
+    tictactoe:{textcontent:"Tic Tac Toe",funktion:setup_tic_tac_toe},
+    mapchart:{textcontent:"Covid-19 mapchart",funktion:setup_covid19_mapchart},
+    vuesinglefile:{textcontent:"Vue Single Component",funktion:vue_singlefile},
+    fragen:{textcontent:"Fragen und Antworten",funktion:fragenAntworten},
+    code:{textcontent:"Funktionen in Javascript",funktion:codeUebung}
+  
+  }
+
+  setup_headernav(obj);
+  
+
  const functionArray = [setup_webInventors, domBenchmarks,setup_RednerMitZeitmessung,setup_TopSortAlsWebApp,setup_Klammerpaare,setup_TextAnalyse,setup_TextkonkatenierungMitPromises,setup_TextkonkatenierungMitAwait,setup_tic_tac_toe,setup_covid19_mapchart,vue_singlefile,fragenAntworten,codeUebung];
   const dropdownbuttoncol = Array.from(document.getElementsByClassName("drpdwnbtn"));
   const sidebuttondiv:HTMLDivElement = <HTMLDivElement>document.getElementById("sidebutton");
@@ -44,7 +86,7 @@ setup_JsonImportieren();
  }
   for(const b of buttoncollection){
     b.style.cursor="pointer";
-    b.addEventListener("mouseover",mouseOver);
+    b.addEventListener("mouseover",function(){ this.style.backgroundColor= this.style.backgroundColor="#cfe8fd";});
     b.addEventListener("mouseout",mouseOut);
   }
  for(const c of dropdownbuttoncol){
@@ -67,9 +109,9 @@ setup_JsonImportieren();
   
 
 })();
-function mouseOver(this: any):void{
+function mouseOver(this:any,farbe:string="#34568B"):void{
  
-  this.style.backgroundColor= "#34568B";
+  this.style.backgroundColor=farbe;
   this.style.color="white";
   
     
@@ -92,7 +134,7 @@ const resetMainbereich = ():HTMLDivElement[]=>{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
   mainref.replaceChildren();
  setupMainBereich();
-  MainBereichStyling();
+
  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
  
@@ -101,41 +143,18 @@ const resetMainbereich = ():HTMLDivElement[]=>{
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main"); 
- let main_container:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_container.setAttribute("id","main_container");
- let main_header:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_header.setAttribute("id","mainheader");
- let main_main:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_main.setAttribute("id","main_main");
- let main_footer:HTMLDivElement = <HTMLDivElement>document.createElement("div");
-  main_footer.setAttribute("id","main_footer");
+ 
+ let main_container:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_container"},"background-color:white; min-height:700px; padding-left:10px;padding-right:10px;");
+ let main_header:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"mainheader"},"background-color:white; border-bottom:1px solid lightgray; display:flex; justify-content:center;");
+
+ let main_main:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_main"},"background-color:white; display:block;margin-top:20px;");
+ 
+ let main_footer:HTMLDivElement = <HTMLDivElement>elementFactory("id",{id:"main_footer"},"");
  mainref.appendChild(main_container);
  main_container.appendChild(main_header);
 
  main_container.appendChild(main_main);
  main_container.appendChild(main_footer);
-
-}
-function MainBereichStyling():void{
-  // styling für den Bereich(header,main)
-  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main");
-  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader");
-  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main");
-  const main_container:HTMLDivElement =< HTMLDivElement>document.getElementById("main_container");
-  main_header.style.backgroundColor="white";
- 
- main_main.style.backgroundColor="white";
- main_main.style.marginTop = "40px";
- main_main.style.display ="block";
-
- main_container.style.backgroundColor='white';
- main_container.style.minHeight="700px";
- main_header.style.borderBottom = "1px solid lightgray"
- main_container.style.borderLeft = "10px solid white";
- main_container.style.borderRight = "10px solid white";
- main_header.style.display = "flex";
- main_header.style.justifyContent = "center";
- mainref.style.marginTop = "30px";
 
 }
 
@@ -192,7 +211,6 @@ function sidenavHandler():Object{
     }
   };
 }
-
 function Schleife({start=0,end=10,step=1,func=console.log}){
   for(let i=start;i<end;i+=step){
     func( i );
@@ -200,17 +218,51 @@ function Schleife({start=0,end=10,step=1,func=console.log}){
 
 
 }
-
-
-
-
-
-
+export function elementFactory(typ:string, attributes:any,style:string,ishtml=false,...children:any[]):HTMLElement{
+  const el = document.createElement(typ);
+  for(const [key, value] of Object.entries(attributes)){
+    el.setAttribute(key, String(value));
+  }
   
-       
-       
-     
 
+  el.style.cssText=style;
+
+  for(const c of children){
+   
+    if(ishtml===false&&typeof c==="string"){
+      
+      el.appendChild(document.createTextNode(c));
+    }
+    else if(ishtml===true){
+      el.innerHTML = c;
+    }
+    else{
+      el.appendChild(c);
+    }
+  }
+
+  return el;
+}
+export function setCssProperties(htmlElement:HTMLElement,props:string):void{
+
+  htmlElement.style.cssText = props;
+
+}
+function isHTML(string:string):boolean{
+  var ret:boolean = false;
+  const div:HTMLDivElement = document.createElement("div");
+  div.innerHTML = string;
+  const childnodes:Element[] = Array.from(div.getElementsByTagName("*"));
+  childnodes.forEach(node=>{if(node.nodeType===1){ret=true;}});
+  return ret;
+}
+(function home():void{
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  const homebutton:HTMLButtonElement = <HTMLButtonElement>document.getElementById("homebutton")!;
+  homebutton.addEventListener("click",()=>{mainref.replaceChildren(); addBrotkrümel("Startseite");});
+  
+ 
+})();
 function profileCard(){
   // Under Construction ...
   const mainref = <HTMLDivElement>document.getElementById("main");
@@ -225,7 +277,138 @@ function profileCard(){
 
   
 }
+export function addToTable(table:HTMLTableElement,cellContent:any[][],headlinecontent:string[],colorHeadline:string="white",colorRows:string="#dddddd"){
+  // For headline
+  if(headlinecontent.length>0){
+  var firstrow = table.insertRow(-1);
+  setCssProperties(firstrow,`background-color:${colorHeadline};`);
 
+  for(const c of headlinecontent){
+    let firstcells = firstrow.insertCell(headlinecontent.indexOf(c));
+    firstcells.innerHTML = c;
+  }
+ }
+ // actual content
+
+ for(let i=0;i<cellContent.length;i++){
+  let row = table.insertRow(-1);
+  if(i%2===0){
+  setCssProperties(row,`background-color:${colorRows};`);
+  }
+  for(let j=0;j<cellContent[i].length;j++){
+    if(isHTML(cellContent[i][j])){
+      let cell = row.insertCell(j);
+    cell.innerHTML = cellContent[i][j];
+    }
+    else if(typeof cellContent[i][j] === "string"){
+      let cell = row.insertCell(j);
+      cell.textContent = cellContent[i][j];
+
+    }
+    else{
+    let cell = row.insertCell(j);
+    cell.appendChild(cellContent[i][j]);
+    }
+  }
+}  
+
+
+}
+export function addToList(liste:HTMLElement,content:any[],color_notodd:string="#dddddd"):HTMLElement{
+ 
+ content.forEach(c=>{
+  const li = document.createElement("li");
+ content.indexOf(c) === 0 ? li.style.backgroundColor=color_notodd : li.style.backgroundColor="white";
+  if(isHTML(c)){
+  li.innerHTML = c;
+  }
+  else{
+    li.textContent = c;
+  }
+  liste.appendChild(li);
+  
+
+ });
+ return liste;
+}
+
+function setup_headernav(object:any){
+  const navdropdown = document.getElementById("navbardropdown");
+
+  for(const key of Object.values(object)){
+    
+
+  const button = elementFactory("button",{},"border:none; color:white; padding:7px; background-color:#34568B; align:left; cursor:pointer;width100%;");
+    
+    button.textContent = Object(key).textcontent;
+    button.addEventListener("click",Object(key).funktion);
+   
+    navdropdown?.appendChild(button);
+     
+
+  }
+ 
+    
+   
+    
+
+  
+}
+function setup_headerbar_withjsonimports(functionArray:any[]){
+  functionArray.forEach(f=>{
+    const button = elementFactory("button",{},"");
+    const div = elementFactory("div",{},"");
+    
+  });
+
+
+}
+export function addBrotkrümel(...brotkrümel:any[]){
+  const bkdiv = document.getElementById("brotkrümel");
+  
+  bkdiv?.replaceChildren();
+  const href = elementFactory("a",{href:"#"},"",false,"Link");
+  href.addEventListener("click",()=>setup_webInventors());
+  
+ 
+    for(const c of brotkrümel){
+      const arrow = elementFactory("i",{class:"fa fa-angle-right"},"margin-left:10px; margin-right:10px;");
+      bkdiv?.appendChild(document.createTextNode(c));
+      bkdiv?.appendChild(arrow);
+    }
+    const lastchild:ChildNode = <ChildNode>bkdiv?.lastChild;
+    bkdiv?.removeChild(lastchild);
+   
+
+
+
+}
+export function addBrotkrümelv2(obj:any,icon:string){
+  const bkdiv = document.getElementById("brotkrümel");
+  const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  bkdiv?.replaceChildren();
+  const href = elementFactory("a",{href:"#"},"");
+  const arrow = elementFactory("i",{class:icon},"margin-left:10px; margin-right:10px;");
+  href.textContent = "Startseite";
+  bkdiv?.appendChild(href);
+  bkdiv?.appendChild(arrow);
+  href.addEventListener("click",()=>{mainref.replaceChildren();addBrotkrümelv2({},"fa fa-angle-right")});
+
+  for(const key of Object.values(obj)){
+    const href = elementFactory("a",{href:"#"},"");
+    href.textContent = Object(key).textcontent;
+    href.addEventListener("click",()=>Object(key).funktion);
+    const arrow = elementFactory("i",{class:icon},"margin-left:10px; margin-right:10px;");
+    bkdiv?.appendChild(href);
+    bkdiv?.appendChild(arrow);
+
+  }
+  const lastchild:ChildNode = <ChildNode>bkdiv?.lastChild;
+  bkdiv?.removeChild(lastchild);
+  
+
+
+}
 
 export {setup_tic_tac_toe}; 
     

@@ -1,34 +1,31 @@
 import { resetMainbereich } from "./script.js";
 export {vue_singlefile};
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
  function vue_singlefile():void{
     const [mainref,main_header,main_main] = resetMainbereich();
      
-      let headerdiv:HTMLDivElement = document.createElement("div");
-      let header:HTMLDivElement = document.createElement("h1");
-      header.appendChild(document.createTextNode("Vue Single Component")); 
+      
+      let header:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Vue Single Component");
+      addBrotkrümel("Startseite","Vue Single Component");
+      let headerdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"");  
       headerdiv.appendChild(header);
       main_header.appendChild(headerdiv);
-      let div:HTMLDivElement = document.createElement("div");
-      let vuedivcontainer:HTMLDivElement = document.createElement("div");
-      vuedivcontainer.style.display="flex";
-      vuedivcontainer.style.justifyContent="center";
+      let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"vuediv"},"");
+      let vuedivcontainer:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center;");
       vuedivcontainer.appendChild(div);
-      div.setAttribute("id","vuediv");
+      let para1:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Buchstaben : {{buchstaben}}");
+      let para2:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Leerzeichen :{{leerzeichen}}");
+      let para3:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,"Worte : {{worte}}");
+    
      
-      let para1:HTMLParagraphElement = document.createElement("p");
-      let para2:HTMLParagraphElement = document.createElement("p");
-      let para3:HTMLParagraphElement = document.createElement("p");
-     
-      para1.textContent = "Buchstaben : {{buchstaben}}";
-      para2.appendChild(document.createTextNode("Leerzeichen :{{leerzeichen}}"));
-      para3.appendChild(document.createTextNode("Worte : {{worte}}"));
       div.appendChild(para1);
       div.appendChild(para2);
       div.appendChild(para3);
       
-         let input:HTMLInputElement = document.createElement("input");
-         input.setAttribute("type","text");
+         let input:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"text",},"");
+        
          input.setAttribute("v-on:input","handler");
          input.setAttribute("ref","inputfield");
          div.appendChild(input);

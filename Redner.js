@@ -1,3 +1,5 @@
+import { elementFactory } from "./script.js";
+import { addToTable } from "./script.js";
 function makeRedner(name) {
     var new_Redner = { name, std: 0, min: 0, sek: 0, counting: 0, intervalids: [0], startstopsymbol: "Stop",
         timer: function (htmlElement) {
@@ -83,24 +85,16 @@ function makeRedner(name) {
             liste.appendChild(li);
         },
         createRedner: function (rednerarray) {
-            const tabelle = document.createElement("table");
-            let reihe = tabelle.insertRow(-1);
-            var button = document.createElement("button");
-            button.appendChild(document.createTextNode('Start'));
-            reihe.insertCell(0);
-            reihe.appendChild(document.createTextNode(this.name));
-            reihe.insertCell(1);
-            reihe.appendChild(button);
-            let timer = document.createElement("p");
-            reihe.insertCell(2);
-            var display = document.createTextNode("00:00:00");
-            timer.appendChild(display);
+            const tabelle = elementFactory("table", {}, "");
+            var button = elementFactory("button", {}, "font-size: clamp(0.6em, 4vw, 1.2em);", false, "Start");
+            let timer = elementFactory("p", {}, "", false, "00:00:00");
+            let p = elementFactory("p", {}, "", false, this.name);
+            addToTable(tabelle, [[p, button, timer]], [], "white", "white");
             var interval = setInterval(this.timer.bind(this), 1000, timer);
             button.textContent = this.startstopsymbol;
             this.counting = 1;
             this.intervalids.push(interval);
             button.addEventListener("click", () => this.myEventHandler(timer, button, rednerarray));
-            reihe.appendChild(timer);
             if (rednerarray.length != 0) {
                 rednerarray.forEach((redner) => { redner.clearAllIntervalIds(); redner.counting = 0; });
             }

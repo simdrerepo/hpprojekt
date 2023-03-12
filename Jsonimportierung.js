@@ -1,6 +1,7 @@
 import { resetMainbereich } from "./script.js";
 export { setup_JsonImportieren };
 import { fetchJsonData } from "./script.js";
+import { elementFactory } from "./script.js";
 const setup_JsonImportieren = async () => {
     const json = await fetchJsonData("http://127.0.0.1:5500/content.json");
     const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
@@ -8,12 +9,8 @@ const setup_JsonImportieren = async () => {
     var array = new Array();
     for (let o of Object.keys(json)) {
         for (let ob of Object.keys(json[o])) {
-            let button = document.createElement("button");
-            button.style.backgroundColor = "#dddddd";
-            button.setAttribute("class", "dropdowncontainerbutton");
+            let button = elementFactory("button", { class: "dropdowncontainerbutton" }, "background-color:#dddddd; fontsize:16px; cursor:pointer;");
             array.push(ob);
-            button.style.fontSize = "16px";
-            button.style.cursor = "pointer";
             dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
         }
     }
@@ -24,8 +21,7 @@ const setup_JsonImportieren = async () => {
     var i = 0;
     for (const [title, inhalte] of Object.entries(json)) {
         //dropdownbuttoncollection[Object.keys(json).indexOf(title)].textContent = title;
-        let itag = document.createElement("i");
-        itag.setAttribute("class", "fa fa-caret-down");
+        let itag = elementFactory("i", { class: "fa fa-caret-down" }, "");
         dropdownbuttoncollection[Object.keys(json).indexOf(title)].appendChild(itag);
         for (const [a, b] of Object.entries(json[title])) {
             dropdowncontainerbuttoncollection[i].addEventListener("click", () => {

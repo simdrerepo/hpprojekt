@@ -1,4 +1,9 @@
 import { resetMainbereich } from "./script.js";
+import { elementFactory } from "./script.js";
+import { addToTable } from "./script.js";
+import { addBrotkrümelv2 } from "./script.js";
+import { objectFabric } from "./script.js";
+import { filterObject } from "./script.js";
 function benchmarkInnerHTML() {
     let main = document.getElementById("main_main");
     let div = document.createElement("div");
@@ -42,62 +47,22 @@ function benchmarkTextContent() {
 }
 export function domBenchmarks() {
     const [main_ref, main_header, main_main] = resetMainbereich();
-    let ueberschrift = document.createElement("h1");
-    ueberschrift.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
-    var tabelle = document.createElement("table");
-    tabelle.setAttribute("id", "benchmarktabelle");
-    tabelle.setAttribute("class", "tabelle");
-    let reihe0 = tabelle.insertRow(-1);
-    let zelle = reihe0.insertCell(0);
-    zelle.appendChild(document.createTextNode("Dom-Operation"));
-    zelle = reihe0.insertCell(1);
-    zelle.appendChild(document.createTextNode("Performance in Millisekunden für 500 Iterationen"));
-    let reihe = tabelle.insertRow(-1);
-    zelle = reihe.insertCell(0);
-    zelle.appendChild(document.createTextNode("innerHTML"));
-    zelle = reihe.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkInnerHTML())));
-    let reihe2 = tabelle.insertRow(-1);
-    zelle = reihe2.insertCell(0);
-    zelle.appendChild(document.createTextNode("innerText"));
-    zelle = reihe2.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkInnerText())));
-    let reihe3 = tabelle.insertRow(-1);
-    zelle = reihe3.insertCell(0);
-    zelle.appendChild(document.createTextNode("textContent"));
-    zelle = reihe3.insertCell(1);
-    zelle.appendChild(document.createTextNode(String(benchmarkTextContent())));
-    ueberschrift.setAttribute("id", "headline");
-    let tabellendiv = document.createElement("div");
-    tabellendiv.setAttribute("id", "tabellendiv");
+    let ueberschrift = elementFactory("h1", { id: "headline" }, "", false, "Performanz-Messungen von DOM-Operationen");
+    const object = objectFabric();
+    console.log(filterObject(object, "dombenchmarks"));
+    addBrotkrümelv2(filterObject(object, "dombenchmarks"), "fa fa-angle-right");
+    var tabelle = elementFactory("table", { id: "benchmarktabelle", class: "tabelle" }, "border:1px solid black;font-size: clamp(0.6em, 4vw, 1.2em);");
+    const content = [["innerHTML", String(benchmarkInnerHTML())], ["innerText", String(benchmarkInnerText())], ["textContent", String(benchmarkTextContent())]];
+    addToTable(tabelle, content, ["Dom-Operation", "Performance in Millisekunden für 500 Iterationen"], "lighyellow", "#dddddd");
+    let tabellendiv = elementFactory("div", { id: "tabellendiv" }, "display:flex; justify-content:center;");
     tabellendiv.appendChild(tabelle);
-    tabellendiv.style.display = "flex";
-    tabellendiv.style.justifyContent = "center";
-    let mainueberschr = document.createElement("h2");
-    mainueberschr.appendChild(document.createTextNode("Performanz-Messungen von DOM-Operationen"));
     main_header.appendChild(ueberschrift);
     main_header.style.textAlign = "center";
-    let codeblock = document.createElement("code");
-    let codediv = document.createElement("div");
-    let div = document.createElement("div");
-    div.style.display = "flex";
-    div.style.justifyContent = "center";
-    div.style.marginBottom = "40px";
-    codediv.style.border = "1px solid lightgrey";
-    codediv.style.padding = "10px";
-    codediv.style.width = "500px";
-    codediv.innerHTML = "<b>Codesample</b><br>..." + "<br>" +
-        "<code>let t0 = performance.now();</code>" + "<br>" +
-        "<code>for(i=0;i<500;i++){</code>" + "<br>" +
-        "<code>div.innerHTML+=text;}</code>" + "<br>" +
-        "<code>let t1 = performance.now();</code>" + "<br>" +
-        "<code>return t1-t0;</code><br>" +
-        "...";
-    codediv.style.backgroundColor = "#e7e9eb";
+    let codediv = elementFactory("div", {}, "border:1px solid lightgrey; padding:10px; width:500px; background-color:#e7e9eb; border-left:5px solid grey;", true, "<b>Codesample</b><br>...<br><code>let t0 = performance.now();</code><br><code>for(i=0;i<500;i++){</code>" + "<br><code>div.innerHTML+=text;}</code><br><code>let t1 = performance.now();</code>" + "<br><code>return t1-t0;</code><br>...");
+    let div = elementFactory("div", {}, "display:flex; justify-content:center; margin-Bottom:40px");
     div.appendChild(codediv);
     main_main.appendChild(div);
     main_main.appendChild(tabellendiv);
-    tabelle.style.border = "1px solid black";
     let trs = tabelle.getElementsByTagName("td");
     for (let i = 0; i < trs.length; i++) {
         trs[i].style.border = "1px solid black";

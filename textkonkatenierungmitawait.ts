@@ -1,6 +1,8 @@
 import { sleep } from "./script.js";
 import { fetchTextData } from "./script.js";
 import { resetMainbereich } from "./script.js";
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 export {setup_TextkonkatenierungMitAwait};
 const setup_TextkonkatenierungMitAwait =async ():Promise<void>=>{
 
@@ -8,37 +10,23 @@ const setup_TextkonkatenierungMitAwait =async ():Promise<void>=>{
 
   const [main,main_header,main_main] = resetMainbereich();
 
-  let promisediv:HTMLDivElement = document.createElement("div");
- 
- 
- 
-  let h1:HTMLHeadElement = document.createElement("h1");
-  let headerdiv:HTMLDivElement = document.createElement("div");
-  headerdiv.appendChild(h1);
-  headerdiv.style.display="flex";
-  headerdiv.style.justifyContent="center";
-  headerdiv.style.textAlign="center";
- 
-  let div:HTMLDivElement = document.createElement("div");
-  let textdiv:HTMLDivElement = document.createElement("div");
-  div.style.display ="flex";
- div.style.justifyContent="center";
- div.style.marginBottom = "40px";
- textdiv.style.border ="1px solid lightgrey";
- textdiv.style.padding = "10px";
- 
-  textdiv.style.backgroundColor="#e7e9eb";
-  
-  textdiv.innerHTML ="Konkateniert werden die Gedichte <b>Erlkönig</b> von <i>Johann Wolfgang von Goethe</i> sowie <b>Eine Frage</b> von <i>Kurt Tucholsky</i>";
-  let p:HTMLParagraphElement = document.createElement("p");
+  let promisediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"");
+  let headerdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center; text-align:center;");
+  let ueberschrift:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{},"",false,"Zeilenweise Textkonkatenierung mit async / await")
+  addBrotkrümel("Startseite","Textkonkatenierung mit async / await");
+  let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center; margin-bottom:40px;");
+  let textdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{}," border:1px solid lightgrey;border-left:5px solid grey; padding:10px; background-color:#e7e9eb;",true,"<p>Konkateniert werden die Gedichte <b>Erlkönig</b> von <i>Johann Wolfgang von Goethe</i> sowie <b>Eine Frage</b> von <i>Kurt Tucholsky</i></p>");
+
+  let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"");
+  headerdiv.appendChild(ueberschrift);
   promisediv.append(p);
-  h1.appendChild(document.createTextNode("Zeilenweise Textkonkatenierung mit async / await"));
+
   main_header.appendChild(headerdiv);
   div.appendChild(textdiv);
   main_main.appendChild(div);
   main_main.appendChild(promisediv);
   
-  
+
  let arrayA = texta.split(/\r?\n/);
   let arrayB = textb.split(/\r?\n/);
   let i = 0;

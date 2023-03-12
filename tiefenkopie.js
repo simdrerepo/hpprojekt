@@ -11,5 +11,5 @@ function deepClone(obj) {
     }
     return clone;
 }
-const obj = { name: "horst", adrresse: { plz: "12345", strasse: "strasse", a: { b: "irgendwas" } } };
+const obj = { name: "horst", adresse: { plz: "12345", strasse: "strasse", a: { b: "irgendwas" } } };
 const objcopy = deepClone(obj);

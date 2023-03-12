@@ -1,4 +1,6 @@
 import { resetMainbereich } from "./script.js";
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 
 var frage = {
    frage:"",
@@ -17,7 +19,6 @@ var antwort = {
     }
  
 }
-
 const fragen = [
    "Mit welchen fachlichen Argumenten wurde das WWW-Proposal von TBL abgelehnt?",
    "Was sind die fachlichen Argumente, warum das WWW dennoch ein Erfolg wurde?",
@@ -51,7 +52,6 @@ const antworten = [
    "Man könnte z.B. ein Div element anlegen und darin seine Menuelemente wrappen.Um auf verschiedene Seiten zu verlinken könnte man <a> tags oder <button> tags verwenden. Diese könnte man noch in einer unsortierten Liste oder einer Tabelle anordnen.",
    "Width and Height sollten immer defininiert sein. Außerdem wird empfohlen, letztere Attribute in Kombination mit dem style attribut zu nutzen. Also <img src='...' style='width:...; height:...;'"
 ];
-
 const codeaufgaben = [
    "Schreiben Sie eine Funktion identity_function, die einen Parameter entgegennimmt und eine Funktion zurückgibt, die dieses Argument zurückgibt.",
    "Schreiben Sie eine Funktion addf, sodass addf(x)(y) genau x + y zurückgibt. (Es haben also zwei Funktionsaufrufe zu erfolgen. addf(x) liefert eine Funktion, die auf y angewandt wird.)",
@@ -106,12 +106,12 @@ const codeloesungen = [
 
 
 ];
-
 export const codeUebung=():void=>{
    const [main,main_header,main_main] = resetMainbereich();
-   let h1:HTMLDivElement = document.createElement("h1");
+   let h1:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Funktionen in Javascript");
+   addBrotkrümel("Startseite","Funktionen in Javascript");
    
-   h1.textContent="Funktionen in Javascript";
+  
    main_header.appendChild(h1);
    var array = new Array();
  
@@ -127,11 +127,11 @@ export const codeUebung=():void=>{
 
 
 }
-
-
-
 export const fragenAntworten = ():void=>{
    const [main,main_header,main_main] = resetMainbereich();
+   const h1 = elementFactory("h1",{},"",false,"Fragen / Antworten");
+   main_header.appendChild(h1);
+   addBrotkrümel("Startseite","Fragen und Antworten");
    var array = new Array();
    for(let i=0;i<fragen.length;i++){
       let Antwort = Object.create(antwort);
@@ -145,56 +145,27 @@ export const fragenAntworten = ():void=>{
 
 
 }
-
-
-
 const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
   
    for(const s of array){
-      let fragediv:HTMLDivElement = document.createElement("div");
-      let p:HTMLParagraphElement = document.createElement("p");
-      p.textContent=s.frage;
-      let antwortdiv:HTMLDivElement;
-      let pa:HTMLParagraphElement;
-      antwortdiv = document.createElement("div");
-      antwortdiv.style.marginTop="10px";
-      antwortdiv.style.marginBottom="10px";
-      antwortdiv.style.backgroundColor="#edf5f6";
-      antwortdiv.style.padding = "10px";
-      pa = document.createElement("p");
-      pa.style.color="#455f93";  
-      pa.textContent=s.antwort;   
+      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"padding:10px; background-color:#e7e9eb; border-left:5px solid grey;");
+      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,s.frage);
+      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"margin-top:10px; margin-bottom:10px; border-left:4px solid #455f93; background-color:#edf5f6; padding:10px;")
+      let pa:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"color:#455f93;",false,s.antwort);
       fragediv.appendChild(p);
       antwortdiv.appendChild(pa);
-      fragediv.style.padding = "10px";
-      fragediv.style.backgroundColor="#e7e9eb";
       mainref.appendChild(fragediv);
       mainref.appendChild(antwortdiv);
    
      }
    
    }
-
- 
-
-const addCodeFragen=(mainref:HTMLDivElement,array:any[])=>{
+const addCodeFragen=(mainref:HTMLDivElement,array:any[]):void=>{
    for(const c of array){
-      let fragediv:HTMLDivElement = document.createElement("div");
-      fragediv.style.display = "flex";
-      let p:HTMLParagraphElement = document.createElement("p");
-      p.textContent=c.frage;
-      fragediv.style.padding = "10px";
-      fragediv.style.backgroundColor="#e7e9eb";
+      let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; padding:10px; border-left:5px solid grey; background-color:#e7e9eb;"); 
+      let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,c.frage);
+      let antwortdiv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; margin-top:10px; margin-bottom:10px; padding:10px; border-left:5px solid yellow; background-color:lightyellow;",true,c.antwort);
       fragediv.appendChild(p);
-     
-      let antwortdiv:HTMLDivElement = document.createElement("div");
-      antwortdiv.style.display = "flex";
-      antwortdiv.style.marginTop="10px";
-      antwortdiv.style.marginBottom="10px";
-      antwortdiv.style.padding = "10px";
-      antwortdiv.style.backgroundColor="lightyellow";
-      antwortdiv.innerHTML=c.antwort;
-
       mainref.appendChild(fragediv);
       mainref.appendChild(antwortdiv);
 

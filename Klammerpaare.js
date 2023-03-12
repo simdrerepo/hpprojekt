@@ -1,24 +1,20 @@
 import { resetMainbereich } from "./script.js";
 export { setup_Klammerpaare };
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 const setup_Klammerpaare = () => {
     const [main, main_header, main_main] = resetMainbereich();
-    let eingabedivu6 = document.createElement("div");
-    let h1 = document.createElement("h1");
-    h1.appendChild(document.createTextNode("Klammerpaare"));
+    let eingabedivu6 = elementFactory("div", {}, `display:flex; justify-content:center;margin-top:10px;`);
+    let h1 = elementFactory("h1", {}, "", false, "Klammerpaare");
+    addBrotkrümel("Startseite", "Klammerpaare");
+    var eingabeu6 = elementFactory("input", { type: "text" }, "");
+    let p = elementFactory("p", {}, `text-align:center;`, false, "Der eingegebene Text wird auf korrekte Klammerung geprüft. Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].");
+    const textdiv = elementFactory("div", {}, "border:1px solid lightgrey; border-left:5px solid grey; padding:10px; background-color:#e7e9eb;");
+    textdiv.appendChild(p);
     main_header.appendChild(h1);
-    var eingabeu6 = document.createElement("input");
-    eingabeu6.setAttribute("type", "search");
-    let p = document.createElement("p");
-    p.style.textAlign = "center";
-    p.innerHTML = "Der eingegebene Text wird auf korrekte Klammerung geprüft.<br>" +
-        "Folgende Klammerpaare werden dabei berücksichtigt : (,) {,} [,].";
     eingabedivu6.appendChild(eingabeu6);
-    eingabedivu6.style.display = "flex";
-    eingabedivu6.style.justifyContent = "center";
-    eingabeu6.style.marginTop = "25px";
-    main_main.appendChild(p);
+    main_main.appendChild(textdiv);
     main_main.appendChild(eingabedivu6);
-    eingabeu6.style.width = "700px";
     eingabeu6.addEventListener("input", () => {
         const kp1_1 = '(';
         const kp1_2 = ')';

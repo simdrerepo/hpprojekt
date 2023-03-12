@@ -1,4 +1,6 @@
 import { resetMainbereich } from "./script.js";
+import { elementFactory } from "./script.js";
+import { addBrotkrümel } from "./script.js";
 var frage = {
     frage: "",
     setFrage: function (string) {
@@ -98,8 +100,8 @@ const codeloesungen = [
 ];
 export const codeUebung = () => {
     const [main, main_header, main_main] = resetMainbereich();
-    let h1 = document.createElement("h1");
-    h1.textContent = "Funktionen in Javascript";
+    let h1 = elementFactory("h1", {}, "", false, "Funktionen in Javascript");
+    addBrotkrümel("Startseite", "Funktionen in Javascript");
     main_header.appendChild(h1);
     var array = new Array();
     for (let i = 0; i < codeaufgaben.length; i++) {
@@ -112,6 +114,9 @@ export const codeUebung = () => {
 };
 export const fragenAntworten = () => {
     const [main, main_header, main_main] = resetMainbereich();
+    const h1 = elementFactory("h1", {}, "", false, "Fragen / Antworten");
+    main_header.appendChild(h1);
+    addBrotkrümel("Startseite", "Fragen und Antworten");
     var array = new Array();
     for (let i = 0; i < fragen.length; i++) {
         let Antwort = Object.create(antwort);
@@ -123,43 +128,22 @@ export const fragenAntworten = () => {
 };
 const addDivs = (mainref, array) => {
     for (const s of array) {
-        let fragediv = document.createElement("div");
-        let p = document.createElement("p");
-        p.textContent = s.frage;
-        let antwortdiv;
-        let pa;
-        antwortdiv = document.createElement("div");
-        antwortdiv.style.marginTop = "10px";
-        antwortdiv.style.marginBottom = "10px";
-        antwortdiv.style.backgroundColor = "#edf5f6";
-        antwortdiv.style.padding = "10px";
-        pa = document.createElement("p");
-        pa.style.color = "#455f93";
-        pa.textContent = s.antwort;
+        let fragediv = elementFactory("div", {}, "padding:10px; background-color:#e7e9eb; border-left:5px solid grey;");
+        let p = elementFactory("p", {}, "", false, s.frage);
+        let antwortdiv = elementFactory("div", {}, "margin-top:10px; margin-bottom:10px; border-left:4px solid #455f93; background-color:#edf5f6; padding:10px;");
+        let pa = elementFactory("p", {}, "color:#455f93;", false, s.antwort);
         fragediv.appendChild(p);
         antwortdiv.appendChild(pa);
-        fragediv.style.padding = "10px";
-        fragediv.style.backgroundColor = "#e7e9eb";
         mainref.appendChild(fragediv);
         mainref.appendChild(antwortdiv);
     }
 };
 const addCodeFragen = (mainref, array) => {
     for (const c of array) {
-        let fragediv = document.createElement("div");
-        fragediv.style.display = "flex";
-        let p = document.createElement("p");
-        p.textContent = c.frage;
-        fragediv.style.padding = "10px";
-        fragediv.style.backgroundColor = "#e7e9eb";
+        let fragediv = elementFactory("div", {}, "display:flex; padding:10px; border-left:5px solid grey; background-color:#e7e9eb;");
+        let p = elementFactory("p", {}, "", false, c.frage);
+        let antwortdiv = elementFactory("div", {}, "display:flex; margin-top:10px; margin-bottom:10px; padding:10px; border-left:5px solid yellow; background-color:lightyellow;", true, c.antwort);
         fragediv.appendChild(p);
-        let antwortdiv = document.createElement("div");
-        antwortdiv.style.display = "flex";
-        antwortdiv.style.marginTop = "10px";
-        antwortdiv.style.marginBottom = "10px";
-        antwortdiv.style.padding = "10px";
-        antwortdiv.style.backgroundColor = "lightyellow";
-        antwortdiv.innerHTML = c.antwort;
         mainref.appendChild(fragediv);
         mainref.appendChild(antwortdiv);
     }
