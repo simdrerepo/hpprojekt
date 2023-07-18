@@ -1,4 +1,4 @@
-import { setup_tic_tac_toe } from "./script.js";
+import { setup_tic_tac_toe } from "../script.js";
 class tic_tac_toe {
     constructor(div) {
         this.spieler = "";

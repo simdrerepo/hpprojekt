@@ -1,10 +1,10 @@
 import { resetMainbereich } from "./script.js";
-import { Vorrang } from "./Vorrang.js";
+import { Vorrang } from "./klassen/Vorrang.js";
 import { elementFactory } from "./script.js";
 import { addBrotkrümel } from "./script.js";
 export { setup_TopSortAlsWebApp };
 const setup_TopSortAlsWebApp = () => {
-    const [main, main_header, main_main] = resetMainbereich();
+    const [main_container, main_main] = resetMainbereich();
     var liste = document.createElement("ul");
     var input1 = elementFactory("input", { type: "search", id: "input1" }, "grid-area:input1;font-size: clamp(0.6em, 4vw, 1.2em);");
     var input2 = elementFactory("input", { type: "search", id: "input2" }, "grid-area:input2;font-size: clamp(0.6em, 4vw, 1.2em);");
@@ -12,7 +12,7 @@ const setup_TopSortAlsWebApp = () => {
     addBrotkrümel("Startseite", "TopSort als Web-App");
     let h1div = elementFactory("div", {}, "");
     h1div.appendChild(headline);
-    main_header.appendChild(h1div);
+    main_main.appendChild(h1div);
     var resetbutton = elementFactory("button", { id: "resetbutton" }, "height:1.5rem; width:5rem; grid-area:reset; font-size: clamp(0.6em, 4vw, 1.2em);", false, "reset");
     resetbutton.addEventListener("click", () => setup_TopSortAlsWebApp());
     let button = elementFactory("button", { id: "sortbutton" }, "height:1.5rem; width:5rem; grid-area:sortieren;font-size: clamp(0.6em, 4vw, 1.2em);", false, "sortieren");

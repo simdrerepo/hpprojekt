@@ -76,13 +76,14 @@ function benchmarkTextContent():number{
   
   }
   export function domBenchmarks():void{
-  const [main_ref,main_header,main_main] = resetMainbereich();
+  const [main_container,main_main] = resetMainbereich();
     let ueberschrift:HTMLHeadElement = <HTMLHeadElement>elementFactory("h1",{id:"headline"},"",false,"Performanz-Messungen von DOM-Operationen")
     const object = objectFabric();
    
    
     
-    addBrotkrümelv2(filterObject(object,"dombenchmarks"),"fa fa-angle-right");
+    //addBrotkrümelv2(filterObject(object,"dombenchmarks"),"fa fa-angle-right");
+    addBrotkrümel("Startseite","Dom-Benchmarks");
     var tabelle:HTMLTableElement = <HTMLTableElement>elementFactory("table",{id:"benchmarktabelle",class:"tabelle"},"border:1px solid black;font-size: clamp(0.6em, 4vw, 1.2em);");
    
     const content =  [["innerHTML",String(benchmarkInnerHTML())],["innerText",String(benchmarkInnerText())],["textContent",String(benchmarkTextContent())]];
@@ -97,8 +98,8 @@ function benchmarkTextContent():number{
   
   
   
-   main_header.appendChild(ueberschrift);
-   main_header.style.textAlign="center";
+   //main_header.appendChild(ueberschrift);
+   
   
    let codediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"border:1px solid lightgrey; padding:10px; width:500px; background-color:#e7e9eb; border-left:5px solid grey;",true,"<b>Codesample</b><br>...<br><code>let t0 = performance.now();</code><br><code>for(i=0;i<500;i++){</code>"+"<br><code>div.innerHTML+=text;}</code><br><code>let t1 = performance.now();</code>"+"<br><code>return t1-t0;</code><br>...");
    let div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; justify-content:center; margin-Bottom:40px");

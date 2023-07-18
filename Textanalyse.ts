@@ -8,7 +8,7 @@ import { addBrotkrümel } from "./script.js";
 const setup_TextAnalyse=async():Promise<void>=>{
 
       const stopwörter:string = await fetchTextData('./stopwords-de.txt');
-      const [main,main_header,main_main] = resetMainbereich();
+      const [main_container, main_main] = resetMainbereich();
       addBrotkrümel("Startseite","Textanalyse");
 
      let Plagiatsresolution:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"plagiatresolution"},"");
@@ -21,13 +21,14 @@ const setup_TextAnalyse=async():Promise<void>=>{
      let brschrft:HTMLHeadElement = elementFactory("h1",{},"",false,"Textanalyse mit filter-map-reduce");
      Plagiatsresolution.appendChild(header);
      Plagiatsresolution.appendChild(content);
-     main_header.appendChild(brschrft);
+
+     main_main.appendChild(brschrft);
      main_main.appendChild(analysecontainer);
      main_main.appendChild(Plagiatsresolution);
       let stops:string[] = stopwörter.split(/\r?\n/);
       let stoparray2d = new Array();
       
-      let alltext:string = main.textContent!.toLowerCase().replaceAll(",","").replaceAll(".","").replaceAll("-","").replaceAll("(","").replaceAll(")","").replaceAll(":","");
+      let alltext:string = Plagiatsresolution.textContent!.toLowerCase().replaceAll(",","").replaceAll(".","").replaceAll("-","").replaceAll("(","").replaceAll(")","").replaceAll(":","");
       
      let alltextsplitted:string[] = alltext.split(" ");
      
@@ -58,10 +59,12 @@ const setup_TextAnalyse=async():Promise<void>=>{
      for(let i=0;i<tagset.size;i++){array2d.push([Array.from(tagset)[i],fil.reduce((count, num) => num === Array.from(tagset)[i] ? count + 1 : count, 0)]);}
     
      let mostusedtag = array2d[0];
+    
      for(let i=0;i<array2d.length;i++){if(array2d[i][1]>mostusedtag[1]){mostusedtag = array2d[i];}}
      
      table.style.textAlign = "center";
      array2d.filter(ar=>ar[0]="<"+ar[0]+">");
+     
      addToTable(table,array2d,['<b>HTML-Tag</b>','<b>Anzahl</b>']);
      
      

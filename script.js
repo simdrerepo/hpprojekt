@@ -18,6 +18,7 @@ export { resetMainbereich };
 export { fetchJsonData };
 export { sidenavHandler };
 export { fetchTextData };
+const json = await fetchJsonData("./content.json");
 setup_JsonImportieren();
 export function filterObject(obj, string) {
     return Object.fromEntries(Object.entries(obj).filter(([a, b]) => { return a === string; }));
@@ -105,23 +106,23 @@ function hideShowDropDownContainer() {
 }
 const resetMainbereich = () => {
     const mainref = document.getElementById("main");
+    const main_container = document.getElementById("main_container");
     mainref.replaceChildren();
     setupMainBereich();
     const main_header = document.getElementById("mainheader");
     const main_main = document.getElementById("main_main");
-    return [mainref, main_header, main_main];
+    return [main_container, main_main];
 };
 function setupMainBereich() {
     // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
     const mainref = document.getElementById("main");
+    const brotkrümelrahmen = elementFactory("div", { id: "brotkrümel" }, "border-bottom:1px solid lightgrey;");
     let main_container = elementFactory("div", { id: "main_container" }, "background-color:white; min-height:700px; padding-left:10px;padding-right:10px;");
-    let main_header = elementFactory("div", { id: "mainheader" }, "background-color:white; border-bottom:1px solid lightgray; display:flex; justify-content:center;");
     let main_main = elementFactory("div", { id: "main_main" }, "background-color:white; display:block;margin-top:20px;");
     let main_footer = elementFactory("id", { id: "main_footer" }, "");
-    mainref.appendChild(main_container);
-    main_container.appendChild(main_header);
+    main_container.appendChild(brotkrümelrahmen);
     main_container.appendChild(main_main);
-    main_container.appendChild(main_footer);
+    mainref.appendChild(main_container);
 }
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -242,7 +243,8 @@ export function addToTable(table, cellContent, headlinecontent, colorHeadline = 
         for (let j = 0; j < cellContent[i].length; j++) {
             if (isHTML(cellContent[i][j])) {
                 let cell = row.insertCell(j);
-                cell.innerHTML = cellContent[i][j];
+                cell.textContent = cellContent[i][j];
+                console.log(cellContent[i][j]);
             }
             else if (typeof cellContent[i][j] === "string") {
                 let cell = row.insertCell(j);
@@ -250,7 +252,7 @@ export function addToTable(table, cellContent, headlinecontent, colorHeadline = 
             }
             else {
                 let cell = row.insertCell(j);
-                cell.appendChild(cellContent[i][j]);
+                cell.textContent = cellContent[i][j];
             }
         }
     }
@@ -270,12 +272,12 @@ export function addToList(liste, content, color_notodd = "#dddddd") {
     return liste;
 }
 function setup_headernav(object) {
-    const navdropdown = document.getElementById("navbardropdown");
+    const navdropdown = document.getElementsByClassName("navbardropdown");
     for (const key of Object.values(object)) {
         const button = elementFactory("button", {}, "border:none; color:white; padding:7px; background-color:#34568B; align:left; cursor:pointer;width100%;");
         button.textContent = Object(key).textcontent;
         button.addEventListener("click", Object(key).funktion);
-        navdropdown?.appendChild(button);
+        navdropdown[0].appendChild(button);
     }
 }
 function setup_headerbar_withjsonimports(functionArray) {
@@ -290,7 +292,7 @@ export function addBrotkrümel(...brotkrümel) {
     const href = elementFactory("a", { href: "#" }, "", false, "Link");
     href.addEventListener("click", () => setup_webInventors());
     for (const c of brotkrümel) {
-        const arrow = elementFactory("i", { class: "fa fa-angle-right" }, "margin-left:10px; margin-right:10px;");
+        const arrow = elementFactory("i", { class: "fa fa-angle-double-right" }, "margin-left:10px; margin-right:10px;");
         bkdiv?.appendChild(document.createTextNode(c));
         bkdiv?.appendChild(arrow);
     }

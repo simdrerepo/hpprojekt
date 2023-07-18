@@ -1,5 +1,5 @@
 import { elementFactory, resetMainbereich } from "./script.js";
-import { tic_tac_toe } from "./tic_tac_toe.js";
+import { tic_tac_toe } from "./klassen/tic_tac_toe.js";
 import { addBrotkrümel } from "./script.js";
 export { setup_tic_tac_toe };
 const setup_tic_tac_toe = () => {

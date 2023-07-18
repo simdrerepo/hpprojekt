@@ -6,7 +6,7 @@ import { addToTable } from "./script.js";
 import { addBrotkrümel } from "./script.js";
 const setup_TextAnalyse = async () => {
     const stopwörter = await fetchTextData('./stopwords-de.txt');
-    const [main, main_header, main_main] = resetMainbereich();
+    const [main_container, main_main] = resetMainbereich();
     addBrotkrümel("Startseite", "Textanalyse");
     let Plagiatsresolution = elementFactory("div", { id: "plagiatresolution" }, "");
     let header = elementFactory("div", {}, "", true, '<h2 class="field field--name-title field--type-ds field--label-hidden">Plagiatsresolution und -maßnahmen</h2>');
@@ -17,12 +17,12 @@ const setup_TextAnalyse = async () => {
     let brschrft = elementFactory("h1", {}, "", false, "Textanalyse mit filter-map-reduce");
     Plagiatsresolution.appendChild(header);
     Plagiatsresolution.appendChild(content);
-    main_header.appendChild(brschrft);
+    main_main.appendChild(brschrft);
     main_main.appendChild(analysecontainer);
     main_main.appendChild(Plagiatsresolution);
     let stops = stopwörter.split(/\r?\n/);
     let stoparray2d = new Array();
-    let alltext = main.textContent.toLowerCase().replaceAll(",", "").replaceAll(".", "").replaceAll("-", "").replaceAll("(", "").replaceAll(")", "").replaceAll(":", "");
+    let alltext = Plagiatsresolution.textContent.toLowerCase().replaceAll(",", "").replaceAll(".", "").replaceAll("-", "").replaceAll("(", "").replaceAll(")", "").replaceAll(":", "");
     let alltextsplitted = alltext.split(" ");
     for (let i = 0; i < stops.length; i++) {
         stoparray2d.push([stops[i], alltextsplitted.reduce((count, num) => num === stops[i] ? count + 1 : count, 0)]);

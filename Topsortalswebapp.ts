@@ -1,11 +1,11 @@
 import { resetMainbereich } from "./script.js";
-import { Vorrang } from "./Vorrang.js";
+import { Vorrang } from "./klassen/Vorrang.js";
 import { elementFactory } from "./script.js";
 import { addBrotkrümel } from "./script.js";
 export {setup_TopSortAlsWebApp};
 
 const setup_TopSortAlsWebApp = ():void => {
-  const [main,main_header,main_main] = resetMainbereich();
+  const [main_container,main_main] = resetMainbereich();
     
    var liste:HTMLUListElement = document.createElement("ul");
     
@@ -16,7 +16,7 @@ const setup_TopSortAlsWebApp = ():void => {
     let h1div:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"");
    h1div.appendChild(headline);
 
-    main_header.appendChild(h1div);
+    main_main.appendChild(h1div);
     var resetbutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"resetbutton"},"height:1.5rem; width:5rem; grid-area:reset; font-size: clamp(0.6em, 4vw, 1.2em);",false,"reset");
    
    resetbutton.addEventListener("click",()=>setup_TopSortAlsWebApp());

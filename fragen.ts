@@ -108,11 +108,10 @@ const codeloesungen = [
 ];
 export const codeUebung=():void=>{
    const [main,main_header,main_main] = resetMainbereich();
-   let h1:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Funktionen in Javascript");
+   
    addBrotkrümel("Startseite","Funktionen in Javascript");
    
   
-   main_header.appendChild(h1);
    var array = new Array();
  
    for(let i=0;i<codeaufgaben.length;i++){
@@ -129,8 +128,7 @@ export const codeUebung=():void=>{
 }
 export const fragenAntworten = ():void=>{
    const [main,main_header,main_main] = resetMainbereich();
-   const h1 = elementFactory("h1",{},"",false,"Fragen / Antworten");
-   main_header.appendChild(h1);
+   
    addBrotkrümel("Startseite","Fragen und Antworten");
    var array = new Array();
    for(let i=0;i<fragen.length;i++){
@@ -146,6 +144,9 @@ export const fragenAntworten = ():void=>{
 
 }
 const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
+
+   const h1 = elementFactory("h1",{},"",false,"Fragen / Antworten");
+   mainref.appendChild(h1);
   
    for(const s of array){
       let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"padding:10px; background-color:#e7e9eb; border-left:5px solid grey;");
@@ -161,6 +162,11 @@ const addDivs=(mainref:HTMLDivElement,array:any[]):void=>{
    
    }
 const addCodeFragen=(mainref:HTMLDivElement,array:any[]):void=>{
+
+   let h1:HTMLDivElement = <HTMLDivElement>elementFactory("h1",{},"",false,"Funktionen in Javascript");
+   mainref.appendChild(h1);
+
+
    for(const c of array){
       let fragediv:HTMLDivElement = <HTMLDivElement>elementFactory("div",{},"display:flex; padding:10px; border-left:5px solid grey; background-color:#e7e9eb;"); 
       let p:HTMLParagraphElement = <HTMLParagraphElement>elementFactory("p",{},"",false,c.frage);

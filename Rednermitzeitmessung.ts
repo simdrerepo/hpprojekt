@@ -4,7 +4,7 @@ import { elementFactory } from "./script.js";
 import { addBrotkrümel } from "./script.js";
 export {setup_RednerMitZeitmessung};
 const setup_RednerMitZeitmessung=():void=>{
-    const [main,main_header,main_main] = resetMainbereich();
+    const [main_container,main_main] = resetMainbereich();
     
   
    let h1:HTMLHeadElement = elementFactory("h1",{},"text-align:center;",false,"Rednerliste mit Zeitmessung");
@@ -16,12 +16,13 @@ const setup_RednerMitZeitmessung=():void=>{
    let eingabe:HTMLInputElement = <HTMLInputElement>elementFactory("input",{type:"search",id:"eingabe"},"width:clamp(5em, 4vw, 100em); height:1.5rem; grid-area:input; font-size: clamp(0.6em, 4vw, 1.2em);",false,"");
    let eingabelabel:HTMLLabelElement = <HTMLLabelElement>elementFactory("label",{for:"eingabe",id:"label"},"grid-area:label; font-size: clamp(0.6em, 4vw, 1.2em);",false,"Neuer Redner");
    var eingabebutton:HTMLButtonElement = <HTMLButtonElement>elementFactory("button",{id:"button"},"  grid-area:button; font-size: clamp(0.6em, 4vw, 1.2em);",false,"hinzufügen");
-   main_header.appendChild(h1);
+   main_main.appendChild(h1);
    eingabediv.appendChild(eingabelabel);
    eingabediv.appendChild(eingabe);
    eingabediv.appendChild(eingabebutton);
    listendiv.appendChild(liste);
    main_main.appendChild(eingabediv);
+   console.log(main_main);
    main_main.appendChild(listendiv);
    var rednerarray:any[] = new Array();
  

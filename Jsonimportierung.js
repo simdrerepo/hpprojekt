@@ -1,44 +1,47 @@
-import { resetMainbereich } from "./script.js";
+import { addBrotkrümel, resetMainbereich } from "./script.js";
 export { setup_JsonImportieren };
 import { fetchJsonData } from "./script.js";
 import { elementFactory } from "./script.js";
 const setup_JsonImportieren = async () => {
-    const json = await fetchJsonData("http://127.0.0.1:5500/content.json");
-    const dropdownbuttoncollection = Array.from(document.getElementsByClassName("drpdwnbtn"));
-    const dropdwncntnr = Array.from(document.getElementsByClassName("dropdown-container"));
+    const json = await fetchJsonData("./fetchcontent/content.json");
+    const dropdownbuttoncollection = Array.from(document.getElementsByClassName("navbardropdownbutton")); //Highest level
+    dropdownbuttoncollection.shift();
+    const dropdowndivs = Array.from(document.getElementsByClassName("navbardropdown")); // Hier kommen die Button für den Content rein
+    dropdowndivs.shift();
     var array = new Array();
     for (let o of Object.keys(json)) {
         for (let ob of Object.keys(json[o])) {
-            let button = elementFactory("button", { class: "dropdowncontainerbutton" }, "background-color:#dddddd; fontsize:16px; cursor:pointer;");
-            array.push(ob);
-            dropdwncntnr[Object.keys(json).indexOf(o)].appendChild(button);
+            const button = elementFactory("button", { class: "jsonimportbutton" }, "border:none; color:white; padding:7px; background-color:#34568B; align:left; cursor:pointer;width:100%;");
+            button.textContent = ob;
+            dropdowndivs[Object.keys(json).indexOf(o)].appendChild(button);
         }
     }
-    const dropdowncontainerbuttoncollection = Array.from(document.getElementsByClassName("dropdowncontainerbutton"));
     const jsonkeys = Object.keys(json); // Highestlevel
-    setNameForButton(dropdownbuttoncollection, jsonkeys[0], jsonkeys[1], jsonkeys[2]);
-    setNameForButton(dropdowncontainerbuttoncollection, array[0], array[1], array[2], array[3], array[4], array[5]);
+    for (const jk of dropdownbuttoncollection) {
+        jk.innerHTML = jsonkeys[dropdownbuttoncollection.indexOf(jk)] + '<i class="fa fa-caret-down">';
+    }
+    const jsonimportbutton = Array.from(document.getElementsByClassName("jsonimportbutton"));
     var i = 0;
     for (const [title, inhalte] of Object.entries(json)) {
         //dropdownbuttoncollection[Object.keys(json).indexOf(title)].textContent = title;
-        let itag = elementFactory("i", { class: "fa fa-caret-down" }, "");
-        dropdownbuttoncollection[Object.keys(json).indexOf(title)].appendChild(itag);
         for (const [a, b] of Object.entries(json[title])) {
-            dropdowncontainerbuttoncollection[i].addEventListener("click", () => {
-                resetMainbereich();
-                populateHeader(a);
-                populateMain(Object(b).content);
+            jsonimportbutton[i].addEventListener("click", () => {
+                const [main_container, main_main] = resetMainbereich();
+                //populateHeader(a);
+                addBrotkrümel("Startseite", title, a);
+                insertContentIntoElement(main_main, "h1", a);
+                insertContentIntoElement(main_main, "p", Object(b).content);
             });
             i++;
         }
     }
     //hover effekt für die button im dropdowncontainer
-    for (let dcb of dropdowncontainerbuttoncollection) {
+    for (let dcb of saddropdownbuttoncollection) {
         dcb.addEventListener("mouseover", function () { changeBackgroundColorAndColor(this, "#34568B", "white"); });
         dcb.addEventListener("mouseleave", function () { changeBackgroundColorAndColor(this, "#dddddd", "black"); });
     }
     //dropdownicons für button im sidenav
-    for (let b of dropdownbuttoncollection) {
+    for (let b of daropdownbuttoncollection) {
         b.addEventListener("click", function () {
             if (this.lastChild.classList.contains("fa-caret-down")) {
                 this.removeChild(this.lastChild);
@@ -54,6 +57,14 @@ const setup_JsonImportieren = async () => {
             }
         });
     }
+};
+const insertContentIntoElement = (where, htmlElement, input) => {
+    let element = document.createElement(htmlElement);
+    element.appendChild(document.createTextNode(input));
+    where.appendChild(element);
+};
+const clear = (where) => {
+    where.replaceChildren();
 };
 const populateMain = (input) => {
     const main_main = document.getElementById("main_main");

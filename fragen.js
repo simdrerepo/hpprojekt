@@ -100,9 +100,7 @@ const codeloesungen = [
 ];
 export const codeUebung = () => {
     const [main, main_header, main_main] = resetMainbereich();
-    let h1 = elementFactory("h1", {}, "", false, "Funktionen in Javascript");
     addBrotkrümel("Startseite", "Funktionen in Javascript");
-    main_header.appendChild(h1);
     var array = new Array();
     for (let i = 0; i < codeaufgaben.length; i++) {
         let Antwort = Object.create(antwort);
@@ -114,8 +112,6 @@ export const codeUebung = () => {
 };
 export const fragenAntworten = () => {
     const [main, main_header, main_main] = resetMainbereich();
-    const h1 = elementFactory("h1", {}, "", false, "Fragen / Antworten");
-    main_header.appendChild(h1);
     addBrotkrümel("Startseite", "Fragen und Antworten");
     var array = new Array();
     for (let i = 0; i < fragen.length; i++) {
@@ -127,6 +123,8 @@ export const fragenAntworten = () => {
     addDivs(main_main, array);
 };
 const addDivs = (mainref, array) => {
+    const h1 = elementFactory("h1", {}, "", false, "Fragen / Antworten");
+    mainref.appendChild(h1);
     for (const s of array) {
         let fragediv = elementFactory("div", {}, "padding:10px; background-color:#e7e9eb; border-left:5px solid grey;");
         let p = elementFactory("p", {}, "", false, s.frage);
@@ -139,6 +137,8 @@ const addDivs = (mainref, array) => {
     }
 };
 const addCodeFragen = (mainref, array) => {
+    let h1 = elementFactory("h1", {}, "", false, "Funktionen in Javascript");
+    mainref.appendChild(h1);
     for (const c of array) {
         let fragediv = elementFactory("div", {}, "display:flex; padding:10px; border-left:5px solid grey; background-color:#e7e9eb;");
         let p = elementFactory("p", {}, "", false, c.frage);

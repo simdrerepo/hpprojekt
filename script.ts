@@ -22,6 +22,7 @@ export { fetchTextData };
 
 
 
+const json = await fetchJsonData("./content.json");
 
 setup_JsonImportieren();
 export function filterObject(obj:any,string:string){
@@ -132,29 +133,31 @@ function hideShowDropDownContainer(this:any):void{
 }
 const resetMainbereich = ():HTMLDivElement[]=>{
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main")!;
+  const main_container:HTMLDivElement = <HTMLDivElement>document.getElementById("main_container")!;
   mainref.replaceChildren();
  setupMainBereich();
 
  const main_header:HTMLDivElement = <HTMLDivElement>document.getElementById("mainheader")!;
  const main_main:HTMLDivElement = <HTMLDivElement>document.getElementById("main_main")!;
  
- return [mainref,main_header,main_main];
+ return [main_container,main_main];
 }
 function setupMainBereich():void{
   // Hier wird ein Bereich(header,main) eingerichtet, um später Inhalte dort hineinzuladen
   const mainref:HTMLDivElement = <HTMLDivElement>document.getElementById("main"); 
+  const brotkrümelrahmen = elementFactory("div",{id:"brotkrümel"},"border-bottom:1px solid lightgrey;");
  
  let main_container:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_container"},"background-color:white; min-height:700px; padding-left:10px;padding-right:10px;");
- let main_header:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"mainheader"},"background-color:white; border-bottom:1px solid lightgray; display:flex; justify-content:center;");
+ 
 
  let main_main:HTMLDivElement = <HTMLDivElement>elementFactory("div",{id:"main_main"},"background-color:white; display:block;margin-top:20px;");
  
  let main_footer:HTMLDivElement = <HTMLDivElement>elementFactory("id",{id:"main_footer"},"");
- mainref.appendChild(main_container);
- main_container.appendChild(main_header);
-
+ main_container.appendChild(brotkrümelrahmen);
  main_container.appendChild(main_main);
- main_container.appendChild(main_footer);
+
+ mainref.appendChild(main_container);
+
 
 }
 
@@ -298,16 +301,20 @@ export function addToTable(table:HTMLTableElement,cellContent:any[][],headlineco
   for(let j=0;j<cellContent[i].length;j++){
     if(isHTML(cellContent[i][j])){
       let cell = row.insertCell(j);
-    cell.innerHTML = cellContent[i][j];
+    cell.textContent = cellContent[i][j];
+    
     }
     else if(typeof cellContent[i][j] === "string"){
       let cell = row.insertCell(j);
       cell.textContent = cellContent[i][j];
+      
 
     }
     else{
     let cell = row.insertCell(j);
-    cell.appendChild(cellContent[i][j]);
+    
+    cell.textContent = cellContent[i][j];
+    
     }
   }
 }  
@@ -333,7 +340,7 @@ export function addToList(liste:HTMLElement,content:any[],color_notodd:string="#
 }
 
 function setup_headernav(object:any){
-  const navdropdown = document.getElementById("navbardropdown");
+  const navdropdown = document.getElementsByClassName("navbardropdown");
 
   for(const key of Object.values(object)){
     
@@ -343,7 +350,7 @@ function setup_headernav(object:any){
     button.textContent = Object(key).textcontent;
     button.addEventListener("click",Object(key).funktion);
    
-    navdropdown?.appendChild(button);
+    navdropdown[0].appendChild(button);
      
 
   }
@@ -372,7 +379,7 @@ export function addBrotkrümel(...brotkrümel:any[]){
   
  
     for(const c of brotkrümel){
-      const arrow = elementFactory("i",{class:"fa fa-angle-right"},"margin-left:10px; margin-right:10px;");
+      const arrow = elementFactory("i",{class:"fa fa-angle-double-right"},"margin-left:10px; margin-right:10px;");
       bkdiv?.appendChild(document.createTextNode(c));
       bkdiv?.appendChild(arrow);
     }
